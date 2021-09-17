@@ -12,7 +12,7 @@ export const Topbar = (props) => {
 const styles = StyleSheet.create({
   topbar: {
     backgroundColor: "#1dadbc",
-    height: 40,
+    height: 70,
     alignItems: "center",
     justifyContent: "flex-end",
   },

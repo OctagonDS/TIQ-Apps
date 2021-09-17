@@ -7,10 +7,11 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Topbar />
+      <View style={{ flex: 13 }} />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { flex: 1 },
 })

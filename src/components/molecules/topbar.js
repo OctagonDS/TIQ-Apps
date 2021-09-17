@@ -1,16 +1,16 @@
 import React from "react"
 import { View, Text, StyleSheet } from "react-native"
 
-export const Topnavbar = (props) => {
+export const Topbar = (props) => {
   return (
-    <View style={styles.topnavbar}>
+    <View style={styles.topbar}>
       <Text style={styles.text}>Топ бар</Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  topnavbar: {
+  topbar: {
     backgroundColor: "#1dadbc",
     height: 40,
     alignItems: "center",

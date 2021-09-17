@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "TIQ-Apps",
+    "slug": "TIQ-Apps",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "TIQ-Apps"
+}

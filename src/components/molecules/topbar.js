@@ -6,7 +6,7 @@ export const Topbar = (props) => {
     <View style={styles.topbar}>
       <View style={styles.topline} />
       <View style={styles.bottomline}>
-        <Text style={styles.text}>Топ бар</Text>
+        <Text style={styles.text}>Топ бар2</Text>
       </View>
     </View>
   )

@@ -18,11 +18,11 @@ const styles = StyleSheet.create({
   },
   topline: {
     backgroundColor: "#ffd61e",
-    flex: 1,
+    height: "35%",
   },
   bottomline: {
     backgroundColor: "#21b287",
-    flex: 2,
+    height: "65%",
     alignItems: "center",
     justifyContent: "center",
   },

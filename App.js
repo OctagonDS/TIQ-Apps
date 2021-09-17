@@ -7,7 +7,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Topbar />
-      <View style={{ flex: 13 }} />
+      <View style={{ flex: 9 }} />
     </View>
   )
 }

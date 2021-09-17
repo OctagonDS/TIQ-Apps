@@ -12,6 +12,9 @@ export const Topnavbar = (props) => {
 const styles = StyleSheet.create({
   topnavbar: {
     backgroundColor: "#1dadbc",
+    height: 40,
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
   text: {},
 })

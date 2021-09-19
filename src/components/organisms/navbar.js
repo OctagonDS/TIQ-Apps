@@ -1,6 +1,7 @@
 import React from "react"
-import { View, Text, StyleSheet, Button } from "react-native"
+import { View, Text, StyleSheet, Button, Image } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
+import Svg, { Circle } from "react-native-svg"
 
 export const Navbar = (props) => {
   return (
@@ -11,7 +12,11 @@ export const Navbar = (props) => {
       style={styles.linearGradient}
     >
       <View style={styles.navbar}>
-        <Text style={styles.text}>Нижнее меню</Text>
+        <View style={styles.circle}>
+          <Svg height="95%" width="95%" viewBox="0 0 100 100" {...props}>
+            <Circle cx="50" cy="50" r="45" fill="#FF741F" />
+          </Svg>
+        </View>
       </View>
     </LinearGradient>
   )
@@ -19,7 +24,7 @@ export const Navbar = (props) => {
 
 const styles = StyleSheet.create({
   navbar: {
-    // height: 20,
+    height: "100%",
   },
   linearGradient: {
     flex: 1,
@@ -30,5 +35,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 20,
     textAlign: "center",
+  },
+  circle: {
+    alignItems: "center",
+    justifyContent: "center",
   },
 })

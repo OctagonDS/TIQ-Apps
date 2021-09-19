@@ -6,7 +6,7 @@ import { Content } from "../organisms/content"
 
 export const Traderiq = (props) => {
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.header}>
         <Topbar />
       </View>
@@ -21,6 +21,7 @@ export const Traderiq = (props) => {
 }
 
 const styles = StyleSheet.create({
+  container: { flex: 1 },
   header: { flex: 1 },
   content: {
     flex: 9,

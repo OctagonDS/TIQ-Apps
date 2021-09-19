@@ -1,8 +1,8 @@
 import React from "react"
-import { View } from "react-native"
-import { Navbar } from "./src/components/organisms/navbar"
-import { Topbar } from "./src/components/organisms/topbar"
-import { Content } from "./src/components/organisms/content"
+import { View, StyleSheet } from "react-native"
+import { Navbar } from "../organisms/navbar"
+import { Topbar } from "../organisms/topbar"
+import { Content } from "../organisms/content"
 
 export const Traderiq = (props) => {
   return (

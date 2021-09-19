@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
   header: {},
   content: {
     flex: 9,
-    alignContent: "center",
-    justifyContent: "center",
+    // alignContent: "center",
+    // justifyContent: "center",
   },
   footer: {
     flex: 1,

@@ -11,8 +11,7 @@ export const Navbar = (props) => {
       style={styles.linearGradient}
     >
       <View style={styles.navbar}>
-        <Text>Нижнее меню</Text>
-        <Button title="Меню" />
+        <Text style={styles.text}>Нижнее меню</Text>
       </View>
     </LinearGradient>
   )
@@ -26,5 +25,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 15,
     paddingRight: 15,
+  },
+  text: {
+    color: "#fff",
+    fontSize: 20,
+    textAlign: "center",
   },
 })

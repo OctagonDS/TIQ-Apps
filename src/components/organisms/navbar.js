@@ -12,6 +12,7 @@ export const Navbar = (props) => {
       style={styles.linearGradient}
     >
       <View style={styles.navbar}>
+        <View></View>
         <View style={styles.circle}>
           <Svg height="95%" width="95%" viewBox="0 0 100 100" {...props}>
             <Circle cx="50" cy="50" r="45" fill="#FF741F" />

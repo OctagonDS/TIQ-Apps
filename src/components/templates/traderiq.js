@@ -1,5 +1,5 @@
 import React from "react"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, ScrollView } from "react-native"
 import { Navbar } from "../organisms/navbar"
 import { Topbar } from "../organisms/topbar"
 import { Content } from "../organisms/content"
@@ -22,7 +22,7 @@ export const Traderiq = (props) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  header: { flex: 1 },
+  header: {},
   content: {
     flex: 9,
     alignContent: "center",

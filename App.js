@@ -1,13 +1,14 @@
 import { StatusBar } from "expo-status-bar"
 import React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View, SafeAreaView } from "react-native"
 import { Traderiq } from "./src/components/templates/traderiq"
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Traderiq />
-    </View>
+      <StatusBar style="auto" />
+    </SafeAreaView>
   )
 }
 

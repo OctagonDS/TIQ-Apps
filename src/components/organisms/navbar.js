@@ -19,7 +19,7 @@ export const Navbar = (props) => {
 
 const styles = StyleSheet.create({
   navbar: {
-    height: "100%",
+    // height: 20,
   },
   linearGradient: {
     flex: 1,

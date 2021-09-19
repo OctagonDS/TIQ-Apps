@@ -13,9 +13,8 @@ const styles = StyleSheet.create({
   topbar: {
     backgroundColor: "#21b287",
     alignItems: "center",
-    justifyContent: "flex-end",
-    height: 65,
-    paddingBottom: 10,
+    justifyContent: "center",
+    height: 45,
   },
   text: {
     color: "#fff",

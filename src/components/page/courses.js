@@ -8,14 +8,12 @@ import {
   SafeAreaView,
 } from "react-native"
 import { gStyle } from "../../styles/style"
-import { Topbar } from "../organisms/topbar"
 import { LinearGradient } from "expo-linear-gradient"
 import { IconCourses } from "../atoms/iconCurses"
 import { Feedback } from "../atoms/iconFeedback"
 import { IconMentor } from "../atoms/iconMentor"
 import { IconAnleger } from "../atoms/iconAnleger"
 import { IconBurger } from "../atoms/iconBurger"
-import topandroid from "../atoms/topandroid"
 
 export function Courses({ navigation }) {
   const loadScene = () => {

@@ -1,11 +1,15 @@
 import React from "react"
 import { View, Text, StyleSheet, Button, TextInput } from "react-native"
+import { gStyle } from "../../styles/style"
 
 export const Content = (props) => {
   return (
-    <View style={styles.body}>
-      <TextInput style={styles.input} autoCapitalize="none" />
-      <Button title="Кнокпа" />
+    <View>
+      <View style={styles.body}>
+        <TextInput style={styles.input} autoCapitalize="none" />
+        <Button title="Поиск" />
+      </View>
+      <Text style={gStyle.title}>Hello world!</Text>
     </View>
   )
 }

@@ -53,6 +53,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    height: Platform.OS === "ios" ? 120 : 80,
+    height: Platform.OS === "ios" ? 120 : 75,
   },
 })

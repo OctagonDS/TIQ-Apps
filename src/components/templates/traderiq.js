@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView } from "react-native"
 import { Topbar } from "../organisms/topbar"
 import { Content } from "../organisms/content"
 import { gStyle } from "../../styles/style"
+import { Navbar } from "../organisms/navbar"
 
 export const Traderiq = (props) => {
   return (
@@ -13,6 +14,9 @@ export const Traderiq = (props) => {
       <ScrollView style={styles.content}>
         <Content />
       </ScrollView>
+      <View style={gStyle.Navbar}>
+        <Navbar />
+      </View>
     </View>
   )
 }

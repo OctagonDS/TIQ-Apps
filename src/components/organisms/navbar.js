@@ -1,7 +1,11 @@
 import React from "react"
 import { View, Text, StyleSheet, Button, Image } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
-import Svg, { Circle } from "react-native-svg"
+import { IconCourses } from "../atoms/iconCurses"
+import { Feedback } from "../atoms/feedback"
+import { IconMentor } from "../atoms/iconMentor"
+import { IconAnleger } from "../atoms/iconAnleger"
+import { IconBurger } from "../atoms/iconBurger"
 
 export const Navbar = (props) => {
   return (
@@ -12,12 +16,11 @@ export const Navbar = (props) => {
       style={styles.linearGradient}
     >
       <View style={styles.navbar}>
-        <View></View>
-        <View style={styles.circle}>
-          <Svg height="95%" width="95%" viewBox="0 0 100 100" {...props}>
-            <Circle cx="50" cy="50" r="45" fill="#FF741F" />
-          </Svg>
-        </View>
+        <IconCourses />
+        <IconMentor />
+        <Feedback />
+        <IconAnleger />
+        <IconBurger />
       </View>
     </LinearGradient>
   )
@@ -26,6 +29,9 @@ export const Navbar = (props) => {
 const styles = StyleSheet.create({
   navbar: {
     height: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   linearGradient: {
     flex: 1,
@@ -36,9 +42,5 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 20,
     textAlign: "center",
-  },
-  circle: {
-    alignItems: "center",
-    justifyContent: "center",
   },
 })

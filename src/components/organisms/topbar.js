@@ -1,5 +1,5 @@
 import React from "react"
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, Platform } from "react-native"
 import { IconBack } from "../atoms/iconBack"
 import { IconSearch } from "../atoms/iconSearch"
 import { IconForward } from "../atoms/iconForward"

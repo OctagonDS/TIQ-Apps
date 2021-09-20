@@ -1,5 +1,5 @@
 import React from "react"
-import { View, Text, StyleSheet, Button, Image } from "react-native"
+import { View, Text, StyleSheet, Platform } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { IconCourses } from "../atoms/iconCurses"
 import { Feedback } from "../atoms/feedback"
@@ -28,7 +28,7 @@ export const Navbar = (props) => {
 
 const styles = StyleSheet.create({
   navbar: {
-    height: "100%",
+    height: Platform.OS === "android" ? "100%" : "80%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

@@ -10,12 +10,9 @@ export const Traderiq = (props) => {
       <View style={styles.header}>
         <Topbar />
       </View>
-      <View style={styles.content}>
+      <ScrollView style={styles.content}>
         <Content />
-      </View>
-      <View style={styles.footer}>
-        <Navbar />
-      </View>
+      </ScrollView>
     </View>
   )
 }
@@ -24,12 +21,16 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   header: {},
   content: {
-    flex: 8,
+    // flex: 8,
     // alignContent: "center",
     // justifyContent: "center",
   },
   footer: {
-    flex: 1,
-    height: 200,
+    // flex: 1,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 80,
   },
 })

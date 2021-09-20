@@ -11,10 +11,7 @@ import { IconMentor } from "../atoms/iconMentor"
 import { IconAnleger } from "../atoms/iconAnleger"
 import { IconBurger } from "../atoms/iconBurger"
 
-export function Courses({ navigation }) {
-  const loadScene = () => {
-    navigation.navigate("Mentor")
-  }
+export const Mentor = (props) => {
   return (
     <View style={gStyle.main}>
       <View>
@@ -32,7 +29,7 @@ export function Courses({ navigation }) {
         >
           <View style={styles.navbar}>
             <IconCourses />
-            <IconMentor onPress={loadScene} />
+            <IconMentor />
             <Feedback />
             <IconAnleger />
             <IconBurger />

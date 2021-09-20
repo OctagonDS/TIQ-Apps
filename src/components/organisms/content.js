@@ -1,23 +1,20 @@
 import React from "react"
 import { View, Text, StyleSheet, Button, TextInput } from "react-native"
 import { gStyle } from "../../styles/style"
+import { Courses } from "../page/courses"
 
 export const Content = (props) => {
   return (
-    <View>
-      <View style={styles.body}>
-        <TextInput style={styles.input} autoCapitalize="none" />
-        <Button title="Поиск" />
-      </View>
-      <Text style={gStyle.title}>Hello world!</Text>
+    <View style={styles.body}>
+      <Text>Привет МИр</Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   body: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    // flexDirection: "row",
+    // justifyContent: "space-between",
     padding: 10,
   },
   input: {

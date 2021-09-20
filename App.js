@@ -7,6 +7,7 @@ import { Navbar } from "./src/components/organisms/navbar"
 import { gStyle } from "./src/styles/style"
 import * as Font from "expo-font"
 import AppLoading from "expo-app-loading"
+import Navigations from "./src/components/molecules/navigation"
 
 const fonts = () =>
   Font.loadAsync({
@@ -24,17 +25,7 @@ export default function App() {
   const [font, setFont] = useState(false)
 
   if (font) {
-    return (
-      <View style={gStyle.main}>
-        <SafeAreaView style={topandroid.AndroidSafeArea}>
-          <Traderiq />
-          <StatusBar style="auto" />
-        </SafeAreaView>
-        <View style={styles.footer}>
-          <Navbar />
-        </View>
-      </View>
-    )
+    return <Navigations />
   } else {
     return (
       <AppLoading
@@ -47,12 +38,12 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  footer: {
-    // flex: 1,
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: Platform.OS === "ios" ? 120 : 75,
-  },
+  // footer: {
+  //   // flex: 1,
+  //   position: "absolute",
+  //   left: 0,
+  //   right: 0,
+  //   bottom: 0,
+  //   height: Platform.OS === "ios" ? 120 : 75,
+  // },
 })

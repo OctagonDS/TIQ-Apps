@@ -19,12 +19,12 @@ export const IconSearch = (props) => {
           fill="#7E869E"
           fillOpacity={0.25}
           stroke="#888888"
-          strokeWidth={3}
+          strokeWidth={2}
         />
         <Path
           d="M33.333 33.333l-5-5"
           stroke="#888888"
-          strokeWidth={3}
+          strokeWidth={2}
           strokeLinecap="round"
         />
       </Svg>

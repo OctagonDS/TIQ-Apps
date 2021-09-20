@@ -6,7 +6,7 @@ export const gStyle = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontFamily: "ub-bold",
+    fontFamily: "ub-medium",
     textAlign: "center",
   },
 })

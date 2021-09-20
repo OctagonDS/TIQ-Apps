@@ -8,6 +8,7 @@ export const gStyle = StyleSheet.create({
     fontSize: 20,
     fontFamily: "ub-medium",
     textAlign: "center",
+    padding: 20,
   },
   footer: {
     // flex: 1,

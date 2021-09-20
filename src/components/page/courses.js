@@ -1,9 +1,13 @@
 import React from "react"
-import { View, Text, ScrollView, StyleSheet } from "react-native"
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Platform,
+  SafeAreaView,
+} from "react-native"
 import { gStyle } from "../../styles/style"
-import { Traderiq } from "../templates/traderiq"
-import { Topbar } from "../organisms/topbar"
-import { Navbar } from "../organisms/navbar"
 import { LinearGradient } from "expo-linear-gradient"
 import { IconCourses } from "../atoms/iconCurses"
 import { Feedback } from "../atoms/iconFeedback"
@@ -17,11 +21,8 @@ export function Courses({ navigation }) {
   }
   return (
     <View style={gStyle.main}>
-      <View>
-        <Topbar />
-      </View>
       <ScrollView>
-        <Text style={gStyle.title}>Ghbd</Text>
+        <Text style={gStyle.title}>Страница курсов</Text>
       </ScrollView>
       <View style={gStyle.footer}>
         <LinearGradient

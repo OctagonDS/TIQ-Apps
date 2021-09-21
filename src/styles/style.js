@@ -17,7 +17,7 @@ export const gStyle = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    height: Platform.OS === "ios" ? 120 : 75,
+    height: Platform.OS === "ios" ? 120 : 72,
   },
   topbar: {
     // backgroundColor: "#21b287",
@@ -26,13 +26,5 @@ export const gStyle = StyleSheet.create({
     alignItems: "center",
     height: 45,
     padding: 15,
-  },
-  footer: {
-    // flex: 1,
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: Platform.OS === "ios" ? 120 : 75,
   },
 })

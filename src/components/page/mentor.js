@@ -14,7 +14,7 @@ export const Mentor = (props) => {
       <ScrollView>
         <Text style={gStyle.title}>Страница менторы</Text>
       </ScrollView>
-      <View style={gStyle.footer}>
+      {/* <View style={gStyle.footer}>
         <LinearGradient
           colors={["#454A4F", "#545A60"]}
           start={{ x: 0, y: 0 }}
@@ -29,7 +29,7 @@ export const Mentor = (props) => {
             <IconBurger />
           </View>
         </LinearGradient>
-      </View>
+      </View> */}
     </View>
   )
 }

@@ -14,7 +14,7 @@ export const IconMentor = (props) => {
       >
         <Path
           d="M28.77 29.819c-.665-1.86-2.13-3.505-4.168-4.677-2.037-1.173-4.534-1.809-7.102-1.809-2.568 0-5.065.636-7.102 1.809-2.038 1.172-3.502 2.816-4.167 4.677"
-          stroke="#CCC"
+          stroke={props.focused ? "#fff" : "#CCC"}
           strokeWidth={2}
           strokeLinecap="round"
         />
@@ -23,7 +23,7 @@ export const IconMentor = (props) => {
           cy={11.667}
           fill="#7E869E"
           fillOpacity={0.25}
-          stroke="#CCC"
+          stroke={props.focused ? "#fff" : "#CCC"}
           strokeWidth={2}
           strokeLinecap="round"
           r={5.833}

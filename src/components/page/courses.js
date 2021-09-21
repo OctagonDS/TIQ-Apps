@@ -1,12 +1,5 @@
 import React from "react"
-import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  Platform,
-  SafeAreaView,
-} from "react-native"
+import { View, Text, ScrollView, StyleSheet, Platform } from "react-native"
 import { gStyle } from "../../styles/style"
 import { LinearGradient } from "expo-linear-gradient"
 import { IconCourses } from "../atoms/iconCurses"
@@ -16,15 +9,15 @@ import { IconAnleger } from "../atoms/iconAnleger"
 import { IconBurger } from "../atoms/iconBurger"
 
 export function Courses({ navigation }) {
-  const loadScene = () => {
-    navigation.navigate("Mentor")
-  }
+  // const loadScene = () => {
+  //   navigation.navigate("Mentor")
+  // }
   return (
     <View style={gStyle.main}>
       <ScrollView>
         <Text style={gStyle.title}>Страница курсов</Text>
       </ScrollView>
-      <View style={gStyle.footer}>
+      {/* <View style={gStyle.footer}>
         <LinearGradient
           colors={["#454A4F", "#545A60"]}
           start={{ x: 0, y: 0 }}
@@ -39,7 +32,7 @@ export function Courses({ navigation }) {
             <IconBurger />
           </View>
         </LinearGradient>
-      </View>
+      </View> */}
     </View>
   )
 }

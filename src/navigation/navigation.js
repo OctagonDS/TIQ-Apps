@@ -1,10 +1,10 @@
 import React from "react"
 import { View, Text, StyleSheet, Platform } from "react-native"
-import { Courses } from "../page/courses"
-import { Mentor } from "../page/mentor"
+import { Courses } from "../components/page/courses"
+import { Mentor } from "../components/page/mentor"
 import { createStackNavigator } from "@react-navigation/stack"
 import { NavigationContainer } from "@react-navigation/native"
-import { IconSearch } from "../atoms/iconSearch"
+import { IconSearch } from "../components/atoms/iconSearch"
 
 const Stack = createStackNavigator()
 

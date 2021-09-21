@@ -9,6 +9,7 @@ export const gStyle = StyleSheet.create({
     fontFamily: "ub-medium",
     textAlign: "center",
     padding: 20,
+    color: "#353535",
   },
   footer: {
     // flex: 1,

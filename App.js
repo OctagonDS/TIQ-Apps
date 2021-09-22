@@ -9,7 +9,7 @@ const fonts = () =>
   Font.loadAsync({
     "ub-bold": require("./src/assets/fonts/Ubuntu-Bold.ttf"),
     "ub-bolditalic": require("./src/assets/fonts/Ubuntu-BoldItalic.ttf"),
-    "ub-italic": require("./src/assets/fonts//Ubuntu-Italic.ttf"),
+    "ub-italic": require("./src/assets/fonts/Ubuntu-Italic.ttf"),
     "ub-light": require("./src/assets/fonts/Ubuntu-Light.ttf"),
     "ub-lightitalic": require("./src/assets/fonts/Ubuntu-LightItalic.ttf"),
     "ub-medium": require("./src/assets/fonts/Ubuntu-Medium.ttf"),

@@ -37,7 +37,7 @@ function StackNav() {
         component={Productpage}
         options={{
           headerTitle: (props) => <IconSearch />,
-          headerRight: (props) => <IconNot />,
+          headerRight: (props) => <IconNot style={{ marginRight: 10 }} />,
           headerTitleAlign: "center",
         }}
       />
@@ -74,7 +74,7 @@ function MyTabs() {
           tabBarLabel: "Курсы",
           tabBarIcon: ({ focused }) => <IconCourses focused={focused} />,
           headerTitle: (props) => <IconSearch />,
-          headerRight: (props) => <IconNot />,
+          headerRight: (props) => <IconNot style={{ marginRight: 10 }} />,
         }}
       />
       <Tab.Screen
@@ -84,7 +84,7 @@ function MyTabs() {
           tabBarLabel: "Ментор",
           tabBarIcon: ({ focused }) => <IconMentor focused={focused} />,
           headerTitle: (props) => <IconSearch />,
-          headerRight: (props) => <IconNot />,
+          headerRight: (props) => <IconNot style={{ marginRight: 10 }} />,
         }}
       />
       <Tab.Screen
@@ -94,7 +94,7 @@ function MyTabs() {
           tabBarLabel: "Поддержка",
           tabBarIcon: ({ focused }) => <Iconfeedback focused={focused} />,
           headerTitle: (props) => <IconSearch />,
-          headerRight: (props) => <IconNot />,
+          headerRight: (props) => <IconNot style={{ marginRight: 10 }} />,
         }}
       />
       <Tab.Screen
@@ -104,7 +104,7 @@ function MyTabs() {
           tabBarLabel: "Анлегер клуб",
           tabBarIcon: ({ focused }) => <IconAnleger focused={focused} />,
           headerTitle: (props) => <IconSearch />,
-          headerRight: (props) => <IconNot />,
+          headerRight: (props) => <IconNot style={{ marginRight: 10 }} />,
         }}
       />
       <Tab.Screen
@@ -114,7 +114,7 @@ function MyTabs() {
           tabBarLabel: "Меню",
           tabBarIcon: ({ focused }) => <IconBurger focused={focused} />,
           headerTitle: (props) => <IconSearch />,
-          headerRight: (props) => <IconNot />,
+          headerRight: (props) => <IconNot style={{ marginRight: 10 }} />,
         }}
       />
     </Tab.Navigator>

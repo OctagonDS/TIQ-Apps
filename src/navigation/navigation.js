@@ -5,6 +5,7 @@ import { Courses } from "../components/page/courses"
 import { Mentor } from "../components/page/mentor"
 import { Feedback } from "../components/page/feedback"
 import { Anleger } from "../components/page/anlegerclub"
+import { Productpage } from "../components/page/product"
 
 import { createStackNavigator } from "@react-navigation/stack"
 import { NavigationContainer } from "@react-navigation/native"
@@ -26,13 +27,13 @@ function StackNav() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="MyTabs"
+        name="Home"
         component={MyTabs}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Anleger"
-        component={Anleger}
+        name="Product"
+        component={Productpage}
         options={{
           headerTitle: (props) => <IconSearch />,
           headerTitleAlign: "center",

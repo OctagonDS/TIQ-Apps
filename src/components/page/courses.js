@@ -9,18 +9,18 @@ export function Courses({ navigation }) {
         <Text style={gStyle.title}>Страница курсов</Text>
         <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
           <Button
-            title="Анлегер клуб"
+            title="Продукт"
             onPress={() => {
-              navigation.navigate("Anleger")
+              navigation.navigate("Product")
             }}
             style={{
               marginTop: 10,
             }}
           />
           <Button
-            title="Анлегер клуб"
+            title="Продукт"
             onPress={() => {
-              navigation.navigate("Anleger")
+              navigation.navigate("Product")
             }}
             style={{
               marginTop: 10,

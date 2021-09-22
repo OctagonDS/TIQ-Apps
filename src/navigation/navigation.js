@@ -16,6 +16,7 @@ import { IconMentor } from "../components/atoms/iconMentor"
 import { Iconfeedback } from "../components/atoms/iconFeedback"
 import { IconAnleger } from "../components/atoms/iconAnleger"
 import { IconBurger } from "../components/atoms/iconBurger"
+import { IconNot } from "../components/atoms/iconNotifications"
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { LinearGradient } from "expo-linear-gradient"
@@ -36,6 +37,7 @@ function StackNav() {
         component={Productpage}
         options={{
           headerTitle: (props) => <IconSearch />,
+          headerRight: (props) => <IconNot />,
           headerTitleAlign: "center",
         }}
       />
@@ -72,6 +74,7 @@ function MyTabs() {
           tabBarLabel: "Курсы",
           tabBarIcon: ({ focused }) => <IconCourses focused={focused} />,
           headerTitle: (props) => <IconSearch />,
+          headerRight: (props) => <IconNot />,
         }}
       />
       <Tab.Screen
@@ -81,6 +84,7 @@ function MyTabs() {
           tabBarLabel: "Ментор",
           tabBarIcon: ({ focused }) => <IconMentor focused={focused} />,
           headerTitle: (props) => <IconSearch />,
+          headerRight: (props) => <IconNot />,
         }}
       />
       <Tab.Screen
@@ -90,6 +94,7 @@ function MyTabs() {
           tabBarLabel: "Поддержка",
           tabBarIcon: ({ focused }) => <Iconfeedback focused={focused} />,
           headerTitle: (props) => <IconSearch />,
+          headerRight: (props) => <IconNot />,
         }}
       />
       <Tab.Screen
@@ -99,6 +104,7 @@ function MyTabs() {
           tabBarLabel: "Анлегер клуб",
           tabBarIcon: ({ focused }) => <IconAnleger focused={focused} />,
           headerTitle: (props) => <IconSearch />,
+          headerRight: (props) => <IconNot />,
         }}
       />
       <Tab.Screen
@@ -108,6 +114,7 @@ function MyTabs() {
           tabBarLabel: "Меню",
           tabBarIcon: ({ focused }) => <IconBurger focused={focused} />,
           headerTitle: (props) => <IconSearch />,
+          headerRight: (props) => <IconNot />,
         }}
       />
     </Tab.Navigator>

@@ -9,69 +9,75 @@ import { IconCourses } from "../components/atoms/iconCurses"
 import { IconMentor } from "../components/atoms/iconMentor"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { LinearGradient } from "expo-linear-gradient"
+import { Anleger } from "../components/page/anlegerclub"
 
-const MainStack = createStackNavigator()
-const Main = () => {
+const Tab = createBottomTabNavigator()
+const Stack = createStackNavigator()
+
+function StackNav() {
   return (
-    <MainStack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
-      <MainStack.Screen
-        name="MainTabs"
-        component={MainTabs}
-        options={{ headerTitle: (props) => <IconSearch /> }}
+    <Stack.Navigator>
+      <Stack.Screen
+        name="MyTabs"
+        component={MyTabs}
+        options={{ headerShown: false }}
       />
-    </MainStack.Navigator>
-  )
-}
-
-const Tabs = createBottomTabNavigator()
-const MainTabs = () => {
-  return (
-    <LinearGradient
-      colors={["#454A4F", "#545A60"]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 0 }}
-      style={styles.linearGradient}
-    >
-      <Tabs.Navigator
-        tabBarOptions={{
-          style: {
-            borderTopWidth: 1,
-            backgroundColor: "transparent",
-          },
+      <Stack.Screen
+        name="Anleger"
+        component={Anleger}
+        options={{
+          headerTitle: (props) => <IconSearch />,
+          headerTitleAlign: "center",
         }}
-      >
-        {/* these icons using Ionicons */}
-        <Tabs.Screen
-          name="Курсы"
-          component={Courses}
-          options={{
-            tabBarIcon: ({ focused }) => <IconCourses focused={focused} />,
-          }}
-        />
-        <Tabs.Screen
-          name="Ментор"
-          component={Mentor}
-          options={{
-            tabBarIcon: ({ focused }) => <IconMentor focused={focused} />,
-          }}
-        />
-      </Tabs.Navigator>
-    </LinearGradient>
+      />
+    </Stack.Navigator>
   )
 }
 
-export default () => {
+function MyTabs() {
+  return (
+    <Tab.Navigator
+      initialRouteName="Feed"
+      screenOptions={{
+        tabBarActiveTintColor: "#fff",
+        headerTitleAlign: "center",
+        tabBarStyle: { position: "absolute" },
+        tabBarBackground: () => (
+          <LinearGradient
+            colors={["#454A4F", "#545A60"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{ flex: 1 }}
+          />
+        ),
+      }}
+    >
+      <Tab.Screen
+        name="Feed"
+        component={Courses}
+        options={{
+          tabBarLabel: "Курсы",
+          tabBarIcon: ({ focused }) => <IconMentor focused={focused} />,
+          headerTitle: (props) => <IconSearch />,
+        }}
+      />
+      <Tab.Screen
+        name="Notifications"
+        component={Mentor}
+        options={{
+          tabBarLabel: "Ментор",
+          tabBarIcon: ({ focused }) => <IconCourses focused={focused} />,
+          headerTitle: (props) => <IconSearch />,
+        }}
+      />
+    </Tab.Navigator>
+  )
+}
+
+export default function () {
   return (
     <NavigationContainer>
-      <Main />
+      <StackNav />
     </NavigationContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  linearGradient: {
-    flex: 1,
-    // paddingLeft: 15,
-    // paddingRight: 15,
-  },
-})

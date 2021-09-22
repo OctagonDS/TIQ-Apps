@@ -14,7 +14,7 @@ export const IconBurger = (props) => {
       >
         <Path
           d="M7.292 10.208h20.416M7.292 17.5h20.416M7.292 24.792h20.416"
-          stroke="#CCC"
+          stroke={props.focused ? "#fff" : "#CCC"}
           strokeWidth={2}
           strokeLinecap="round"
         />

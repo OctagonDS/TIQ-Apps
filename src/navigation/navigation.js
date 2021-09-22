@@ -1,15 +1,23 @@
 import React from "react"
 import { View, Text, StyleSheet, Platform } from "react-native"
+
 import { Courses } from "../components/page/courses"
 import { Mentor } from "../components/page/mentor"
+import { Feedback } from "../components/page/feedback"
+import { Anleger } from "../components/page/anlegerclub"
+
 import { createStackNavigator } from "@react-navigation/stack"
 import { NavigationContainer } from "@react-navigation/native"
+
 import { IconSearch } from "../components/atoms/iconSearch"
 import { IconCourses } from "../components/atoms/iconCurses"
 import { IconMentor } from "../components/atoms/iconMentor"
+import { Iconfeedback } from "../components/atoms/iconFeedback"
+import { IconAnleger } from "../components/atoms/iconAnleger"
+import { IconBurger } from "../components/atoms/iconBurger"
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { LinearGradient } from "expo-linear-gradient"
-import { Anleger } from "../components/page/anlegerclub"
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -41,7 +49,11 @@ function MyTabs() {
       screenOptions={{
         tabBarActiveTintColor: "#fff",
         headerTitleAlign: "center",
-        tabBarStyle: { position: "absolute" },
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          position: "absolute",
+          height: Platform.OS === "android" ? 72 : 103,
+        },
         tabBarBackground: () => (
           <LinearGradient
             colors={["#454A4F", "#545A60"]}
@@ -53,20 +65,47 @@ function MyTabs() {
       }}
     >
       <Tab.Screen
-        name="Feed"
+        name="Course"
         component={Courses}
         options={{
           tabBarLabel: "Курсы",
+          tabBarIcon: ({ focused }) => <IconCourses focused={focused} />,
+          headerTitle: (props) => <IconSearch />,
+        }}
+      />
+      <Tab.Screen
+        name="Mentor"
+        component={Mentor}
+        options={{
+          tabBarLabel: "Ментор",
           tabBarIcon: ({ focused }) => <IconMentor focused={focused} />,
           headerTitle: (props) => <IconSearch />,
         }}
       />
       <Tab.Screen
-        name="Notifications"
-        component={Mentor}
+        name="Feedback"
+        component={Feedback}
         options={{
-          tabBarLabel: "Ментор",
-          tabBarIcon: ({ focused }) => <IconCourses focused={focused} />,
+          tabBarLabel: "Поддержка",
+          tabBarIcon: ({ focused }) => <Iconfeedback focused={focused} />,
+          headerTitle: (props) => <IconSearch />,
+        }}
+      />
+      <Tab.Screen
+        name="Anleger"
+        component={Anleger}
+        options={{
+          tabBarLabel: "Анлегер клуб",
+          tabBarIcon: ({ focused }) => <IconAnleger focused={focused} />,
+          headerTitle: (props) => <IconSearch />,
+        }}
+      />
+      <Tab.Screen
+        name="Menu"
+        component={Anleger}
+        options={{
+          tabBarLabel: "Меню",
+          tabBarIcon: ({ focused }) => <IconBurger focused={focused} />,
           headerTitle: (props) => <IconSearch />,
         }}
       />

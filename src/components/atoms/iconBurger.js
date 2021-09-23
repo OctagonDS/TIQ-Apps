@@ -6,15 +6,15 @@ export const IconBurger = (props) => {
   return (
     <View>
       <Svg
-        width={35}
-        height={35}
+        width={40}
+        height={40}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         {...props}
       >
         <Path
           d="M7.292 10.208h20.416M7.292 17.5h20.416M7.292 24.792h20.416"
-          stroke={props.focused ? "#fff" : "#CCC"}
+          stroke="#888888"
           strokeWidth={2}
           strokeLinecap="round"
         />

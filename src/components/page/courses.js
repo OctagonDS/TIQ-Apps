@@ -1,34 +1,36 @@
 import React from "react"
 import { View, Text, ScrollView, StyleSheet, Button } from "react-native"
 import { gStyle } from "../../styles/style"
+import { NavigationContainer } from "@react-navigation/native"
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 
-export function Courses({ navigation }) {
+function HomeScreen({ navigation }) {
   return (
-    <View style={gStyle.main}>
-      <ScrollView>
-        <Text style={gStyle.title}>Страница курсов</Text>
-        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
-          <Button
-            title="Продукт"
-            onPress={() => {
-              navigation.navigate("Product")
-            }}
-            style={{
-              marginTop: 10,
-            }}
-          />
-          <Button
-            title="Продукт"
-            onPress={() => {
-              navigation.navigate("Product")
-            }}
-            style={{
-              marginTop: 10,
-            }}
-          />
-        </View>
-      </ScrollView>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Button
+        title="Продукт"
+        onPress={() => navigation.navigate("Продукт22")}
+      />
     </View>
+  )
+}
+
+function SettingsScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text>Settings!</Text>
+    </View>
+  )
+}
+
+const Tab = createMaterialTopTabNavigator()
+
+export function Courses() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Вкладка 1" component={HomeScreen} />
+      <Tab.Screen name="Вкладка 2" component={SettingsScreen} />
+    </Tab.Navigator>
   )
 }
 

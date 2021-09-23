@@ -2,11 +2,11 @@ import React from "react"
 import { View, Text, ScrollView, StyleSheet, Platform } from "react-native"
 import { gStyle } from "../../styles/style"
 
-export const Mentor = (props) => {
+export const Notifications = (props) => {
   return (
     <View style={gStyle.main}>
       <ScrollView>
-        <Text style={gStyle.title}>Страница менторы</Text>
+        <Text style={gStyle.title}>Страница уведомлений</Text>
       </ScrollView>
     </View>
   )

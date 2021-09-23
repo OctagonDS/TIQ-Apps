@@ -50,15 +50,6 @@ function StackNav() {
         component={MyTabs}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="Product"
-        component={Productpage}
-        options={{
-          headerTitle: (props) => <IconSearch />,
-          headerRight: (props) => <IconNot style={{ marginRight: 10 }} />,
-          headerTitleAlign: "center",
-        }}
-      />
     </Stack.Navigator>
   )
 }
@@ -71,6 +62,7 @@ function MyTabs() {
         tabBarActiveTintColor: "#fff",
         headerTitleAlign: "center",
         tabBarShowLabel: false,
+        headerShown: false,
         tabBarStyle: {
           position: "absolute",
           height: Platform.OS === "android" ? 72 : 103,
@@ -91,17 +83,6 @@ function MyTabs() {
         options={{
           tabBarLabel: "Курсы",
           tabBarIcon: ({ focused }) => <IconCourses focused={focused} />,
-          headerTitle: (props) => <IconSearch />,
-          headerRight: () => {
-            const navigation = useNavigation()
-            return (
-              <TouchableOpacity
-                onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-              >
-                <IconBurger style={{ marginRight: 10 }} />
-              </TouchableOpacity>
-            )
-          },
         }}
       />
       <Tab.Screen
@@ -110,17 +91,6 @@ function MyTabs() {
         options={{
           tabBarLabel: "Ментор",
           tabBarIcon: ({ focused }) => <IconMentor focused={focused} />,
-          headerTitle: (props) => <IconSearch />,
-          headerRight: () => {
-            const navigation = useNavigation()
-            return (
-              <TouchableOpacity
-                onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-              >
-                <IconBurger style={{ marginRight: 10 }} />
-              </TouchableOpacity>
-            )
-          },
         }}
       />
       <Tab.Screen
@@ -129,17 +99,6 @@ function MyTabs() {
         options={{
           tabBarLabel: "Поддержка",
           tabBarIcon: ({ focused }) => <Iconfeedback focused={focused} />,
-          headerTitle: (props) => <IconSearch />,
-          headerRight: () => {
-            const navigation = useNavigation()
-            return (
-              <TouchableOpacity
-                onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-              >
-                <IconBurger style={{ marginRight: 10 }} />
-              </TouchableOpacity>
-            )
-          },
         }}
       />
       <Tab.Screen
@@ -148,17 +107,6 @@ function MyTabs() {
         options={{
           tabBarLabel: "Анлегер клуб",
           tabBarIcon: ({ focused }) => <IconAnleger focused={focused} />,
-          headerTitle: (props) => <IconSearch />,
-          headerRight: () => {
-            const navigation = useNavigation()
-            return (
-              <TouchableOpacity
-                onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-              >
-                <IconBurger style={{ marginRight: 10 }} />
-              </TouchableOpacity>
-            )
-          },
         }}
       />
       <Tab.Screen
@@ -168,17 +116,6 @@ function MyTabs() {
           tabBarLabel: "Уведомления",
           tabBarBadge: 3,
           tabBarIcon: ({ focused }) => <IconNot focused={focused} />,
-          headerTitle: (props) => <IconSearch />,
-          headerRight: () => {
-            const navigation = useNavigation()
-            return (
-              <TouchableOpacity
-                onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-              >
-                <IconBurger style={{ marginRight: 10 }} />
-              </TouchableOpacity>
-            )
-          },
         }}
       />
     </Tab.Navigator>

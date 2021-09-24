@@ -65,7 +65,7 @@ function MyTabs() {
         headerShown: false,
         tabBarStyle: {
           position: "absolute",
-          height: Platform.OS === "android" ? 72 : 103,
+          height: Platform.OS === "android" ? 72 : 110,
           borderTopWidth: 0,
         },
         tabBarBackground: () => (

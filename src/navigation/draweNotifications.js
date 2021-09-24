@@ -26,23 +26,27 @@ function CustomDrawerContent({ navigation }) {
       ),
     []
   )
+  const image = require("../assets/img/black-geo.png")
+
   return (
-    <View
-      style={{
-        marginTop: 70,
-        justifyContent: "center",
-        alignItems: "flex-end",
-      }}
-    >
-      <Button
-        title="Тест кнопка"
-        onPress={() => {
-          // Navigate using the `navigation` prop that you received
-          // navigation.navigate("")
-          alert("Привет тебе человек!:)")
+    <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
+      <View
+        style={{
+          marginTop: 70,
+          justifyContent: "center",
+          alignItems: "flex-end",
         }}
-      />
-    </View>
+      >
+        <Button
+          title="Тест кнопка"
+          onPress={() => {
+            // Navigate using the `navigation` prop that you received
+            // navigation.navigate("")
+            alert("Привет тебе человек!:)")
+          }}
+        />
+      </View>
+    </ImageBackground>
   )
 }
 

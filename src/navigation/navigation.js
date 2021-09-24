@@ -66,6 +66,7 @@ function MyTabs() {
         tabBarStyle: {
           position: "absolute",
           height: Platform.OS === "android" ? 72 : 103,
+          borderTopWidth: 0,
         },
         tabBarBackground: () => (
           <LinearGradient

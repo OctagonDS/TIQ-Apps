@@ -18,10 +18,39 @@ import { createDrawerNavigator } from "@react-navigation/drawer"
 
 const Drawer = createDrawerNavigator()
 
+function CustomDrawerContent({ navigation }) {
+  React.useEffect(
+    () =>
+      navigation.addListener("blur", () =>
+        navigation.dispatch(DrawerActions.closeDrawer())
+      ),
+    []
+  )
+  return (
+    <View
+      style={{
+        marginTop: 70,
+        justifyContent: "center",
+        alignItems: "flex-end",
+      }}
+    >
+      <Button
+        title="Тест кнопка"
+        onPress={() => {
+          // Navigate using the `navigation` prop that you received
+          // navigation.navigate("")
+          alert("Привет тебе человек!:)")
+        }}
+      />
+    </View>
+  )
+}
+
 export function DraweAnleger() {
   return (
     <Drawer.Navigator
       // defaultStatus="open"
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         drawerPosition: "right",
         drawerStyle: {

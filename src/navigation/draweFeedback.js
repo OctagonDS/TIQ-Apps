@@ -21,6 +21,13 @@ import { createDrawerNavigator } from "@react-navigation/drawer"
 const Drawer = createDrawerNavigator()
 
 function CustomDrawerContent({ navigation }) {
+  React.useEffect(
+    () =>
+      navigation.addListener("blur", () =>
+        navigation.dispatch(DrawerActions.closeDrawer())
+      ),
+    []
+  )
   return (
     <View
       style={{
@@ -33,7 +40,8 @@ function CustomDrawerContent({ navigation }) {
         title="Тест кнопка"
         onPress={() => {
           // Navigate using the `navigation` prop that you received
-          navigation.navigate("")
+          // navigation.navigate("")
+          alert("Привет тебе человек!:)")
         }}
       />
     </View>

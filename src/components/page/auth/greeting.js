@@ -26,7 +26,7 @@ const ratio = win.width / 541
 export const Greeting = (props) => {
   return (
     <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
-      <View style={gStyle.main}>
+      <View style={[gStyle.main, { justifyContent: "center" }]}>
         <View style={styles.logo}>
           <Image
             source={logoTIQ}
@@ -99,11 +99,8 @@ export const Greeting = (props) => {
 
 const styles = StyleSheet.create({
   logo: {
-    marginTop: "20%",
     alignItems: "center",
     marginBottom: "5%",
-
-    // padding: 20,
   },
   block: {
     alignItems: "center",

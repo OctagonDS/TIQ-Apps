@@ -7,10 +7,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 function HomeScreen({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Button
-        title="Продукт"
-        onPress={() => navigation.navigate("Продукт22")}
-      />
+      <Button title="Продукт" onPress={() => navigation.navigate("Product")} />
     </View>
   )
 }
@@ -18,7 +15,7 @@ function HomeScreen({ navigation }) {
 function SettingsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Settings!</Text>
+      <Text>Настройки!</Text>
     </View>
   )
 }
@@ -28,8 +25,8 @@ const Tab = createMaterialTopTabNavigator()
 export function Courses() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Вкладка 1" component={HomeScreen} />
-      <Tab.Screen name="Вкладка 2" component={SettingsScreen} />
+      <Tab.Screen name="Бесплатные курсы" component={HomeScreen} />
+      <Tab.Screen name="Платные курсы" component={SettingsScreen} />
     </Tab.Navigator>
   )
 }

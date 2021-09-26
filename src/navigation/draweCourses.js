@@ -12,6 +12,7 @@ import { DrawerActions, useNavigation } from "@react-navigation/native"
 
 import { IconBurger } from "../components/atoms/iconBurger"
 import { IconSearch } from "../components/atoms/iconSearch"
+import { IconRef } from "../components/atoms/iconRef"
 
 import { Courses } from "../components/page/courses"
 import { createDrawerNavigator } from "@react-navigation/drawer"
@@ -69,11 +70,20 @@ export function DraweCourses() {
           const navigation = useNavigation()
 
           return (
-            <TouchableOpacity
-              onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-            >
-              <IconBurger style={{ marginRight: 10 }} />
-            </TouchableOpacity>
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity
+                onPress={() => alert("Ты поделись ссылкой своей!")}
+              >
+                <IconRef style={{ marginRight: 10 }} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.dispatch(DrawerActions.toggleDrawer())
+                }
+              >
+                <IconBurger style={{ marginRight: 10 }} />
+              </TouchableOpacity>
+            </View>
           )
         },
       }}

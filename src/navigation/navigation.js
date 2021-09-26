@@ -1,28 +1,13 @@
 import React from "react"
-import {
-  View,
-  Text,
-  StyleSheet,
-  Platform,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native"
-
-import { Productpage } from "../components/page/product"
+import { Platform } from "react-native"
 
 import { createStackNavigator } from "@react-navigation/stack"
-import {
-  NavigationContainer,
-  DrawerActions,
-  useNavigation,
-} from "@react-navigation/native"
+import { NavigationContainer } from "@react-navigation/native"
 
-import { IconSearch } from "../components/atoms/iconSearch"
 import { IconCourses } from "../components/atoms/iconCurses"
 import { IconMentor } from "../components/atoms/iconMentor"
 import { Iconfeedback } from "../components/atoms/iconFeedback"
 import { IconAnleger } from "../components/atoms/iconAnleger"
-import { IconBurger } from "../components/atoms/iconBurger"
 import { IconNot } from "../components/atoms/iconNotifications"
 
 import { DraweNotifications } from "./draweNotifications"
@@ -30,6 +15,7 @@ import { DraweMentor } from "./draweMentor"
 import { DraweFeedback } from "./draweFeedback"
 import { DraweCourses } from "./draweCourses"
 import { DraweAnleger } from "./draweAnlegerclub"
+import { Greeting } from "../components/page/auth/greeting"
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { LinearGradient } from "expo-linear-gradient"
@@ -48,6 +34,11 @@ function StackNav() {
       <Stack.Screen
         name="Home"
         component={MyTabs}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Greeting"
+        component={Greeting}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

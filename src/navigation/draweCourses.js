@@ -15,7 +15,7 @@ import { IconSearch } from "../components/atoms/iconSearch"
 import { IconRef } from "../components/atoms/iconRef"
 
 import { Courses } from "../components/page/courses"
-import { Productpage } from "../components/page/product"
+import { Productpage } from "../components/page/child/product"
 
 import { createDrawerNavigator } from "@react-navigation/drawer"
 

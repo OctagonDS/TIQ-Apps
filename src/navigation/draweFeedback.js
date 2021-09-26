@@ -11,7 +11,7 @@ import {
 } from "react-native"
 import { DrawerActions, useNavigation } from "@react-navigation/native"
 
-import { Productpage } from "../components/page/product"
+import { Productpage } from "../components/page/child/product"
 
 import { IconBurger } from "../components/atoms/iconBurger"
 import { IconSearch } from "../components/atoms/iconSearch"

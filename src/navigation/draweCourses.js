@@ -15,6 +15,8 @@ import { IconSearch } from "../components/atoms/iconSearch"
 import { IconRef } from "../components/atoms/iconRef"
 
 import { Courses } from "../components/page/courses"
+import { Productpage } from "../components/page/product"
+
 import { createDrawerNavigator } from "@react-navigation/drawer"
 
 const Drawer = createDrawerNavigator()
@@ -93,6 +95,13 @@ export function DraweCourses() {
         component={Courses}
         options={{
           title: "Курсы",
+        }}
+      />
+      <Drawer.Screen
+        name="Product"
+        component={Productpage}
+        options={{
+          title: "Продукт",
         }}
       />
     </Drawer.Navigator>

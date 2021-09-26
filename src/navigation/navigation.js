@@ -116,6 +116,7 @@ function MyTabs() {
         options={{
           tabBarLabel: "Уведомления",
           tabBarBadge: 3,
+          tabBarBadgeStyle: { marginTop: 10 },
           tabBarIcon: ({ focused }) => <IconNot focused={focused} />,
         }}
       />

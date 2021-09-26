@@ -16,6 +16,9 @@ import { DraweFeedback } from "./draweFeedback"
 import { DraweCourses } from "./draweCourses"
 import { DraweAnleger } from "./draweAnlegerclub"
 import { Greeting } from "../components/page/auth/greeting"
+import { FotgetPass } from "../components/page/auth/forgetPassword"
+import { SignIn } from "../components/page/auth/signIn"
+import { SignUp } from "../components/page/auth/signUp"
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { LinearGradient } from "expo-linear-gradient"
@@ -39,6 +42,21 @@ function StackNav() {
       <Stack.Screen
         name="Greeting"
         component={Greeting}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SignIn"
+        component={SignIn}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="FotgetPass"
+        component={FotgetPass}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

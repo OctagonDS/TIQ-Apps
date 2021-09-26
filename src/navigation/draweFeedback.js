@@ -59,6 +59,7 @@ export function DraweFeedback({ navigation }) {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         drawerPosition: "right",
+        drawerType: "slide",
         drawerStyle: {
           backgroundImg: "#c6cbef",
           width: "80%",

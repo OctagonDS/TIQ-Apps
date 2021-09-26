@@ -1,7 +1,10 @@
 import React from "react"
 import { Platform } from "react-native"
 
-import { createStackNavigator } from "@react-navigation/stack"
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from "@react-navigation/stack"
 import { NavigationContainer } from "@react-navigation/native"
 
 import { IconCourses } from "../components/atoms/iconCurses"
@@ -37,27 +40,41 @@ function StackNav() {
       <Stack.Screen
         name="Home"
         component={MyTabs}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name="Greeting"
         component={Greeting}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
       />
       <Stack.Screen
         name="SignIn"
         component={SignIn}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
       />
       <Stack.Screen
         name="SignUp"
         component={SignUp}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
       />
       <Stack.Screen
         name="FotgetPass"
         component={FotgetPass}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
       />
     </Stack.Navigator>
   )

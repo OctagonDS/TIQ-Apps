@@ -3,17 +3,16 @@ import React from "react"
 import {
   View,
   Text,
-  ScrollView,
   StyleSheet,
-  Platform,
   ImageBackground,
   Image,
-  Button,
   TouchableOpacity,
   Dimensions,
+  SafeAreaView,
 } from "react-native"
 import { gStyle } from "../../../styles/style"
 import * as WebBrowser from "expo-web-browser"
+import { LinearGradient } from "expo-linear-gradient"
 
 const image = require("../../../assets/img/grey-geo.png")
 const logoTIQ = require("../../../assets/img/logo-tiq.png")
@@ -23,7 +22,18 @@ const topE = require("../../../assets/img/TOP-E2021.png")
 const win = Dimensions.get("window")
 const ratio = win.width / 541
 
-export const Greeting = (props) => {
+const GradientBtn = ({ name }) => (
+  <LinearGradient
+    colors={["#FF741F", "#E86312"]}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={{ flex: 1, borderRadius: 5, justifyContent: "center" }}
+  >
+    <Text style={styles.submitTextLog}>{name}</Text>
+  </LinearGradient>
+)
+
+export const Greeting = ({ navigation }) => {
   return (
     <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
       <View style={[gStyle.main, { justifyContent: "center" }]}>
@@ -36,18 +46,14 @@ export const Greeting = (props) => {
         </View>
         <View style={styles.block}>
           <TouchableOpacity
-            style={styles.submitLog}
-            onPress={() => {
-              alert("Привет2")
-            }}
+            style={styles.wrapper}
+            onPress={() => navigation.navigate("SignIn")}
           >
-            <Text style={styles.submitTextLog}>Log-In</Text>
+            <GradientBtn name="Log-In" />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.submitReg}
-            onPress={() => {
-              alert("Привет")
-            }}
+            onPress={() => navigation.navigate("SignUp")}
           >
             <Text style={styles.submitTextReg}>Registrieren</Text>
           </TouchableOpacity>
@@ -105,15 +111,9 @@ const styles = StyleSheet.create({
   block: {
     alignItems: "center",
   },
-  submitLog: {
-    marginRight: 40,
-    marginLeft: 40,
-    marginTop: 10,
-    paddingTop: 20,
-    paddingBottom: 20,
-    borderRadius: 5,
-    backgroundColor: "#FF741F",
+  wrapper: {
     width: "70%",
+    height: 68,
   },
   submitTextLog: {
     color: "#fff",
@@ -122,15 +122,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   submitReg: {
-    marginRight: 40,
-    marginLeft: 40,
     marginTop: 10,
-    paddingTop: 20,
-    paddingBottom: 20,
     borderRadius: 5,
     borderWidth: 2,
     borderColor: "#FF741F",
     width: "70%",
+    height: 68,
+    justifyContent: "center",
   },
   submitTextReg: {
     color: "#000",

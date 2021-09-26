@@ -7,7 +7,7 @@ export const FotgetPass = (props) => {
   return (
     <View style={gStyle.main}>
       <ScrollView>
-        <Text style={gStyle.title}>Страница менторы</Text>
+        <Text style={gStyle.title}>Забыл пароль</Text>
       </ScrollView>
     </View>
   )

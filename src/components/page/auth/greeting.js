@@ -41,7 +41,7 @@ export const Greeting = (props) => {
               alert("Привет2")
             }}
           >
-            <Text style={styles.submitTextLog}>Войти</Text>
+            <Text style={styles.submitTextLog}>Log-In</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.submitReg}
@@ -49,7 +49,7 @@ export const Greeting = (props) => {
               alert("Привет")
             }}
           >
-            <Text style={styles.submitTextReg}>Регистрация</Text>
+            <Text style={styles.submitTextReg}>Registrieren</Text>
           </TouchableOpacity>
           <Text style={[styles.text, { marginTop: "10%" }]}>
             Mit Ihrer Anmeldung akzeptieren Sie unsere{" "}
@@ -59,7 +59,7 @@ export const Greeting = (props) => {
             >
               AGB’s
             </Text>{" "}
-            sowie unsere
+            sowie unsere{" "}
             <Text
               style={{ color: "#FF741F" }}
               onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   text: {
-    width: "70%",
+    width: "80%",
     fontFamily: "ub-medium",
     fontSize: 15,
     textAlign: "center",

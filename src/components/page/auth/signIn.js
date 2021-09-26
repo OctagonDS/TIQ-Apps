@@ -21,6 +21,21 @@ export const SignIn = ({ navigation: { goBack } }) => {
           <ArrowLeft style={styles.arrow} />
         </TouchableOpacity>
         <Text style={styles.title}>Anmelden</Text>
+        <View style={{ marginTop: "8%" }}>
+          <TextInput style={styles.input} />
+        </View>
+        <View style={{ marginTop: "8%" }}>
+          <Text style={styles.label}>
+            Passwort <Text style={{ color: "#DA1414" }}>*</Text>
+          </Text>
+          <TextInput
+            style={styles.input}
+            secureTextEntry={true}
+            autoCorrect={false}
+            autoCapitalize="none"
+            autoCompleteType="off"
+          />
+        </View>
       </View>
     </ImageBackground>
   )
@@ -31,6 +46,18 @@ export const styles = StyleSheet.create({
     marginLeft: "8%",
     marginTop: "15%",
     marginBottom: "10%",
+  },
+  label: {
+    color: "#FF741F",
+    backgroundColor: "#fff",
+    width: "15%",
+    borderRadius: 4,
+    position: "absolute",
+    zIndex: 1,
+    paddingLeft: 5,
+    marginLeft: "10%",
+    marginTop: -5,
+    fontFamily: "ub-medium",
   },
   block: {
     alignItems: "center",
@@ -51,5 +78,16 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     letterSpacing: 2,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#FF741F",
+    width: "86%",
+    marginLeft: "7%",
+    borderRadius: 5,
+    height: 60,
+    backgroundColor: "#fff",
+    fontSize: 21,
+    paddingLeft: "2%",
   },
 })

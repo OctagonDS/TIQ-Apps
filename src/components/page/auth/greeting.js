@@ -51,7 +51,7 @@ export const Greeting = (props) => {
           >
             <Text style={styles.submitTextReg}>Регистрация</Text>
           </TouchableOpacity>
-          <Text style={styles.text}>
+          <Text style={[styles.text, { marginTop: "10%" }]}>
             Mit Ihrer Anmeldung akzeptieren Sie unsere{" "}
             <Text
               style={{ color: "#FF741F" }}
@@ -67,7 +67,7 @@ export const Greeting = (props) => {
               Datenschutz
             </Text>
           </Text>
-          <Text style={[styles.text, { marginTop: 20 }]}>
+          <Text style={[styles.text, { marginTop: 20, marginBottom: 10 }]}>
             Laut{" "}
             <Text
               style={{ color: "#FF741F" }}

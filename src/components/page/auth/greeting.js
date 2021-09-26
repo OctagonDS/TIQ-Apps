@@ -10,11 +10,14 @@ import {
   Image,
   Button,
   TouchableOpacity,
+  Dimensions,
 } from "react-native"
 import { gStyle } from "../../../styles/style"
 
 const image = require("../../../assets/img/grey-geo.png")
 const logoTIQ = require("../../../assets/img/logo-tiq.png")
+const win = Dimensions.get("window")
+const ratio = win.width / 541
 
 export const Greeting = (props) => {
   return (
@@ -23,7 +26,7 @@ export const Greeting = (props) => {
         <View style={styles.logo}>
           <Image
             source={logoTIQ}
-            style={{ width: "90%" }}
+            style={{ width: "90%", height: 180 * ratio }}
             resizeMode="contain"
           />
         </View>
@@ -59,7 +62,7 @@ export const Greeting = (props) => {
 
 const styles = StyleSheet.create({
   logo: {
-    marginTop: "30%",
+    marginTop: "20%",
     alignItems: "center",
     marginBottom: "5%",
 

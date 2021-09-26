@@ -13,9 +13,13 @@ import {
   Dimensions,
 } from "react-native"
 import { gStyle } from "../../../styles/style"
+import * as WebBrowser from "expo-web-browser"
 
 const image = require("../../../assets/img/grey-geo.png")
 const logoTIQ = require("../../../assets/img/logo-tiq.png")
+const topD = require("../../../assets/img/TOP-D2021.png")
+const topE = require("../../../assets/img/TOP-E2021.png")
+
 const win = Dimensions.get("window")
 const ratio = win.width / 541
 
@@ -48,12 +52,45 @@ export const Greeting = (props) => {
             <Text style={styles.submitTextReg}>Регистрация</Text>
           </TouchableOpacity>
           <Text style={styles.text}>
-            Mit Ihrer Anmeldung akzeptieren Sie unsere AGB’s sowie unsere
-            Datenschutz
+            Mit Ihrer Anmeldung akzeptieren Sie unsere{" "}
+            <Text
+              style={{ color: "#FF741F" }}
+              onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
+            >
+              AGB’s
+            </Text>{" "}
+            sowie unsere
+            <Text
+              style={{ color: "#FF741F" }}
+              onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
+            >
+              Datenschutz
+            </Text>
           </Text>
           <Text style={[styles.text, { marginTop: 20 }]}>
-            Laut Provenexpert
+            Laut{" "}
+            <Text
+              style={{ color: "#FF741F" }}
+              onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
+            >
+              Provenexpert
+            </Text>
           </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <Image
+              source={topD}
+              style={{ width: 122, height: 64, marginRight: "3%" }}
+            />
+            <Image
+              source={topE}
+              style={{ width: 122, height: 64, marginLeft: "3%" }}
+            />
+          </View>
         </View>
       </View>
     </ImageBackground>

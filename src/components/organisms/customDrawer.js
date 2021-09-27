@@ -10,6 +10,7 @@ import {
 
 const image = require("../../assets/img/black-geo.png")
 let avatar = require("../../assets/img/ilon.jpg")
+let UserName = "UserName222ws"
 
 export function CustomDrawer() {
   return (
@@ -18,7 +19,7 @@ export function CustomDrawer() {
         style={{
           flexDirection: "row",
           justifyContent: "flex-end",
-          height: 140,
+          height: "19%",
           alignItems: "center",
           borderBottomColor: "#DADADA",
           borderBottomWidth: 1,
@@ -56,11 +57,11 @@ export function CustomDrawer() {
             marginLeft: "10%",
             marginRight: "5%",
             fontFamily: "ub-medium",
-            fontSize: 24,
+            fontSize: 20,
             color: "#FF741F",
           }}
         >
-          UserName
+          {UserName}
         </Text>
       </View>
       <View

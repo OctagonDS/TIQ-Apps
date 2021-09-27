@@ -81,7 +81,7 @@ export const styles = StyleSheet.create({
   arrow: {
     marginLeft: "8%",
     // alignItems: "flex-start",
-    marginTop: "-20%",
+    marginBottom: "20%",
     // position: "absolute",
   },
   label: {

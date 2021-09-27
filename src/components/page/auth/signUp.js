@@ -7,6 +7,8 @@ import {
   ImageBackground,
   TouchableOpacity,
   TextInput,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native"
 import { gStyle } from "../../../styles/style"
 import { ArrowLeft } from "../../atoms/arrowLeft"
@@ -27,73 +29,75 @@ const GradientBtn = ({ name }) => (
 
 export const SignUp = ({ navigation: { goBack }, navigation }) => {
   return (
-    <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
-      <View style={[gStyle.main, { justifyContent: "center" }]}>
-        <TouchableOpacity onPress={() => goBack()}>
-          <ArrowLeft style={styles.arrow} />
-        </TouchableOpacity>
-        <Text style={styles.title}>Registrieren</Text>
-        <View style={{ marginTop: "8%" }}>
-          <View style={styles.labelmail}>
-            <Text style={{ color: "#FF741F" }}>
-              Email <Text style={{ color: "#DA1414" }}>*</Text>
-            </Text>
-          </View>
-          <TextInput
-            style={styles.input}
-            autoCapitalize="none"
-            autoCompleteType="off"
-            autoCorrect={false}
-            keyboardType="email-address"
-          />
-        </View>
-        <View style={{ marginTop: "8%" }}>
-          <View style={styles.labelB}>
-            <Text style={{ color: "#FF741F" }}>
-              Benutzername <Text style={{ color: "#DA1414" }}>*</Text>
-            </Text>
-          </View>
-          <TextInput
-            style={styles.input}
-            secureTextEntry={true}
-            autoCorrect={false}
-            autoCapitalize="none"
-            autoCompleteType="off"
-          />
-        </View>
-        <View style={{ marginTop: "8%" }}>
-          <View style={styles.label}>
-            <Text style={{ color: "#FF741F" }}>
-              Passwort <Text style={{ color: "#DA1414" }}>*</Text>
-            </Text>
-          </View>
-          <TextInput
-            style={styles.input}
-            secureTextEntry={true}
-            autoCorrect={false}
-            autoCapitalize="none"
-            autoCompleteType="off"
-          />
-        </View>
-        <View style={styles.block}>
-          <TouchableOpacity
-            style={styles.wrapper}
-            onPress={() => navigation.navigate("SignUp")}
-          >
-            <GradientBtn name="Registrieren" />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
+        <View style={[gStyle.main, { justifyContent: "center" }]}>
+          <TouchableOpacity onPress={() => goBack()}>
+            <ArrowLeft style={styles.arrow} />
           </TouchableOpacity>
+          <Text style={styles.title}>Registrieren</Text>
+          <View style={{ marginTop: "8%" }}>
+            <View style={styles.labelmail}>
+              <Text style={{ color: "#FF741F" }}>
+                Email <Text style={{ color: "#DA1414" }}>*</Text>
+              </Text>
+            </View>
+            <TextInput
+              style={styles.input}
+              autoCapitalize="none"
+              autoCompleteType="off"
+              autoCorrect={false}
+              keyboardType="email-address"
+            />
+          </View>
+          <View style={{ marginTop: "8%" }}>
+            <View style={styles.labelB}>
+              <Text style={{ color: "#FF741F" }}>
+                Benutzername <Text style={{ color: "#DA1414" }}>*</Text>
+              </Text>
+            </View>
+            <TextInput
+              style={styles.input}
+              secureTextEntry={true}
+              autoCorrect={false}
+              autoCapitalize="none"
+              autoCompleteType="off"
+            />
+          </View>
+          <View style={{ marginTop: "8%" }}>
+            <View style={styles.label}>
+              <Text style={{ color: "#FF741F" }}>
+                Passwort <Text style={{ color: "#DA1414" }}>*</Text>
+              </Text>
+            </View>
+            <TextInput
+              style={styles.input}
+              secureTextEntry={true}
+              autoCorrect={false}
+              autoCapitalize="none"
+              autoCompleteType="off"
+            />
+          </View>
+          <View style={styles.block}>
+            <TouchableOpacity
+              style={styles.wrapper}
+              onPress={() => navigation.navigate("SuccessReg")}
+            >
+              <GradientBtn name="Registrieren" />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </ImageBackground>
+      </ImageBackground>
+    </KeyboardAvoidingView>
   )
 }
 
 export const styles = StyleSheet.create({
   arrow: {
     marginLeft: "8%",
-    // alignItems: "flex-start",
-    marginBottom: "20%",
-    // position: "absolute",
   },
   label: {
     backgroundColor: "#fff",
@@ -158,6 +162,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     letterSpacing: 2,
+    marginTop: "7%",
   },
   input: {
     borderWidth: 1,

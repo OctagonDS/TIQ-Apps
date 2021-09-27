@@ -22,6 +22,7 @@ import { Greeting } from "../components/page/auth/greeting"
 import { FotgetPass } from "../components/page/auth/forgetPassword"
 import { SignIn } from "../components/page/auth/signIn"
 import { SignUp } from "../components/page/auth/signUp"
+import { SuccessReg } from "../components/page/auth/successReg"
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { LinearGradient } from "expo-linear-gradient"
@@ -71,6 +72,14 @@ function StackNav() {
       <Stack.Screen
         name="FotgetPass"
         component={FotgetPass}
+        options={{
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="SuccessReg"
+        component={SuccessReg}
         options={{
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,

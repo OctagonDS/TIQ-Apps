@@ -34,8 +34,8 @@ export const SuccessReg = ({ navigation: { goBack }, navigation }) => {
       style={{ flex: 1 }}
     >
       <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
-        <TouchableOpacity onPress={() => goBack()}>
-          <ArrowLeft style={styles.arrow} />
+        <TouchableOpacity onPress={() => goBack()} style={styles.arrow}>
+          <ArrowLeft />
         </TouchableOpacity>
         <View style={[gStyle.main, { justifyContent: "center" }]}>
           <Text style={styles.title}>Registrieren</Text>
@@ -55,6 +55,7 @@ export const styles = StyleSheet.create({
   arrow: {
     marginLeft: "8%",
     marginTop: "20%",
+    position: "absolute",
   },
   block: {
     alignItems: "center",

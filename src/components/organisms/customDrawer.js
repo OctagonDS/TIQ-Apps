@@ -9,7 +9,7 @@ import {
 } from "react-native"
 
 const image = require("../../assets/img/black-geo.png")
-let avatar = require("../../assets/img/ilon.jpg")
+let avatar = require("../../assets/img/avatar2.jpg")
 let UserName = "UserName222ws"
 
 export function CustomDrawer() {
@@ -17,57 +17,65 @@ export function CustomDrawer() {
     <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
       <View
         style={{
-          flexDirection: "row",
           justifyContent: "flex-end",
-          height: "19%",
-          alignItems: "center",
+          height: "17%",
+          alignItems: "flex-end",
           borderBottomColor: "#DADADA",
           borderBottomWidth: 1,
         }}
       >
         <View
           style={{
-            width: 66,
-            height: 66,
-            borderRadius: 100,
-            backgroundColor: "#fff",
-            justifyContent: "center",
             alignItems: "center",
+            flexDirection: "row",
+            marginBottom: 20,
           }}
         >
           <View
             style={{
-              overflow: "hidden",
+              width: 66,
+              height: 66,
               borderRadius: 100,
-              width: 65,
-              height: 65,
               backgroundColor: "#fff",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <Image
-              source={avatar}
-              style={{ width: 65, height: 65 }}
-              resizeMode="cover"
-            />
+            <View
+              style={{
+                overflow: "hidden",
+                borderRadius: 100,
+                width: 65,
+                height: 65,
+                backgroundColor: "#fff",
+              }}
+            >
+              <Image
+                source={avatar}
+                style={{ width: 65, height: 65 }}
+                resizeMode="cover"
+              />
+            </View>
           </View>
+          <Text
+            style={{
+              // alignSelf: "center",
+              marginLeft: "10%",
+              marginRight: "5%",
+              fontFamily: "ub-medium",
+              fontSize: 20,
+              color: "#FF741F",
+            }}
+          >
+            {UserName}
+          </Text>
         </View>
-        <Text
-          style={{
-            alignSelf: "center",
-            marginLeft: "10%",
-            marginRight: "5%",
-            fontFamily: "ub-medium",
-            fontSize: 20,
-            color: "#FF741F",
-          }}
-        >
-          {UserName}
-        </Text>
       </View>
       <View
         style={{
-          justifyContent: "center",
+          // justifyContent: "center",
           alignItems: "flex-end",
+          marginRight: "5%",
         }}
       >
         <Button

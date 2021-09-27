@@ -25,7 +25,7 @@ const GradientBtn = ({ name }) => (
   </LinearGradient>
 )
 
-export const SignIn = ({ navigation: { goBack } }) => {
+export const SignIn = ({ navigation: { goBack }, navigation }) => {
   return (
     <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
       <View style={[gStyle.main, { justifyContent: "center" }]}>
@@ -68,7 +68,9 @@ export const SignIn = ({ navigation: { goBack } }) => {
           >
             <GradientBtn name="Log-In" />
           </TouchableOpacity>
-          <Text style={styles.forget}>Passwort vergessen?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate("FotgetPass")}>
+            <Text style={styles.forget}>Passwort vergessen?</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ImageBackground>
@@ -78,7 +80,7 @@ export const SignIn = ({ navigation: { goBack } }) => {
 export const styles = StyleSheet.create({
   arrow: {
     marginLeft: "8%",
-    marginTop: -30,
+    // marginTop: -30,
     marginBottom: "10%",
   },
   label: {
@@ -94,7 +96,6 @@ export const styles = StyleSheet.create({
     fontFamily: "ub-medium",
   },
   labelmail: {
-    color: "#FF741F",
     backgroundColor: "#fff",
     width: "15%",
     height: 15,

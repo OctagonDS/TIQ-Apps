@@ -32,7 +32,7 @@ export const SignUp = ({ navigation: { goBack }, navigation }) => {
         <TouchableOpacity onPress={() => goBack()}>
           <ArrowLeft style={styles.arrow} />
         </TouchableOpacity>
-        <Text style={styles.title}>Anmelden</Text>
+        <Text style={styles.title}>Registrieren</Text>
         <View style={{ marginTop: "8%" }}>
           <View style={styles.labelmail}>
             <Text style={{ color: "#FF741F" }}>
@@ -78,9 +78,9 @@ export const SignUp = ({ navigation: { goBack }, navigation }) => {
         <View style={styles.block}>
           <TouchableOpacity
             style={styles.wrapper}
-            onPress={() => navigation.navigate("SignIn")}
+            onPress={() => navigation.navigate("SignUp")}
           >
-            <GradientBtn name="Log-In" />
+            <GradientBtn name="Registrieren" />
           </TouchableOpacity>
         </View>
       </View>

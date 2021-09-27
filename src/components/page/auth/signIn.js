@@ -87,7 +87,7 @@ export const SignIn = ({ navigation: { goBack }, navigation }) => {
 export const styles = StyleSheet.create({
   arrow: {
     marginLeft: "8%",
-    marginTop: "20%",
+    marginTop: "10%",
     position: "absolute",
   },
   label: {

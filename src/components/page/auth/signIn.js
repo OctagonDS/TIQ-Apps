@@ -10,8 +10,20 @@ import {
 } from "react-native"
 import { gStyle } from "../../../styles/style"
 import { ArrowLeft } from "../../atoms/arrowLeft"
+import { LinearGradient } from "expo-linear-gradient"
 
 const image = require("../../../assets/img/black-geo.png")
+
+const GradientBtn = ({ name }) => (
+  <LinearGradient
+    colors={["#FF741F", "#E86312"]}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={{ flex: 1, borderRadius: 5, justifyContent: "center" }}
+  >
+    <Text style={styles.submitTextLog}>{name}</Text>
+  </LinearGradient>
+)
 
 export const SignIn = ({ navigation: { goBack } }) => {
   return (
@@ -22,7 +34,16 @@ export const SignIn = ({ navigation: { goBack } }) => {
         </TouchableOpacity>
         <Text style={styles.title}>Anmelden</Text>
         <View style={{ marginTop: "8%" }}>
-          <TextInput style={styles.input} />
+          <Text style={styles.labelmail}>
+            Email <Text style={{ color: "#DA1414" }}>*</Text>
+          </Text>
+          <TextInput
+            style={styles.input}
+            autoCapitalize="none"
+            autoCompleteType="off"
+            autoCorrect={false}
+            keyboardType="email-address"
+          />
         </View>
         <View style={{ marginTop: "8%" }}>
           <Text style={styles.label}>
@@ -36,6 +57,15 @@ export const SignIn = ({ navigation: { goBack } }) => {
             autoCompleteType="off"
           />
         </View>
+        <View style={styles.block}>
+          <TouchableOpacity
+            style={styles.wrapper}
+            onPress={() => navigation.navigate("SignIn")}
+          >
+            <GradientBtn name="Log-In" />
+          </TouchableOpacity>
+          <Text style={styles.forget}>Passwort vergessen?</Text>
+        </View>
       </View>
     </ImageBackground>
   )
@@ -44,13 +74,27 @@ export const SignIn = ({ navigation: { goBack } }) => {
 export const styles = StyleSheet.create({
   arrow: {
     marginLeft: "8%",
-    marginTop: "15%",
+    // marginTop: "10%",
     marginBottom: "10%",
   },
   label: {
     color: "#FF741F",
     backgroundColor: "#fff",
-    width: "15%",
+    width: 30,
+    borderRadius: 4,
+    position: "absolute",
+    height: 15,
+    zIndex: 1,
+    paddingLeft: 5,
+    marginLeft: "10%",
+    marginTop: -5,
+    fontFamily: "ub-medium",
+  },
+  labelmail: {
+    color: "#FF741F",
+    backgroundColor: "#fff",
+    width: 15,
+    height: 15,
     borderRadius: 4,
     position: "absolute",
     zIndex: 1,
@@ -61,6 +105,7 @@ export const styles = StyleSheet.create({
   },
   block: {
     alignItems: "center",
+    marginTop: "10%",
   },
   wrapper: {
     width: "70%",
@@ -71,6 +116,13 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "ub-medium",
     fontSize: 24,
+  },
+  forget: {
+    color: "#fff",
+    textAlign: "center",
+    fontFamily: "ub-medium",
+    fontSize: 15,
+    marginTop: "5%",
   },
   title: {
     fontSize: 40,

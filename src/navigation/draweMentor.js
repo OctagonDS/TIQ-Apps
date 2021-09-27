@@ -9,9 +9,11 @@ import {
   TouchableOpacity,
 } from "react-native"
 import { DrawerActions, useNavigation } from "@react-navigation/native"
+import { CustomDrawer } from "../components/organisms/customDrawer"
 
 import { IconBurger } from "../components/atoms/iconBurger"
 import { IconSearch } from "../components/atoms/iconSearch"
+import { IconRef } from "../components/atoms/iconRef"
 
 import { Mentor } from "../components/page/mentor"
 import { createDrawerNavigator } from "@react-navigation/drawer"
@@ -26,28 +28,8 @@ function CustomDrawerContent({ navigation }) {
       ),
     []
   )
-  const image = require("../assets/img/black-geo.png")
 
-  return (
-    <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
-      <View
-        style={{
-          marginTop: 70,
-          justifyContent: "center",
-          alignItems: "flex-end",
-        }}
-      >
-        <Button
-          title="Тест кнопка"
-          onPress={() => {
-            // Navigate using the `navigation` prop that you received
-            // navigation.navigate("")
-            alert("Привет тебе человек!:)")
-          }}
-        />
-      </View>
-    </ImageBackground>
-  )
+  return <CustomDrawer />
 }
 
 export function DraweMentor() {
@@ -70,11 +52,20 @@ export function DraweMentor() {
           const navigation = useNavigation()
 
           return (
-            <TouchableOpacity
-              onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-            >
-              <IconBurger style={{ marginRight: 10 }} />
-            </TouchableOpacity>
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity
+                onPress={() => alert("Ты поделись ссылкой своей!")}
+              >
+                <IconRef style={{ marginRight: 10 }} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.dispatch(DrawerActions.toggleDrawer())
+                }
+              >
+                <IconBurger style={{ marginRight: 10 }} />
+              </TouchableOpacity>
+            </View>
           )
         },
       }}

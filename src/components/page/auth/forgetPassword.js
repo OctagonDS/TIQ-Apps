@@ -54,10 +54,10 @@ export const ForgetPass = ({ navigation: { goBack }, navigation }) => {
             </View>
             <TextInput
               style={styles.input}
-              secureTextEntry={true}
-              autoCorrect={false}
               autoCapitalize="none"
               autoCompleteType="off"
+              autoCorrect={false}
+              keyboardType="email-address"
             />
           </View>
           <View style={styles.block}>
@@ -107,14 +107,6 @@ export const styles = StyleSheet.create({
     fontFamily: "ub-medium",
     fontSize: 24,
   },
-  title: {
-    fontSize: 40,
-    fontFamily: "ub-medium",
-    textAlign: "center",
-    color: "#fff",
-    letterSpacing: 2,
-    marginTop: "28%",
-  },
   input: {
     borderWidth: 1,
     borderColor: "#FF741F",
@@ -128,7 +120,7 @@ export const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    fontFamily: "ub-medium",
+    fontFamily: "ub-light",
     color: "#fff",
     letterSpacing: 2,
     marginTop: "28%",

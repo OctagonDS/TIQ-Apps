@@ -58,14 +58,11 @@ export const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 1,
   },
-  block: {
-    alignItems: "center",
-  },
   textBlock: { marginTop: "10%", width: "90%", marginLeft: "5%" },
   text: {
     color: "#fff",
     textAlign: "center",
-    fontFamily: "ub-medium",
+    fontFamily: "ub-light",
     fontSize: 16,
   },
   title: {

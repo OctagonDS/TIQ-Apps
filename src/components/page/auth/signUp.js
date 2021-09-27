@@ -61,10 +61,10 @@ export const SignUp = ({ navigation: { goBack }, navigation }) => {
             </View>
             <TextInput
               style={styles.input}
-              secureTextEntry={true}
-              autoCorrect={false}
               autoCapitalize="none"
               autoCompleteType="off"
+              autoCorrect={false}
+              keyboardType="default"
             />
           </View>
           <View style={{ marginTop: "8%" }}>
@@ -151,13 +151,6 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "ub-medium",
     fontSize: 24,
-  },
-  forget: {
-    color: "#fff",
-    textAlign: "center",
-    fontFamily: "ub-medium",
-    fontSize: 15,
-    marginTop: "5%",
   },
   title: {
     fontSize: 40,

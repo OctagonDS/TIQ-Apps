@@ -34,9 +34,11 @@ export const SignIn = ({ navigation: { goBack } }) => {
         </TouchableOpacity>
         <Text style={styles.title}>Anmelden</Text>
         <View style={{ marginTop: "8%" }}>
-          <Text style={styles.labelmail}>
-            Email <Text style={{ color: "#DA1414" }}>*</Text>
-          </Text>
+          <View style={styles.labelmail}>
+            <Text style={{ color: "#FF741F" }}>
+              Email <Text style={{ color: "#DA1414" }}>*</Text>
+            </Text>
+          </View>
           <TextInput
             style={styles.input}
             autoCapitalize="none"
@@ -46,9 +48,11 @@ export const SignIn = ({ navigation: { goBack } }) => {
           />
         </View>
         <View style={{ marginTop: "8%" }}>
-          <Text style={styles.label}>
-            Passwort <Text style={{ color: "#DA1414" }}>*</Text>
-          </Text>
+          <View style={styles.label}>
+            <Text style={{ color: "#FF741F" }}>
+              Passwort <Text style={{ color: "#DA1414" }}>*</Text>
+            </Text>
+          </View>
           <TextInput
             style={styles.input}
             secureTextEntry={true}
@@ -78,9 +82,8 @@ export const styles = StyleSheet.create({
     marginBottom: "10%",
   },
   label: {
-    color: "#FF741F",
     backgroundColor: "#fff",
-    width: "25%",
+    width: "20%",
     borderRadius: 4,
     position: "absolute",
     height: 15,
@@ -93,7 +96,7 @@ export const styles = StyleSheet.create({
   labelmail: {
     color: "#FF741F",
     backgroundColor: "#fff",
-    width: "16%",
+    width: "15%",
     height: 15,
     borderRadius: 4,
     position: "absolute",

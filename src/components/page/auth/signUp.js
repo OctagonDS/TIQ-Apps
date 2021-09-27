@@ -162,7 +162,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     letterSpacing: 2,
-    marginTop: "7%",
+    marginTop: "15%",
   },
   input: {
     borderWidth: 1,

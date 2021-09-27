@@ -139,7 +139,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     letterSpacing: 2,
-    marginTop: "20%",
+    marginTop: "28%",
   },
   input: {
     borderWidth: 1,

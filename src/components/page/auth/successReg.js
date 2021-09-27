@@ -54,7 +54,7 @@ export const SuccessReg = ({ navigation: { goBack }, navigation }) => {
 export const styles = StyleSheet.create({
   arrow: {
     marginLeft: "8%",
-    marginTop: "24%",
+    marginTop: "20%",
   },
   block: {
     alignItems: "center",

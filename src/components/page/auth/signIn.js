@@ -74,7 +74,7 @@ export const SignIn = ({ navigation: { goBack }, navigation }) => {
             >
               <GradientBtn name="Log-In" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("FotgetPass")}>
+            <TouchableOpacity onPress={() => navigation.navigate("ForgetPass")}>
               <Text style={styles.forget}>Passwort vergessen?</Text>
             </TouchableOpacity>
           </View>

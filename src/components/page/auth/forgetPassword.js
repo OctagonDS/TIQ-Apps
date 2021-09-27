@@ -27,7 +27,7 @@ const GradientBtn = ({ name }) => (
   </LinearGradient>
 )
 
-export const FotgetPass = ({ navigation: { goBack }, navigation }) => {
+export const ForgetPass = ({ navigation: { goBack }, navigation }) => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}

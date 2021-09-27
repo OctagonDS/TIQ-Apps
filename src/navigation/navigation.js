@@ -19,7 +19,7 @@ import { DraweFeedback } from "./draweFeedback"
 import { DraweCourses } from "./draweCourses"
 import { DraweAnleger } from "./draweAnlegerclub"
 import { Greeting } from "../components/page/auth/greeting"
-import { FotgetPass } from "../components/page/auth/forgetPassword"
+import { ForgetPass } from "../components/page/auth/forgetPassword"
 import { SignIn } from "../components/page/auth/signIn"
 import { SignUp } from "../components/page/auth/signUp"
 import { SuccessReg } from "../components/page/auth/successReg"
@@ -70,8 +70,8 @@ function StackNav() {
         }}
       />
       <Stack.Screen
-        name="FotgetPass"
-        component={FotgetPass}
+        name="ForgetPass"
+        component={ForgetPass}
         options={{
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,

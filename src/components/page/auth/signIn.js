@@ -28,10 +28,10 @@ const GradientBtn = ({ name }) => (
 export const SignIn = ({ navigation: { goBack }, navigation }) => {
   return (
     <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
-      <TouchableOpacity onPress={() => goBack()}>
-        <ArrowLeft style={styles.arrow} />
-      </TouchableOpacity>
       <View style={[gStyle.main, { justifyContent: "center" }]}>
+        <TouchableOpacity onPress={() => goBack()}>
+          <ArrowLeft style={styles.arrow} />
+        </TouchableOpacity>
         <Text style={styles.title}>Anmelden</Text>
         <View style={{ marginTop: "8%" }}>
           <View style={styles.labelmail}>
@@ -81,7 +81,7 @@ export const styles = StyleSheet.create({
   arrow: {
     marginLeft: "8%",
     // alignItems: "flex-start",
-    marginTop: "20%",
+    marginTop: "-20%",
     // position: "absolute",
   },
   label: {

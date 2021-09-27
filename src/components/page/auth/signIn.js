@@ -74,13 +74,13 @@ export const SignIn = ({ navigation: { goBack } }) => {
 export const styles = StyleSheet.create({
   arrow: {
     marginLeft: "8%",
-    // marginTop: "10%",
+    marginTop: -30,
     marginBottom: "10%",
   },
   label: {
     color: "#FF741F",
     backgroundColor: "#fff",
-    width: 30,
+    width: "25%",
     borderRadius: 4,
     position: "absolute",
     height: 15,
@@ -93,7 +93,7 @@ export const styles = StyleSheet.create({
   labelmail: {
     color: "#FF741F",
     backgroundColor: "#fff",
-    width: 15,
+    width: "16%",
     height: 15,
     borderRadius: 4,
     position: "absolute",

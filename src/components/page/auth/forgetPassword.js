@@ -77,8 +77,9 @@ export const ForgetPass = ({ navigation: { goBack }, navigation }) => {
 export const styles = StyleSheet.create({
   arrow: {
     marginLeft: "8%",
-    marginTop: "10%",
+    marginTop: "12%",
     position: "absolute",
+    zIndex: 1,
   },
   label: {
     backgroundColor: "#fff",

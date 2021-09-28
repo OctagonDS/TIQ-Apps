@@ -4,12 +4,15 @@ import {
   Text,
   StyleSheet,
   Platform,
-  ImageBackground,
-  Button,
   TouchableOpacity,
 } from "react-native"
-import { DrawerActions, useNavigation } from "@react-navigation/native"
+import {
+  DrawerActions,
+  useNavigation,
+  useFocusEffect,
+} from "@react-navigation/native"
 import { CustomDrawer } from "../components/organisms/customDrawer"
+import { ArrowLeftScreen } from "../components/atoms/arrowLeftScreen"
 
 import { IconBurger } from "../components/atoms/iconBurger"
 import { IconSearch } from "../components/atoms/iconSearch"
@@ -23,18 +26,17 @@ import { createDrawerNavigator } from "@react-navigation/drawer"
 const Drawer = createDrawerNavigator()
 
 function CustomDrawerContent({ navigation }) {
-  React.useEffect(
-    () =>
-      navigation.addListener("blur", () =>
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
         navigation.dispatch(DrawerActions.closeDrawer())
-      ),
-    []
+      }
+    }, [])
   )
-
   return <CustomDrawer />
 }
 
-export function DraweCourses() {
+export function DraweCourses({ navigation: { goBack } }) {
   return (
     <Drawer.Navigator
       // defaultStatus="open"
@@ -83,6 +85,14 @@ export function DraweCourses() {
         name="Product"
         component={Productpage}
         options={{
+          headerLeft: () => {
+            const navigation = useNavigation()
+            return (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <ArrowLeftScreen style={{ marginLeft: 10 }} />
+              </TouchableOpacity>
+            )
+          },
           title: "Продукт",
         }}
       />

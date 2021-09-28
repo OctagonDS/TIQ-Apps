@@ -1,17 +1,18 @@
 import React from "react"
-import { Platform } from "react-native"
+import { Platform, TouchableOpacity } from "react-native"
 
 import {
   createStackNavigator,
   CardStyleInterpolators,
 } from "@react-navigation/stack"
-import { NavigationContainer } from "@react-navigation/native"
+import { NavigationContainer, useNavigation } from "@react-navigation/native"
 
 import { IconCourses } from "../components/atoms/iconCurses"
 import { IconMentor } from "../components/atoms/iconMentor"
 import { Iconfeedback } from "../components/atoms/iconFeedback"
 import { IconAnleger } from "../components/atoms/iconAnleger"
 import { IconNot } from "../components/atoms/iconNotifications"
+import { ArrowLeftScreen } from "../components/atoms/arrowLeftScreen"
 
 import { DraweNotifications } from "./draweNotifications"
 import { DraweMentor } from "./draweMentor"
@@ -23,6 +24,7 @@ import { ForgetPass } from "../components/page/auth/forgetPassword"
 import { SignIn } from "../components/page/auth/signIn"
 import { SignUp } from "../components/page/auth/signUp"
 import { SuccessReg } from "../components/page/auth/successReg"
+import { ProfilePage } from "../components/page/child/profile"
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { LinearGradient } from "expo-linear-gradient"
@@ -85,6 +87,30 @@ function StackNav() {
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       />
+      <Stack.Group
+        screenOptions={{
+          presentation: "modal",
+          headerTitleStyle: { color: "#888888", fontFamily: "ub-medium" },
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          headerTitleAlign: "center",
+          headerLeft: () => {
+            const navigation = useNavigation()
+            return (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <ArrowLeftScreen style={{ marginLeft: 10 }} />
+              </TouchableOpacity>
+            )
+          },
+        }}
+      >
+        <Stack.Screen
+          name="Profile"
+          component={ProfilePage}
+          options={{
+            title: "Profil",
+          }}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   )
 }

@@ -49,7 +49,7 @@ const Tab = createMaterialTopTabNavigator()
 
 export function Courses() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{}}>
       <Tab.Screen name="Бесплатные курсы" component={HomeScreen} />
       <Tab.Screen name="Платные курсы" component={SettingsScreen} />
     </Tab.Navigator>

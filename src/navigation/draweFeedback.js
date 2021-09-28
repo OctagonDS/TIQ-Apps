@@ -5,15 +5,16 @@ import {
   StyleSheet,
   Platform,
   ImageBackground,
-  Button,
   TouchableOpacity,
-  SafeAreaView,
 } from "react-native"
-import { DrawerActions, useNavigation } from "@react-navigation/native"
+import {
+  DrawerActions,
+  useNavigation,
+  useFocusEffect,
+} from "@react-navigation/native"
 import { CustomDrawer } from "../components/organisms/customDrawer"
 
-import { Productpage } from "../components/page/child/product"
-
+import { ArrowLeftScreen } from "../components/atoms/arrowLeftScreen"
 import { IconBurger } from "../components/atoms/iconBurger"
 import { IconSearch } from "../components/atoms/iconSearch"
 import { IconRef } from "../components/atoms/iconRef"
@@ -24,17 +25,18 @@ import { createDrawerNavigator } from "@react-navigation/drawer"
 const Drawer = createDrawerNavigator()
 
 function CustomDrawerContent({ navigation }) {
-  React.useEffect(
-    () =>
-      navigation.addListener("blur", () =>
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
         navigation.dispatch(DrawerActions.closeDrawer())
-      ),
-    []
+      }
+    }, [])
   )
+
   return <CustomDrawer />
 }
 
-export function DraweFeedback({ navigation }) {
+export function DraweFeedback({ navigation: { goBack } }) {
   return (
     <Drawer.Navigator
       // defaultStatus="open"
@@ -77,13 +79,6 @@ export function DraweFeedback({ navigation }) {
         component={Feedback}
         options={{
           title: "Обратная связь",
-        }}
-      />
-      <Drawer.Screen
-        name="Product"
-        component={Productpage}
-        options={{
-          title: "Продукт",
         }}
       />
     </Drawer.Navigator>

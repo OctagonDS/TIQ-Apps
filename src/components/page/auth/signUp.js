@@ -34,7 +34,10 @@ export const SignUp = ({ navigation: { goBack }, navigation }) => {
       style={{ flex: 1 }}
     >
       <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
-        <TouchableOpacity onPress={() => goBack()} style={styles.arrow}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.arrow}
+        >
           <ArrowLeft />
         </TouchableOpacity>
         <View style={[gStyle.main, { justifyContent: "center" }]}>

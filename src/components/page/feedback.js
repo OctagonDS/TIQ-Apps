@@ -14,10 +14,6 @@ export const Feedback = ({ navigation }) => {
     <View style={gStyle.main}>
       <ScrollView>
         <Text style={gStyle.title}>Поддержка</Text>
-        <Button
-          title="Продукт"
-          onPress={() => navigation.navigate("Product")}
-        />
       </ScrollView>
     </View>
   )

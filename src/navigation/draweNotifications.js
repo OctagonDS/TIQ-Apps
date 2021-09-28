@@ -5,15 +5,19 @@ import {
   StyleSheet,
   Platform,
   ImageBackground,
-  Button,
   TouchableOpacity,
 } from "react-native"
-import { DrawerActions, useNavigation } from "@react-navigation/native"
+import {
+  DrawerActions,
+  useNavigation,
+  useFocusEffect,
+} from "@react-navigation/native"
 import { CustomDrawer } from "../components/organisms/customDrawer"
 
 import { IconBurger } from "../components/atoms/iconBurger"
 import { IconSearch } from "../components/atoms/iconSearch"
 import { IconRef } from "../components/atoms/iconRef"
+import { ArrowLeftScreen } from "../components/atoms/arrowLeftScreen"
 
 import { Notifications } from "../components/page/notifications"
 import { createDrawerNavigator } from "@react-navigation/drawer"
@@ -21,18 +25,17 @@ import { createDrawerNavigator } from "@react-navigation/drawer"
 const Drawer = createDrawerNavigator()
 
 function CustomDrawerContent({ navigation }) {
-  React.useEffect(
-    () =>
-      navigation.addListener("blur", () =>
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
         navigation.dispatch(DrawerActions.closeDrawer())
-      ),
-    []
+      }
+    }, [])
   )
-
   return <CustomDrawer />
 }
 
-export function DraweNotifications() {
+export function DraweNotifications({ navigation }) {
   return (
     <Drawer.Navigator
       // defaultStatus="open"

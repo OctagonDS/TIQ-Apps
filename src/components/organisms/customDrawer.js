@@ -19,6 +19,8 @@ import { IcoFacebook } from "../atoms/iconFacebook"
 import { IcoInsta } from "../atoms/iconInst"
 import { IcoYouTube } from "../atoms/iconYouTube"
 
+import * as WebBrowser from "expo-web-browser"
+
 const image = require("../../assets/img/black-geo.png")
 let avatar = require("../../assets/img/avatar2.jpg")
 let UserName = "UserName222ws"
@@ -27,41 +29,10 @@ export function CustomDrawer() {
   const navigation = useNavigation()
   return (
     <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
-      <View
-        style={{
-          justifyContent: "flex-end",
-          height: "17%",
-          alignItems: "flex-end",
-          borderBottomColor: "#DADADA",
-          borderBottomWidth: 1,
-        }}
-      >
-        <View
-          style={{
-            alignItems: "center",
-            flexDirection: "row",
-            marginBottom: 20,
-          }}
-        >
-          <View
-            style={{
-              width: 66,
-              height: 66,
-              borderRadius: 100,
-              backgroundColor: "#fff",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <View
-              style={{
-                overflow: "hidden",
-                borderRadius: 100,
-                width: 65,
-                height: 65,
-                backgroundColor: "#fff",
-              }}
-            >
+      <View style={styles.header}>
+        <View style={styles.headerCenter}>
+          <View style={styles.imageAvatarBack}>
+            <View style={styles.imageAvatar}>
               <Image
                 source={avatar}
                 style={{ width: 65, height: 65 }}
@@ -69,18 +40,7 @@ export function CustomDrawer() {
               />
             </View>
           </View>
-          <Text
-            style={{
-              // alignSelf: "center",
-              marginLeft: "10%",
-              marginRight: "5%",
-              fontFamily: "ub-medium",
-              fontSize: 20,
-              color: "#FF741F",
-            }}
-          >
-            {UserName}
-          </Text>
+          <Text style={styles.userName}>{UserName}</Text>
         </View>
       </View>
       <View style={{ borderBottomColor: "#DADADA", borderBottomWidth: 1 }}>
@@ -97,76 +57,62 @@ export function CustomDrawer() {
               marginTop: "7%",
             }}
           >
-            <Text
-              style={{ color: "#fff", fontFamily: "ub-medium", fontSize: 17 }}
-            >
-              Профиль
+            <Text style={[styles.textItem, { alignSelf: "center" }]}>
+              Profil
             </Text>
             <View style={{ marginLeft: 20 }}>
               <IcoProfile />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Profile")}
+            onPress={() => navigation.navigate("SuccessScale")}
             style={{
               flexDirection: "row",
               marginTop: "4%",
             }}
           >
-            <Text
-              style={{ color: "#fff", fontFamily: "ub-medium", fontSize: 17 }}
-            >
-              Шкала успеха
+            <Text style={[styles.textItem, { alignSelf: "center" }]}>
+              Erfolgsskala
             </Text>
             <View style={{ marginLeft: 20 }}>
               <IcoSucces />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Profile")}
+            onPress={() => navigation.navigate("Favorit")}
             style={{
               flexDirection: "row",
               marginTop: "4%",
             }}
           >
-            <Text
-              style={{ color: "#fff", fontFamily: "ub-medium", fontSize: 17 }}
-            >
-              Избранное
+            <Text style={[styles.textItem, { alignSelf: "center" }]}>
+              Favoriten
             </Text>
             <View style={{ marginLeft: 20 }}>
               <IcoFire />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Profile")}
+            onPress={() => navigation.navigate("FAQ")}
             style={{
               flexDirection: "row",
               marginTop: "4%",
             }}
           >
-            <Text
-              style={{ color: "#fff", fontFamily: "ub-medium", fontSize: 17 }}
-            >
-              FAQ
-            </Text>
+            <Text style={[styles.textItem, { alignSelf: "center" }]}>FAQ</Text>
             <View style={{ marginLeft: 20 }}>
               <IcoFAQ />
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Profile")}
+            // onPress={() => navigation.navigate("Profile")}
             style={{
               flexDirection: "row",
               marginTop: "15%",
               marginBottom: "7%",
             }}
           >
-            <Text
-              style={{ color: "#fff", fontFamily: "ub-medium", fontSize: 17 }}
-            >
-              Выйти
-            </Text>
+            <Text style={styles.textItem}>Log Out</Text>
             <View style={{ marginLeft: 20 }}>
               <IcoOut />
             </View>
@@ -181,26 +127,28 @@ export function CustomDrawer() {
           }}
         >
           <TouchableOpacity
-            onPress={() => navigation.navigate("Profile")}
+            // onPress={() => navigation.navigate("Profile")}
             style={{
               flexDirection: "row",
               marginTop: "12%",
             }}
           >
-            <Text
-              style={{ color: "#fff", fontFamily: "ub-medium", fontSize: 17 }}
-            >
-              Поделиться
-            </Text>
+            <Text style={styles.textItem}>Teilen</Text>
             <View style={{ marginLeft: 20 }}>
               <IcoReferalMain />
             </View>
           </TouchableOpacity>
         </View>
       </View>
-      <View>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "flex-end",
+          marginBottom: "40%",
+        }}
+      >
         <TouchableOpacity
-          onPress={() => navigation.navigate("Profile")}
+          onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
           style={{
             alignItems: "center",
             marginTop: "15%",
@@ -220,7 +168,7 @@ export function CustomDrawer() {
           }}
         >
           <TouchableOpacity
-            onPress={() => navigation.navigate("Profile")}
+            onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
             style={{
               marginRight: "5%",
             }}
@@ -232,7 +180,7 @@ export function CustomDrawer() {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Profile")}
+            onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
             style={{}}
           >
             <Text
@@ -242,7 +190,7 @@ export function CustomDrawer() {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Profile")}
+            onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
             style={{
               marginLeft: "5%",
             }}
@@ -262,7 +210,7 @@ export function CustomDrawer() {
           }}
         >
           <TouchableOpacity
-            onPress={() => navigation.navigate("Profile")}
+            onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
             style={{
               marginRight: "10%",
             }}
@@ -270,13 +218,13 @@ export function CustomDrawer() {
             <IcoFacebook />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Profile")}
+            onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
             style={{}}
           >
             <IcoInsta />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Profile")}
+            onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
             style={{
               marginLeft: "10%",
             }}
@@ -288,3 +236,45 @@ export function CustomDrawer() {
     </ImageBackground>
   )
 }
+
+export const styles = StyleSheet.create({
+  header: {
+    justifyContent: "flex-end",
+    height: "17%",
+    alignItems: "flex-end",
+    borderBottomColor: "#DADADA",
+    borderBottomWidth: 1,
+  },
+  headerCenter: {
+    alignItems: "center",
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  imageAvatarBack: {
+    width: 66,
+    height: 66,
+    borderRadius: 100,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  imageAvatar: {
+    overflow: "hidden",
+    borderRadius: 100,
+    width: 65,
+    height: 65,
+    backgroundColor: "#fff",
+  },
+  userName: {
+    marginLeft: "10%",
+    marginRight: "5%",
+    fontFamily: "ub-medium",
+    fontSize: 20,
+    color: "#FF741F",
+  },
+  textItem: {
+    color: "#fff",
+    fontFamily: "ub-medium",
+    fontSize: 17,
+  },
+})

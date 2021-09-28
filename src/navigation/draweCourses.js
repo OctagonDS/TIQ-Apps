@@ -51,14 +51,22 @@ export function DraweCourses({ navigation: { goBack } }) {
         headerTitleAlign: "center",
         // headerShown: false,
         headerLeft: false,
-        headerTitle: (props) => <IconSearch />,
+        headerTitle: () => {
+          const navigation = useNavigation()
+
+          return (
+            <TouchableOpacity onPress={() => navigation.navigate("Search")}>
+              <IconSearch />
+            </TouchableOpacity>
+          )
+        },
         headerRight: () => {
           const navigation = useNavigation()
 
           return (
             <View style={{ flexDirection: "row" }}>
               <TouchableOpacity
-                onPress={() => alert("Ты поделись ссылкой своей!")}
+              // onPress={() => alert("Ты поделись ссылкой своей!")}
               >
                 <IconRef style={{ marginRight: 10 }} />
               </TouchableOpacity>

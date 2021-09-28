@@ -31,14 +31,3 @@ export default function App() {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  // footer: {
-  //   // flex: 1,
-  //   position: "absolute",
-  //   left: 0,
-  //   right: 0,
-  //   bottom: 0,
-  //   height: Platform.OS === "ios" ? 120 : 75,
-  // },
-})

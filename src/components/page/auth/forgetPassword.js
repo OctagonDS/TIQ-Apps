@@ -1,4 +1,3 @@
-// Зыбыл пароль
 import React from "react"
 import {
   View,

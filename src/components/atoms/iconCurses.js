@@ -1,6 +1,6 @@
 import React from "react"
 import { View, StyleSheet } from "react-native"
-import Svg, { Circle, Rect, Path } from "react-native-svg"
+import Svg, { Rect, Path } from "react-native-svg"
 
 export const IconCourses = (props) => {
   return (

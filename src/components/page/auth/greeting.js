@@ -1,4 +1,3 @@
-//Приветственное окно
 import React from "react"
 import {
   View,

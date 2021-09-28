@@ -1,4 +1,3 @@
-// Авторизация
 import React from "react"
 import {
   View,
@@ -15,17 +14,6 @@ import { ArrowLeft } from "../../atoms/arrowLeft"
 import { LinearGradient } from "expo-linear-gradient"
 
 const image = require("../../../assets/img/black-geo.png")
-
-const GradientBtn = ({ name }) => (
-  <LinearGradient
-    colors={["#FF741F", "#E86312"]}
-    start={{ x: 0, y: 0 }}
-    end={{ x: 1, y: 0 }}
-    style={{ flex: 1, borderRadius: 5, justifyContent: "center" }}
-  >
-    <Text style={styles.submitTextLog}>{name}</Text>
-  </LinearGradient>
-)
 
 export const SuccessReg = ({ navigation: { goBack }, navigation }) => {
   return (

@@ -13,8 +13,11 @@ import { IcoProfile } from "../atoms/iconProfile"
 import { IcoSucces } from "../atoms/iconSuc"
 import { IcoFire } from "../atoms/iconFire"
 import { IcoFAQ } from "../atoms/iconFAQ"
-import { IcoContact } from "../atoms/iconContact"
+import { IcoReferalMain } from "../atoms/iconRefer"
 import { IcoOut } from "../atoms/iconOut"
+import { IcoFacebook } from "../atoms/iconFacebook"
+import { IcoInsta } from "../atoms/iconInst"
+import { IcoYouTube } from "../atoms/iconYouTube"
 
 const image = require("../../assets/img/black-geo.png")
 let avatar = require("../../assets/img/avatar2.jpg")
@@ -155,22 +158,6 @@ export function CustomDrawer() {
             onPress={() => navigation.navigate("Profile")}
             style={{
               flexDirection: "row",
-              marginTop: "4%",
-            }}
-          >
-            <Text
-              style={{ color: "#fff", fontFamily: "ub-medium", fontSize: 17 }}
-            >
-              Контакты
-            </Text>
-            <View style={{ marginLeft: 20 }}>
-              <IcoContact />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Profile")}
-            style={{
-              flexDirection: "row",
               marginTop: "15%",
               marginBottom: "7%",
             }}
@@ -183,6 +170,118 @@ export function CustomDrawer() {
             <View style={{ marginLeft: 20 }}>
               <IcoOut />
             </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View>
+        <View
+          style={{
+            alignItems: "flex-end",
+            marginRight: "5%",
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Profile")}
+            style={{
+              flexDirection: "row",
+              marginTop: "12%",
+            }}
+          >
+            <Text
+              style={{ color: "#fff", fontFamily: "ub-medium", fontSize: 17 }}
+            >
+              Поделиться
+            </Text>
+            <View style={{ marginLeft: 20 }}>
+              <IcoReferalMain />
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Profile")}
+          style={{
+            alignItems: "center",
+            marginTop: "15%",
+          }}
+        >
+          <Text
+            style={{ color: "#fff", fontFamily: "ub-medium", fontSize: 20 }}
+          >
+            Trader IQ
+          </Text>
+        </TouchableOpacity>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            marginTop: "6%",
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Profile")}
+            style={{
+              marginRight: "5%",
+            }}
+          >
+            <Text
+              style={{ color: "#fff", fontFamily: "ub-medium", fontSize: 12 }}
+            >
+              AGB’s
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Profile")}
+            style={{}}
+          >
+            <Text
+              style={{ color: "#fff", fontFamily: "ub-medium", fontSize: 12 }}
+            >
+              Impressum
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Profile")}
+            style={{
+              marginLeft: "5%",
+            }}
+          >
+            <Text
+              style={{ color: "#fff", fontFamily: "ub-medium", fontSize: 12 }}
+            >
+              Datenschutz
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            marginTop: "8%",
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Profile")}
+            style={{
+              marginRight: "10%",
+            }}
+          >
+            <IcoFacebook />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Profile")}
+            style={{}}
+          >
+            <IcoInsta />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Profile")}
+            style={{
+              marginLeft: "10%",
+            }}
+          >
+            <IcoYouTube />
           </TouchableOpacity>
         </View>
       </View>

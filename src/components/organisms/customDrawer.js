@@ -23,7 +23,7 @@ import * as WebBrowser from "expo-web-browser"
 
 const image = require("../../assets/img/black-geo.png")
 let avatar = require("../../assets/img/avatar2.jpg")
-let UserName = "UserName222ws"
+let UserName = "UserName"
 
 export function CustomDrawer() {
   const navigation = useNavigation()

@@ -40,7 +40,7 @@ export const SignUp = ({ navigation: { goBack }, navigation }) => {
         >
           <ArrowLeft />
         </TouchableOpacity>
-        <View style={[gStyle.main, { justifyContent: "center" }]}>
+        <View style={{ flex: 1, justifyContent: "center" }}>
           <Text style={styles.title}>Registrieren</Text>
           <View style={{ marginTop: "8%" }}>
             <View style={styles.labelmail}>

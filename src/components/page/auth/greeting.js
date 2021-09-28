@@ -36,7 +36,7 @@ const GradientBtn = ({ name }) => (
 export const Greeting = ({ navigation }) => {
   return (
     <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
-      <View style={[gStyle.main, { justifyContent: "center" }]}>
+      <View style={{ flex: 1, justifyContent: "center" }}>
         <View style={styles.logo}>
           <Image
             source={logoTIQ}

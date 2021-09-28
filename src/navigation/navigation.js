@@ -240,7 +240,7 @@ function MyTabs() {
   )
 }
 
-export default function () {
+export function Navigations() {
   return (
     <NavigationContainer>
       <StackNav />

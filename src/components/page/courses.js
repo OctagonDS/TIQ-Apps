@@ -6,7 +6,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 
 function HomeScreen({ navigation }) {
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
       <View
         style={{
           marginBottom: 10,
@@ -39,7 +39,14 @@ function HomeScreen({ navigation }) {
 
 function SettingsScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#fff",
+      }}
+    >
       <Text>Настройки!</Text>
     </View>
   )
@@ -49,9 +56,30 @@ const Tab = createMaterialTopTabNavigator()
 
 export function Courses() {
   return (
-    <Tab.Navigator screenOptions={{}}>
-      <Tab.Screen name="Бесплатные курсы" component={HomeScreen} />
-      <Tab.Screen name="Платные курсы" component={SettingsScreen} />
+    <Tab.Navigator
+      screenOptions={{
+        tabBarIndicatorContainerStyle: {
+          borderBottomWidth: 1,
+          borderBottomColor: "#D8D8D8",
+        },
+        tabBarStyle: {
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        tabBarActiveTintColor: "#FF741F",
+        tabBarInactiveTintColor: "#545A60",
+        tabBarIndicatorStyle: {
+          backgroundColor: "#FF741F",
+        },
+        tabBarLabelStyle: {
+          fontFamily: "ub-medium",
+          textTransform: "none",
+          fontSize: 14,
+        },
+      }}
+    >
+      <Tab.Screen name="Kostenlose Kurse" component={HomeScreen} />
+      <Tab.Screen name="Bezahlte Kurse" component={SettingsScreen} />
     </Tab.Navigator>
   )
 }

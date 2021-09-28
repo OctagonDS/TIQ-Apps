@@ -47,6 +47,7 @@ export function DraweNotifications({ navigation }) {
           backgroundImg: "#c6cbef",
           width: "80%",
         },
+        headerStyle: { elevation: 0, shadowOpacity: 0 },
         headerTitleAlign: "center",
         // headerShown: false,
         headerLeft: false,

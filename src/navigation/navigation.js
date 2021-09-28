@@ -97,6 +97,7 @@ function StackNav() {
           presentation: "modal",
           headerTitleStyle: { color: "#888888", fontFamily: "ub-medium" },
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          headerStyle: { elevation: 0, shadowOpacity: 0 },
           headerTitleAlign: "center",
           headerLeft: () => {
             const navigation = useNavigation()
@@ -144,6 +145,7 @@ function StackNav() {
           cardStyleInterpolator:
             CardStyleInterpolators.forFadeFromBottomAndroid,
           headerTitleAlign: "center",
+          headerStyle: { elevation: 0, shadowOpacity: 0 },
           headerLeft: false,
           headerTitle: () => {
             const navigation = useNavigation()

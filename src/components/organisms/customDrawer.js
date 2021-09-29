@@ -148,7 +148,7 @@ export function CustomDrawer() {
         }}
       >
         <TouchableOpacity
-          onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
+          onPress={() => WebBrowser.openBrowserAsync("https://traderiq.net/")}
           style={{
             alignItems: "center",
             marginTop: "15%",
@@ -168,7 +168,7 @@ export function CustomDrawer() {
           }}
         >
           <TouchableOpacity
-            onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
+            // onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
             style={{
               marginRight: "5%",
             }}
@@ -180,7 +180,7 @@ export function CustomDrawer() {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
+            // onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
             style={{}}
           >
             <Text
@@ -190,7 +190,7 @@ export function CustomDrawer() {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
+            // onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
             style={{
               marginLeft: "5%",
             }}
@@ -210,7 +210,9 @@ export function CustomDrawer() {
           }}
         >
           <TouchableOpacity
-            onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
+            onPress={() =>
+              WebBrowser.openBrowserAsync("https://www.facebook.com/traderiq")
+            }
             style={{
               marginRight: "10%",
             }}
@@ -218,13 +220,19 @@ export function CustomDrawer() {
             <IcoFacebook />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
+            onPress={() =>
+              WebBrowser.openBrowserAsync(
+                "https://www.instagram.com/mytraderiq/"
+              )
+            }
             style={{}}
           >
             <IcoInsta />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => WebBrowser.openBrowserAsync("https://google.com")}
+            onPress={() =>
+              WebBrowser.openBrowserAsync("https://www.youtube.com/user/GeldIQ")
+            }
             style={{
               marginLeft: "10%",
             }}

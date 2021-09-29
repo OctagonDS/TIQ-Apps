@@ -7,7 +7,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 function HomeScreen({ navigation }) {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
-      <View
+      {/* <View
         style={{
           marginBottom: 10,
           marginTop: 30,
@@ -32,7 +32,7 @@ function HomeScreen({ navigation }) {
           title="Главная страница"
           onPress={() => navigation.navigate("Greeting")}
         />
-      </View>
+      </View> */}
     </ScrollView>
   )
 }
@@ -47,7 +47,7 @@ function SettingsScreen() {
         backgroundColor: "#fff",
       }}
     >
-      <Text>Настройки!</Text>
+      {/* <Text>Настройки!</Text> */}
     </View>
   )
 }

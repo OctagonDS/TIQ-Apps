@@ -6,7 +6,7 @@ export const Anleger = (props) => {
   return (
     <View style={gStyle.main}>
       <ScrollView>
-        <Text style={gStyle.title}>Страница клуба</Text>
+        {/* <Text style={gStyle.title}>Страница клуба</Text> */}
       </ScrollView>
     </View>
   )

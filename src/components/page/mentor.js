@@ -6,7 +6,7 @@ export const Mentor = (props) => {
   return (
     <View style={gStyle.main}>
       <ScrollView>
-        <Text style={gStyle.title}>Страница менторы</Text>
+        {/* <Text style={gStyle.title}>Страница менторы</Text> */}
       </ScrollView>
     </View>
   )

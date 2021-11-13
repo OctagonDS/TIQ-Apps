@@ -94,9 +94,6 @@ export function CourseSlideOne({ navigation }) {
                   <IcoFireTop />
                 </View>
               </ImageBackground>
-              <View style={styles.titleBlock}>
-                <Text style={styles.title}>{item.title}</Text>
-              </View>
               <View style={styles.progress}>
                 <View style={styles.progressBar}>
                   <Animated.View
@@ -111,6 +108,9 @@ export function CourseSlideOne({ navigation }) {
                   />
                 </View>
                 <Text style={styles.percent}>{progressPercent}%</Text>
+              </View>
+              <View style={styles.titleBlock}>
+                <Text style={styles.title}>{item.title}</Text>
               </View>
             </View>
           )}
@@ -156,10 +156,11 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   titleBlock: {
-    position: 'absolute',
-    left: 10,
-    top: '100%',
+    // position: 'absolute',
+    // left: 10,
+    // top: '100%',
     width: '95%',
+    height: 10,
   },
   title: {
     fontFamily: 'ub-reg',

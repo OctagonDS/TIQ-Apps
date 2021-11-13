@@ -110,7 +110,7 @@ export function CourseSlideOne({ navigation }) {
                     }
                   />
                 </View>
-                <Text style={{ paddingRight: 10 }}>{progressPercent}%</Text>
+                <Text style={styles.percent}>{progressPercent}%</Text>
               </View>
             </View>
           )}
@@ -141,6 +141,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEEEEE',
     borderRadius: 8,
     flexDirection: 'row',
+  },
+  percent: {
+    paddingRight: 10,
+    fontFamily: 'ub-light',
+    fontSize: 12,
+    letterSpacing: -0.33,
   },
   progressBarLevel: {
     position: 'absolute',

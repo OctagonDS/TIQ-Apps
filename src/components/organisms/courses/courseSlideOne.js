@@ -49,11 +49,6 @@ export function CourseSlideOne({ navigation }) {
     getCourses()
   }, [])
 
-  const [layout, setLayout] = useState({
-    width: 0,
-    height: 0,
-  })
-
   return (
     // <ScrollView
     //   style={{ flex: 1, backgroundColor: '#fff' }}
@@ -63,15 +58,11 @@ export function CourseSlideOne({ navigation }) {
     // >
     <View
       style={{
-        // margin: 0,
         marginBottom: '20%',
-        // marginTop: '10%',
-        // alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
         backgroundColor: '#fff',
       }}
-      onLayout={(event) => setLayout(event.nativeEvent.layout)}
     >
       {isLoading ? (
         <ActivityIndicator />

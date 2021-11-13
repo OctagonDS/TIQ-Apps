@@ -94,23 +94,25 @@ export function CourseSlideTwo({ navigation }) {
                   <IcoFireTop />
                 </View>
               </ImageBackground>
-              <View style={styles.titleBlock}>
-                <Text style={styles.title}>{item.title}</Text>
-              </View>
-              <View style={styles.progress}>
-                <View style={styles.progressBar}>
-                  <Animated.View
-                    style={
-                      ([styles.progressBarLevel],
-                      {
-                        backgroundColor: '#FF741F',
-                        width: `${progressPercent}%`,
-                        borderRadius: 5,
-                      })
-                    }
-                  />
+              <View style={{ width: 165, height: 60 }}>
+                <View style={styles.progress}>
+                  <View style={styles.progressBar}>
+                    <Animated.View
+                      style={
+                        ([styles.progressBarLevel],
+                        {
+                          backgroundColor: '#FF741F',
+                          width: `${progressPercent}%`,
+                          borderRadius: 5,
+                        })
+                      }
+                    />
+                  </View>
+                  <Text style={styles.percent}>{progressPercent}%</Text>
                 </View>
-                <Text style={{ paddingRight: 10 }}>{progressPercent}%</Text>
+                <View>
+                  <Text style={styles.title}>{item.title}</Text>
+                </View>
               </View>
             </View>
           )}
@@ -124,8 +126,8 @@ const styles = StyleSheet.create({
   courses: {
     alignItems: 'center',
     width: '50%',
-    marginTop: '10%',
-    marginBottom: '10%',
+    marginTop: 20,
+    marginBottom: '0%',
     position: 'relative',
   },
   progress: {
@@ -142,18 +144,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flexDirection: 'row',
   },
+  percent: {
+    paddingRight: 10,
+    fontFamily: 'ub-light',
+    fontSize: 12,
+    letterSpacing: -0.33,
+  },
   progressBarLevel: {
     position: 'absolute',
     left: 0,
     right: 0,
     top: 0,
     bottom: 0,
-  },
-  titleBlock: {
-    position: 'absolute',
-    left: 10,
-    top: '100%',
-    width: '95%',
   },
   title: {
     fontFamily: 'ub-reg',

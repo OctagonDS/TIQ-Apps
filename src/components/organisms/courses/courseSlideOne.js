@@ -75,7 +75,7 @@ export function CourseSlideOne({ navigation }) {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          style={{ paddingTop: '1%' }}
+          style={{ flex: 1 }}
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (
             <View style={styles.courses}>
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '50%',
     marginTop: 20,
-    // marginBottom: '2%',
+    // marginBottom: 20,
     position: 'relative',
   },
   progress: {

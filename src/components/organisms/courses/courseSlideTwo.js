@@ -60,7 +60,6 @@ export function CourseSlideTwo({ navigation }) {
   return (
     <View
       style={{
-        marginBottom: '20%',
         flex: 1,
         justifyContent: 'center',
         backgroundColor: '#fff',
@@ -75,6 +74,10 @@ export function CourseSlideTwo({ navigation }) {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
+          contentContainerStyle={{
+            paddingTop: '3%',
+            paddingBottom: '23%',
+          }}
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (
             <View style={styles.courses}>
@@ -127,7 +130,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '50%',
     marginTop: 20,
-    marginBottom: '10%',
+    // marginBottom: 20,
     position: 'relative',
   },
   progress: {

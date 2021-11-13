@@ -60,7 +60,6 @@ export function CourseSlideOne({ navigation }) {
   return (
     <View
       style={{
-        // marginBottom: '20%',
         flex: 1,
         justifyContent: 'center',
         backgroundColor: '#fff',
@@ -76,7 +75,7 @@ export function CourseSlideOne({ navigation }) {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           contentContainerStyle={{
-            paddingTop: 5,
+            paddingTop: '3%',
             paddingBottom: '23%',
           }}
           keyExtractor={({ id }, index) => id}

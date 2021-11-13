@@ -11,8 +11,10 @@ import {
   StyleSheet,
   Animated,
   TouchableOpacity,
+  useWindowDimensions,
 } from 'react-native'
 import { gStyle } from '../../../styles/style'
+import HTML from 'react-native-render-html'
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
@@ -27,7 +29,7 @@ export function Modules({ props, route }) {
   const url = `https://fe20295.online-server.cloud/api/v1/course/${JSON.stringify(
     itemId
   )}`
-
+  const contentWidth = useWindowDimensions().width
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
 
@@ -67,39 +69,48 @@ export function Modules({ props, route }) {
         backgroundColor: '#fff',
       }}
     >
-      <View
-        style={{
-          // width: '100%',
-          justifyContent: 'center',
-        }}
-      >
-        <ImageBackground
-          source={image}
-          resizeMode="cover"
-          style={{
-            // flex: 1,
-            width: '95%',
-            height: 164,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          imageStyle={{ borderRadius: 5 }}
-        >
-          <View>
-            <Text style={{ color: '#fff' }}>
-              {JSON.stringify(titleCourses)}
-            </Text>
-            <Text style={{ color: '#fff' }}>
-              {JSON.stringify(titleDescription)}
-            </Text>
-          </View>
-        </ImageBackground>
-      </View>
+      {/* </View> */}
       {isLoading ? (
         <ActivityIndicator />
       ) : (
         <FlatList
           data={data}
+          ListHeaderComponent={
+            <View
+              style={{
+                // width: '100%',
+                justifyContent: 'center',
+                // alignSelf: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <ImageBackground
+                source={image}
+                resizeMode="cover"
+                style={{
+                  // flex: 1,
+                  width: 300,
+                  height: '100%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                imageStyle={{ borderRadius: 5 }}
+              >
+                <View style={{ flex: 1, width: '80%' }}>
+                  <Text style={{ color: '#fff' }}>
+                    {JSON.stringify(titleCourses)}
+                  </Text>
+                  {/* <Text style={{ color: '#fff' }}>
+                  {JSON.stringify(titleDescription)}
+                </Text> */}
+                  <HTML
+                    source={{ html: `${JSON.stringify(titleDescription)}` }}
+                    contentWidth={contentWidth}
+                  />
+                </View>
+              </ImageBackground>
+            </View>
+          }
           numColumns={2}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

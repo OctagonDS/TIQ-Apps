@@ -10,6 +10,7 @@ import {
   RefreshControl,
   StyleSheet,
   Animated,
+  TouchableOpacity,
 } from 'react-native'
 import { gStyle } from '../../../styles/style'
 import { IcoFireTop } from '../../atoms/iconFireTop'
@@ -81,22 +82,27 @@ export function CourseSlideOne({ navigation }) {
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (
             <View style={styles.courses}>
-              <ImageBackground
-                source={image}
-                resizeMode="cover"
-                style={styles.imageBack}
-                imageStyle={{ borderRadius: 5 }}
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Modules')}
+                style={{ position: 'relative', width: 165, height: 165 }}
               >
-                <Image
-                  style={styles.imageProduct}
-                  source={{
-                    uri: `https://fe20295.online-server.cloud/storage/${item.image_сourses}`,
-                  }}
-                />
-                <View style={styles.fireTop}>
-                  <IcoFireTop />
-                </View>
-              </ImageBackground>
+                <ImageBackground
+                  source={image}
+                  resizeMode="cover"
+                  style={styles.imageBack}
+                  imageStyle={{ borderRadius: 5 }}
+                >
+                  <Image
+                    style={styles.imageProduct}
+                    source={{
+                      uri: `https://fe20295.online-server.cloud/storage/${item.image_сourses}`,
+                    }}
+                  />
+                  <TouchableOpacity style={styles.fireTop}>
+                    <IcoFireTop />
+                  </TouchableOpacity>
+                </ImageBackground>
+              </TouchableOpacity>
               <View style={{ width: 165, height: 60 }}>
                 <View style={styles.progress}>
                   <View style={styles.progressBar}>
@@ -114,7 +120,20 @@ export function CourseSlideOne({ navigation }) {
                   <Text style={styles.percent}>{progressPercent}%</Text>
                 </View>
                 <View>
-                  <Text style={styles.title}>{item.title}</Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('Modules', {
+                        screen: 'draweModules',
+                        params: {
+                          itemId: item.id,
+                          titleCourses: item.title,
+                          titleDescription: item.description,
+                        },
+                      })
+                    }
+                  >
+                    <Text style={styles.title}>{item.title}</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>

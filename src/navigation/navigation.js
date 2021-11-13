@@ -1,37 +1,42 @@
-import React from "react"
-import { Platform, TouchableOpacity } from "react-native"
+import React from 'react'
+import { Platform, TouchableOpacity, View } from 'react-native'
 import {
   createStackNavigator,
   CardStyleInterpolators,
-} from "@react-navigation/stack"
-import { NavigationContainer, useNavigation } from "@react-navigation/native"
+} from '@react-navigation/stack'
+import { NavigationContainer, useNavigation } from '@react-navigation/native'
 
-import { IconCourses } from "../components/atoms/iconCurses"
-import { IconMentor } from "../components/atoms/iconMentor"
-import { Iconfeedback } from "../components/atoms/iconFeedback"
-import { IconAnleger } from "../components/atoms/iconAnleger"
-import { IconNot } from "../components/atoms/iconNotifications"
-import { ArrowLeftScreen } from "../components/atoms/arrowLeftScreen"
-import { IconSearchClose } from "../components/atoms/iconSearchClose"
+import { IconCourses } from '../components/atoms/iconCurses'
+import { IconMentor } from '../components/atoms/iconMentor'
+import { Iconfeedback } from '../components/atoms/iconFeedback'
+import { IconAnleger } from '../components/atoms/iconAnleger'
+import { IconNot } from '../components/atoms/iconNotifications'
+import { ArrowLeftScreen } from '../components/atoms/arrowLeftScreen'
+import { IconSearchClose } from '../components/atoms/iconSearchClose'
+import { IconRef } from '../components/atoms/iconRef'
+import { IconBurger } from '../components/atoms/iconBurger'
+import { IconSearch } from '../components/atoms/iconSearch'
 
-import { DraweNotifications } from "./draweNotifications"
-import { DraweMentor } from "./draweMentor"
-import { DraweFeedback } from "./draweFeedback"
-import { DraweCourses } from "./draweCourses"
-import { DraweAnleger } from "./draweAnlegerclub"
-import { Greeting } from "../components/page/auth/greeting"
-import { ForgetPass } from "../components/page/auth/forgetPassword"
-import { SignIn } from "../components/page/auth/signIn"
-import { SignUp } from "../components/page/auth/signUp"
-import { SuccessReg } from "../components/page/auth/successReg"
-import { ProfilePage } from "../components/page/menu/profile"
-import { SuccessScale } from "../components/page/menu/successScale"
-import { SearchModal } from "../components/page/menu/search"
-import { FavoritPage } from "../components/page/menu/favorites"
-import { FaqPage } from "../components/page/menu/faq"
+import { DraweNotifications } from './draweNotifications'
+import { DraweMentor } from './draweMentor'
+import { DraweFeedback } from './draweFeedback'
+import { DraweCourses } from './draweCourses'
+import { DraweAnleger } from './draweAnlegerclub'
+import { Greeting } from '../components/page/auth/greeting'
+import { ForgetPass } from '../components/page/auth/forgetPassword'
+import { SignIn } from '../components/page/auth/signIn'
+import { SignUp } from '../components/page/auth/signUp'
+import { SuccessReg } from '../components/page/auth/successReg'
+import { ProfilePage } from '../components/page/menu/profile'
+import { SuccessScale } from '../components/page/menu/successScale'
+import { SearchModal } from '../components/page/menu/search'
+import { FavoritPage } from '../components/page/menu/favorites'
+import { FaqPage } from '../components/page/menu/faq'
+import { Modules } from '../components/page/child/module'
+import { DraweModules } from './Courses/draweModules'
 
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { LinearGradient } from "expo-linear-gradient"
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -40,8 +45,8 @@ function StackNav() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerTintColor: "#353535",
-        headerBackTitleStyle: { color: "#353535" },
+        headerTintColor: '#353535',
+        headerBackTitleStyle: { color: '#353535' },
       }}
     >
       <Stack.Screen
@@ -93,11 +98,11 @@ function StackNav() {
       />
       <Stack.Group
         screenOptions={{
-          presentation: "modal",
-          headerTitleStyle: { color: "#888888", fontFamily: "ub-medium" },
+          presentation: 'modal',
+          headerTitleStyle: { color: '#888888', fontFamily: 'ub-medium' },
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
           headerStyle: { elevation: 0, shadowOpacity: 0 },
-          headerTitleAlign: "center",
+          headerTitleAlign: 'center',
           headerLeft: () => {
             const navigation = useNavigation()
             return (
@@ -112,38 +117,38 @@ function StackNav() {
           name="Profile"
           component={ProfilePage}
           options={{
-            title: "Profil",
+            title: 'Profil',
           }}
         />
         <Stack.Screen
           name="SuccessScale"
           component={SuccessScale}
           options={{
-            title: "Erfolgsskala",
+            title: 'Erfolgsskala',
           }}
         />
         <Stack.Screen
           name="Favorit"
           component={FavoritPage}
           options={{
-            title: "Favoriten",
+            title: 'Favoriten',
           }}
         />
         <Stack.Screen
           name="FAQ"
           component={FaqPage}
           options={{
-            title: "FAQ",
+            title: 'FAQ',
           }}
         />
       </Stack.Group>
       <Stack.Group
         screenOptions={{
-          presentation: "modal",
-          headerTitleStyle: { color: "#888888", fontFamily: "ub-medium" },
+          presentation: 'modal',
+          headerTitleStyle: { color: '#888888', fontFamily: 'ub-medium' },
           cardStyleInterpolator:
             CardStyleInterpolators.forFadeFromBottomAndroid,
-          headerTitleAlign: "center",
+          headerTitleAlign: 'center',
           headerStyle: { elevation: 0, shadowOpacity: 0 },
           headerLeft: false,
           headerTitle: () => {
@@ -161,7 +166,20 @@ function StackNav() {
           name="Search"
           component={SearchModal}
           options={{
-            title: "Suche",
+            title: 'Suche',
+          }}
+        />
+      </Stack.Group>
+      <Stack.Group
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen
+          name="Modules"
+          component={DraweModules}
+          options={{
+            title: 'Модули',
           }}
         />
       </Stack.Group>
@@ -174,18 +192,18 @@ function MyTabs() {
     <Tab.Navigator
       initialRouteName="Feed"
       screenOptions={{
-        tabBarActiveTintColor: "#fff",
-        headerTitleAlign: "center",
+        tabBarActiveTintColor: '#fff',
+        headerTitleAlign: 'center',
         tabBarShowLabel: false,
         headerShown: false,
         tabBarStyle: {
-          position: "absolute",
-          height: Platform.OS === "android" ? 72 : 110,
+          position: 'absolute',
+          height: Platform.OS === 'android' ? 72 : 110,
           borderTopWidth: 0,
         },
         tabBarBackground: () => (
           <LinearGradient
-            colors={["#454A4F", "#545A60"]}
+            colors={['#454A4F', '#545A60']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={{ flex: 1 }}
@@ -197,7 +215,7 @@ function MyTabs() {
         name="Course"
         component={DraweCourses}
         options={{
-          tabBarLabel: "Курсы",
+          tabBarLabel: 'Курсы',
           tabBarIcon: ({ focused }) => <IconCourses focused={focused} />,
         }}
       />
@@ -205,7 +223,7 @@ function MyTabs() {
         name="Mentor"
         component={DraweMentor}
         options={{
-          tabBarLabel: "Ментор",
+          tabBarLabel: 'Ментор',
           tabBarIcon: ({ focused }) => <IconMentor focused={focused} />,
         }}
       />
@@ -213,7 +231,7 @@ function MyTabs() {
         name="Feedback"
         component={DraweFeedback}
         options={{
-          tabBarLabel: "Поддержка",
+          tabBarLabel: 'Поддержка',
           tabBarIcon: ({ focused }) => <Iconfeedback focused={focused} />,
         }}
       />
@@ -221,7 +239,7 @@ function MyTabs() {
         name="Anleger"
         component={DraweAnleger}
         options={{
-          tabBarLabel: "Анлегер клуб",
+          tabBarLabel: 'Анлегер клуб',
           tabBarIcon: ({ focused }) => <IconAnleger focused={focused} />,
         }}
       />
@@ -229,7 +247,7 @@ function MyTabs() {
         name="Notifications"
         component={DraweNotifications}
         options={{
-          tabBarLabel: "Уведомления",
+          tabBarLabel: 'Уведомления',
           // tabBarBadge: 0,
           tabBarBadgeStyle: { marginTop: 10 },
           tabBarIcon: ({ focused }) => <IconNot focused={focused} />,

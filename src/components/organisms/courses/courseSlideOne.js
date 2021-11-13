@@ -94,23 +94,25 @@ export function CourseSlideOne({ navigation }) {
                   <IcoFireTop />
                 </View>
               </ImageBackground>
-              <View style={styles.progress}>
-                <View style={styles.progressBar}>
-                  <Animated.View
-                    style={
-                      ([styles.progressBarLevel],
-                      {
-                        backgroundColor: '#FF741F',
-                        width: `${progressPercent}%`,
-                        borderRadius: 5,
-                      })
-                    }
-                  />
+              <View style={{ position: 'relative', height: 70 }}>
+                <View style={styles.progress}>
+                  <View style={styles.progressBar}>
+                    <Animated.View
+                      style={
+                        ([styles.progressBarLevel],
+                        {
+                          backgroundColor: '#FF741F',
+                          width: `${progressPercent}%`,
+                          borderRadius: 5,
+                        })
+                      }
+                    />
+                  </View>
+                  <Text style={styles.percent}>{progressPercent}%</Text>
                 </View>
-                <Text style={styles.percent}>{progressPercent}%</Text>
-              </View>
-              <View style={styles.titleBlock}>
-                <Text style={styles.title}>{item.title}</Text>
+                <View style={styles.titleBlock}>
+                  <Text style={styles.title}>{item.title}</Text>
+                </View>
               </View>
             </View>
           )}
@@ -124,8 +126,8 @@ const styles = StyleSheet.create({
   courses: {
     alignItems: 'center',
     width: '50%',
-    marginTop: '10%',
-    marginBottom: '10%',
+    marginTop: 20,
+    marginBottom: '0%',
     position: 'relative',
   },
   progress: {
@@ -160,7 +162,8 @@ const styles = StyleSheet.create({
     // left: 10,
     // top: '100%',
     width: '95%',
-    height: 10,
+    // height: 70,
+    // flex: 1,
   },
   title: {
     fontFamily: 'ub-reg',

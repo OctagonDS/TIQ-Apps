@@ -10,14 +10,12 @@ import {
   RefreshControl,
 } from 'react-native'
 import { gStyle } from '../../../styles/style'
-import { NavigationContainer } from '@react-navigation/native'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 
-export const CourseSlideOne = ({ navigation }) => {
+export function CourseSlideOne({ navigation }) {
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
 

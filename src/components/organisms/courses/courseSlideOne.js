@@ -3,7 +3,7 @@ import {
   View,
   Text,
   ScrollView,
-  StyleSheet,
+  ImageBackground,
   ActivityIndicator,
   FlatList,
   Image,
@@ -14,6 +14,8 @@ import { gStyle } from '../../../styles/style'
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
+
+const image = require('../../../assets/img/grey-geo.png')
 
 export function CourseSlideOne({ navigation }) {
   const [isLoading, setLoading] = useState(true)
@@ -79,22 +81,35 @@ export function CourseSlideOne({ navigation }) {
               style={{
                 alignItems: 'center',
                 width: '50%',
+                marginTop: '5%',
+                marginBottom: '5%',
               }}
             >
-              <View
+              <ImageBackground
+                source={image}
+                resizeMode="cover"
                 style={{
-                  backgroundColor: '#000',
-                  margin: 10,
-                  width: 150,
-                  height: 130,
+                  flex: 1,
+                  width: 165,
+                  height: 165,
                   borderRadius: 8,
                   justifyContent: 'space-around',
                 }}
+                imageStyle={{ borderRadius: 5 }}
               >
+                {/* <View
+                  style={{
+                    margin: 10,
+                    width: 150,
+                    height: 130,
+                    borderRadius: 8,
+                    justifyContent: 'space-around',
+                  }}
+                > */}
                 <Image
                   style={{
-                    width: 100,
-                    height: 120,
+                    width: '95%',
+                    height: 153,
                     resizeMode: 'contain',
                     alignSelf: 'center',
                   }}
@@ -102,7 +117,8 @@ export function CourseSlideOne({ navigation }) {
                     uri: `https://fe20295.online-server.cloud/storage/${item.image_сourses}`,
                   }}
                 />
-              </View>
+                {/* </View> */}
+              </ImageBackground>
               <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>
                 {item.title}
               </Text>

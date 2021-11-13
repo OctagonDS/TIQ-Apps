@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '50%',
     marginTop: 20,
-    marginBottom: '0%',
+    marginBottom: '10%',
     position: 'relative',
   },
   progress: {

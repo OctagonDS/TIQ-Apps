@@ -13,6 +13,7 @@ import { gStyle } from '../../styles/style'
 import { NavigationContainer } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { CourseSlideOne } from '../organisms/courses/courseSlideOne'
+import { CourseSlideTwo } from '../organisms/courses/courseSlideTwo'
 
 // const wait = (timeout) => {
 //   return new Promise((resolve) => setTimeout(resolve, timeout))
@@ -136,7 +137,7 @@ export function Courses() {
       }}
     >
       <Tab.Screen name="Kostenlose Kurse" component={CourseSlideOne} />
-      <Tab.Screen name="Bezahlte Kurse" component={SettingsScreen} />
+      <Tab.Screen name="Bezahlte Kurse" component={CourseSlideTwo} />
     </Tab.Navigator>
   )
 }

@@ -25,7 +25,7 @@ const progressPercent = '80'
 
 // Основная функция
 
-export function CourseSlideOne({ navigation }) {
+export function CourseSlideTwo({ navigation }) {
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
 

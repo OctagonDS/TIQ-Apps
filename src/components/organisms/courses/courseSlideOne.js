@@ -75,7 +75,7 @@ export function CourseSlideOne({ navigation }) {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           contentContainerStyle={{
-            paddingTop: '3%',
+            paddingTop: '2%',
             paddingBottom: Platform.OS === 'android' ? 72 : 110,
           }}
           keyExtractor={({ id }, index) => id}

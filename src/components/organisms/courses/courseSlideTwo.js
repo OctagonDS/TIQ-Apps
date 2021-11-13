@@ -21,7 +21,7 @@ const wait = (timeout) => {
 
 const image = require('../../../assets/img/grey-geo.png')
 const url = 'https://fe20295.online-server.cloud/api/v1/courses'
-const progressPercent = '80'
+const progressPercent = '20'
 
 // Основная функция
 

@@ -76,7 +76,7 @@ export function CourseSlideOne({ navigation }) {
           }
           contentContainerStyle={{
             paddingTop: '3%',
-            paddingBottom: '23%',
+            paddingBottom: Platform.OS === 'android' ? 72 : 110,
           }}
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (

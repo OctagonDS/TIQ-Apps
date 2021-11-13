@@ -10,6 +10,7 @@ import {
   RefreshControl,
 } from 'react-native'
 import { gStyle } from '../../../styles/style'
+import { IcoFireTop } from '../../atoms/iconFireTop'
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
@@ -81,8 +82,9 @@ export function CourseSlideOne({ navigation }) {
               style={{
                 alignItems: 'center',
                 width: '50%',
-                marginTop: '5%',
-                marginBottom: '5%',
+                marginTop: '10%',
+                marginBottom: '10%',
+                position: 'relative',
               }}
             >
               <ImageBackground
@@ -97,15 +99,6 @@ export function CourseSlideOne({ navigation }) {
                 }}
                 imageStyle={{ borderRadius: 5 }}
               >
-                {/* <View
-                  style={{
-                    margin: 10,
-                    width: 150,
-                    height: 130,
-                    borderRadius: 8,
-                    justifyContent: 'space-around',
-                  }}
-                > */}
                 <Image
                   style={{
                     width: '95%',
@@ -117,11 +110,42 @@ export function CourseSlideOne({ navigation }) {
                     uri: `https://fe20295.online-server.cloud/storage/${item.image_сourses}`,
                   }}
                 />
-                {/* </View> */}
+                <View
+                  style={{
+                    position: 'absolute',
+                    width: 34,
+                    height: 34,
+                    left: 0,
+                    bottom: 0,
+                    backgroundColor: '#FF741F',
+                    borderTopRightRadius: 5,
+                    borderBottomLeftRadius: 5,
+                    alignItems: 'center',
+                    justifyContent: 'space-around',
+                  }}
+                >
+                  <IcoFireTop />
+                </View>
               </ImageBackground>
-              <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              <Text
+                style={{
+                  fontFamily: 'ub-reg',
+                  letterSpacing: -0.33,
+                  fontSize: 16,
+                  textAlign: 'left',
+                  lineHeight: 18.38,
+                  color: '#4E4D4D',
+                  fontStyle: 'normal',
+                  fontWeight: 'normal',
+                  position: 'absolute',
+                  left: 10,
+                  top: '100%',
+                  width: '95%',
+                }}
+              >
                 {item.title}
               </Text>
+              <View></View>
             </View>
           )}
         />

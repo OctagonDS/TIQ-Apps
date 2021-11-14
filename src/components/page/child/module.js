@@ -16,19 +16,54 @@ import {
 import { gStyle } from '../../../styles/style'
 import HTML from 'react-native-render-html'
 
+// Переменне
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 const image = require('../../../assets/img/black-geo.png')
+const tagsStyles = {
+  p: {
+    color: '#fff',
+    textAlign: 'left',
+    // marginBottom: 10,
+    fontFamily: 'ub-medium',
+    fontSize: 14,
+  },
+  h1: {
+    color: '#fff',
+  },
+  h2: {
+    color: '#fff',
+  },
+  h3: {
+    color: '#fff',
+  },
+  h4: {
+    color: '#fff',
+  },
+  h5: {
+    color: '#fff',
+  },
+  h6: {
+    color: '#fff',
+  },
+  ul: {
+    color: '#fff',
+  },
+  li: {
+    color: '#fff',
+  },
+}
+
+// Основная функция
 
 export function Modules({ props, route }) {
   const { itemId } = route.params
-  const { titleCourses } = route.params
-  const { titleDescription } = route.params
 
   const url = `https://fe20295.online-server.cloud/api/v1/course/${JSON.stringify(
     itemId
   )}`
+
   const contentWidth = useWindowDimensions().width
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
@@ -45,7 +80,7 @@ export function Modules({ props, route }) {
         },
       })
       const json = await response.json()
-      setData(json.data.modules)
+      setData(json.data)
     } catch (error) {
       console.error(error)
     } finally {
@@ -69,12 +104,11 @@ export function Modules({ props, route }) {
         backgroundColor: '#fff',
       }}
     >
-      {/* </View> */}
       {isLoading ? (
         <ActivityIndicator />
       ) : (
         <FlatList
-          data={data}
+          data={data.modules}
           ListHeaderComponent={
             <View
               style={{
@@ -89,22 +123,41 @@ export function Modules({ props, route }) {
                 resizeMode="cover"
                 style={{
                   // flex: 1,
-                  width: 300,
+                  width: 350,
                   height: '100%',
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
                 imageStyle={{ borderRadius: 5 }}
               >
-                <View style={{ flex: 1, width: '80%' }}>
-                  <Text style={{ color: '#fff' }}>
-                    {JSON.stringify(titleCourses)}
+                <View
+                  style={{
+                    flex: 1,
+                    width: '90%',
+                    marginTop: 20,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: '#fff',
+                      textAlign: 'center',
+                      fontFamily: 'ub-medium',
+                      fontSize: 20,
+                    }}
+                  >
+                    {data.title.replace(/^"(.+(?="$))"$/, '$1')}
                   </Text>
                   {/* <Text style={{ color: '#fff' }}>
                   {JSON.stringify(titleDescription)}
                 </Text> */}
                   <HTML
-                    source={{ html: `${JSON.stringify(titleDescription)}` }}
+                    tagsStyles={tagsStyles}
+                    source={{
+                      html: `${data.description.replace(
+                        /^"(.+(?="$))"$/,
+                        '$1'
+                      )}`,
+                    }}
                     contentWidth={contentWidth}
                   />
                 </View>
@@ -130,8 +183,8 @@ export function Modules({ props, route }) {
                 position: 'relative',
               }}
             >
-              <Text>{item['id']}</Text>
-              <Text>{item['title']}</Text>
+              <Text>{item.id}</Text>
+              <Text>{item.title}</Text>
             </View>
           )}
         />

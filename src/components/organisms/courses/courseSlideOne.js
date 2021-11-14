@@ -83,7 +83,14 @@ export function CourseSlideOne({ navigation }) {
           renderItem={({ item }) => (
             <View style={styles.courses}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Modules')}
+                onPress={() =>
+                  navigation.navigate('Modules', {
+                    screen: 'draweModules',
+                    params: {
+                      itemId: item.id,
+                    },
+                  })
+                }
                 style={{ position: 'relative', width: 165, height: 165 }}
               >
                 <ImageBackground
@@ -126,8 +133,6 @@ export function CourseSlideOne({ navigation }) {
                         screen: 'draweModules',
                         params: {
                           itemId: item.id,
-                          titleCourses: item.title,
-                          titleDescription: item.description,
                         },
                       })
                     }

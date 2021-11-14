@@ -83,7 +83,14 @@ export function CourseSlideTwo({ navigation }) {
           renderItem={({ item }) => (
             <View style={styles.courses}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Modules')}
+                onPress={() =>
+                  navigation.navigate('Modules', {
+                    screen: 'draweModules',
+                    params: {
+                      itemId: item.id,
+                    },
+                  })
+                }
                 style={{ position: 'relative', width: 165, height: 165 }}
               >
                 <ImageBackground

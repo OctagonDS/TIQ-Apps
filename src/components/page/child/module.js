@@ -94,6 +94,9 @@ export function Modules({ props, route }) {
 
   useEffect(() => {
     getModules()
+    return () => {
+      setData({})
+    }
   }, [])
 
   return (

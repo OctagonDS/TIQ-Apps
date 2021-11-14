@@ -56,6 +56,9 @@ export function CourseSlideOne({ navigation }) {
 
   useEffect(() => {
     getCourses()
+    return () => {
+      setData({})
+    }
   }, [])
 
   return (

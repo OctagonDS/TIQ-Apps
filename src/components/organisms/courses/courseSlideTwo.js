@@ -56,6 +56,9 @@ export function CourseSlideTwo({ navigation }) {
 
   useEffect(() => {
     getCourses()
+    return () => {
+      setData({})
+    }
   }, [])
 
   return (

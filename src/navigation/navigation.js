@@ -262,6 +262,7 @@ function MyTabs() {
         name="Anleger"
         component={DraweAnleger}
         options={{
+          unmountOnBlur: true,
           tabBarLabel: 'Анлегер клуб',
           tabBarIcon: ({ focused }) => <IconAnleger focused={focused} />,
         }}
@@ -333,7 +334,6 @@ export function Navigations() {
         body: formData,
       })
       let json = await response.json()
-      //console.log(json);
       if (json.status != false) {
         setError(null)
         try {
@@ -382,6 +382,7 @@ export function Navigations() {
       .then((data) => {
         data = JSON.parse(data)
 
+        // Новые данные
         data.display_name = displayName
 
         AsyncStorage.setItem(

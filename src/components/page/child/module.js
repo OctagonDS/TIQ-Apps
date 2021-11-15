@@ -194,13 +194,6 @@ export function Modules({ props, route }) {
       )}
     </View>
   )
-  // return (
-  //   <View style={[gStyle.main, { alignContent: 'center' }]}>
-  //     <View>
-  //       <Text>{url}</Text>
-  //     </View>
-  //   </View>
-  // )
 }
 
 export const styles = StyleSheet.create({

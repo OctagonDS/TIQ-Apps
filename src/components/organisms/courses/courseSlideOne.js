@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import {
   View,
   Text,
@@ -11,9 +11,12 @@ import {
   StyleSheet,
   Animated,
   TouchableOpacity,
+  Button,
+  TextInput,
 } from 'react-native'
 import { gStyle } from '../../../styles/style'
 import { IcoFireTop } from '../../atoms/iconFireTop'
+import mainContext from '../../../store/context/context'
 
 // Переменные
 const wait = (timeout) => {
@@ -31,6 +34,9 @@ export function CourseSlideOne({ navigation }) {
   const [data, setData] = useState([])
 
   const [refreshing, setRefreshing] = React.useState(false)
+
+  const [displayName, setDisplayName] = useState(null)
+  const { userProfile, loggingIn, doLogout, doUpdate } = useContext(mainContext)
 
   const getCourses = async () => {
     try {

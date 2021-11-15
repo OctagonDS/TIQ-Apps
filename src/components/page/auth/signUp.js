@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import {
   View,
   Text,
@@ -8,19 +8,19 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
-} from "react-native"
-import { gStyle } from "../../../styles/style"
-import { ArrowLeft } from "../../atoms/arrowLeft"
-import { LinearGradient } from "expo-linear-gradient"
+} from 'react-native'
+import { gStyle } from '../../../styles/style'
+import { ArrowLeft } from '../../atoms/arrowLeft'
+import { LinearGradient } from 'expo-linear-gradient'
 
-const image = require("../../../assets/img/black-geo.png")
+const image = require('../../../assets/img/black-geo.png')
 
 const GradientBtn = ({ name }) => (
   <LinearGradient
-    colors={["#FF741F", "#E86312"]}
+    colors={['#FF741F', '#E86312']}
     start={{ x: 0, y: 0 }}
     end={{ x: 1, y: 0 }}
-    style={{ flex: 1, borderRadius: 5, justifyContent: "center" }}
+    style={{ flex: 1, borderRadius: 5, justifyContent: 'center' }}
   >
     <Text style={styles.submitTextLog}>{name}</Text>
   </LinearGradient>
@@ -29,7 +29,7 @@ const GradientBtn = ({ name }) => (
 export const SignUp = ({ navigation: { goBack }, navigation }) => {
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
       <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
@@ -39,12 +39,12 @@ export const SignUp = ({ navigation: { goBack }, navigation }) => {
         >
           <ArrowLeft />
         </TouchableOpacity>
-        <View style={{ flex: 1, justifyContent: "center" }}>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
           <Text style={styles.title}>Registrieren</Text>
-          <View style={{ marginTop: "8%" }}>
+          <View style={{ marginTop: '8%' }}>
             <View style={styles.labelmail}>
-              <Text style={{ color: "#FF741F" }}>
-                Email <Text style={{ color: "#DA1414" }}>*</Text>
+              <Text style={{ color: '#FF741F' }}>
+                Email <Text style={{ color: '#DA1414' }}>*</Text>
               </Text>
             </View>
             <TextInput
@@ -55,10 +55,10 @@ export const SignUp = ({ navigation: { goBack }, navigation }) => {
               keyboardType="email-address"
             />
           </View>
-          <View style={{ marginTop: "8%" }}>
+          <View style={{ marginTop: '8%' }}>
             <View style={styles.labelB}>
-              <Text style={{ color: "#FF741F" }}>
-                Benutzername <Text style={{ color: "#DA1414" }}>*</Text>
+              <Text style={{ color: '#FF741F' }}>
+                Benutzername <Text style={{ color: '#DA1414' }}>*</Text>
               </Text>
             </View>
             <TextInput
@@ -69,15 +69,15 @@ export const SignUp = ({ navigation: { goBack }, navigation }) => {
               keyboardType="default"
             />
           </View>
-          <View style={{ marginTop: "8%" }}>
+          <View style={{ marginTop: '8%' }}>
             <View style={styles.label}>
-              <Text style={{ color: "#FF741F" }}>
-                Passwort <Text style={{ color: "#DA1414" }}>*</Text>
+              <Text style={{ color: '#FF741F' }}>
+                Telefonnummer <Text style={{ color: '#DA1414' }}>*</Text>
               </Text>
             </View>
             <TextInput
               style={styles.input}
-              secureTextEntry={true}
+              keyboardType={'phone-pad'}
               autoCorrect={false}
               autoCapitalize="none"
               autoCompleteType="off"
@@ -86,7 +86,7 @@ export const SignUp = ({ navigation: { goBack }, navigation }) => {
           <View style={styles.block}>
             <TouchableOpacity
               style={styles.wrapper}
-              onPress={() => navigation.navigate("SuccessReg")}
+              onPress={() => navigation.navigate('SuccessReg')}
             >
               <GradientBtn name="Registrieren" />
             </TouchableOpacity>
@@ -99,78 +99,78 @@ export const SignUp = ({ navigation: { goBack }, navigation }) => {
 
 export const styles = StyleSheet.create({
   arrow: {
-    marginLeft: "8%",
-    marginTop: "12%",
-    position: "absolute",
+    marginLeft: '8%',
+    marginTop: '12%',
+    position: 'absolute',
     zIndex: 1,
   },
   label: {
-    backgroundColor: "#fff",
-    width: "20%",
+    backgroundColor: '#fff',
+    width: '33%',
     borderRadius: 4,
-    position: "absolute",
+    position: 'absolute',
     height: 15,
     zIndex: 1,
     paddingLeft: 5,
-    marginLeft: "10%",
+    marginLeft: '10%',
     marginTop: -5,
-    fontFamily: "ub-medium",
+    fontFamily: 'ub-medium',
   },
   labelmail: {
-    backgroundColor: "#fff",
-    width: "15%",
+    backgroundColor: '#fff',
+    width: '15%',
     height: 15,
     borderRadius: 4,
-    position: "absolute",
+    position: 'absolute',
     zIndex: 1,
     paddingLeft: 5,
-    marginLeft: "10%",
+    marginLeft: '10%',
     marginTop: -5,
-    fontFamily: "ub-medium",
+    fontFamily: 'ub-medium',
   },
   labelB: {
-    backgroundColor: "#fff",
-    width: "30%",
+    backgroundColor: '#fff',
+    width: '30%',
     height: 15,
     borderRadius: 4,
-    position: "absolute",
+    position: 'absolute',
     zIndex: 1,
     paddingLeft: 5,
-    marginLeft: "10%",
+    marginLeft: '10%',
     marginTop: -5,
-    fontFamily: "ub-medium",
+    fontFamily: 'ub-medium',
   },
   block: {
-    alignItems: "center",
-    marginTop: "10%",
+    alignItems: 'center',
+    marginTop: '10%',
   },
   wrapper: {
-    width: "70%",
+    width: '70%',
     height: 68,
   },
   submitTextLog: {
-    color: "#fff",
-    textAlign: "center",
-    fontFamily: "ub-medium",
+    color: '#fff',
+    textAlign: 'center',
+    fontFamily: 'ub-medium',
     fontSize: 24,
   },
   title: {
     fontSize: 40,
-    fontFamily: "ub-medium",
-    textAlign: "center",
-    color: "#fff",
+    fontFamily: 'ub-medium',
+    textAlign: 'center',
+    color: '#fff',
     letterSpacing: 2,
-    marginTop: "15%",
+    marginTop: '15%',
   },
   input: {
     borderWidth: 1,
-    borderColor: "#FF741F",
-    width: "86%",
-    marginLeft: "7%",
+    borderColor: '#FF741F',
+    width: '86%',
+    marginLeft: '7%',
     borderRadius: 5,
     height: 60,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     fontSize: 21,
-    paddingLeft: "2%",
+    paddingLeft: '2%',
   },
 })

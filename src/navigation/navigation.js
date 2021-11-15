@@ -1,10 +1,17 @@
-import React from 'react'
-import { Platform, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState, useMemo } from 'react'
+import {
+  Platform,
+  TouchableOpacity,
+  View,
+  Text,
+  ActivityIndicator,
+} from 'react-native'
 import {
   createStackNavigator,
   CardStyleInterpolators,
 } from '@react-navigation/stack'
 import { NavigationContainer, useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { IconCourses } from '../components/atoms/iconCurses'
 import { IconMentor } from '../components/atoms/iconMentor'
@@ -35,13 +42,16 @@ import { FaqPage } from '../components/page/menu/faq'
 import { Modules } from '../components/page/child/module'
 import { DraweModules } from './Courses/draweModules'
 
+import { loginUrl } from '../store/const/const'
+import mainContext, { doSome } from '../store/context/context'
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { LinearGradient } from 'expo-linear-gradient'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
-function StackNav() {
+function StackAuth() {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -49,13 +59,6 @@ function StackNav() {
         headerBackTitleStyle: { color: '#353535' },
       }}
     >
-      <Stack.Screen
-        name="Home"
-        component={MyTabs}
-        options={{
-          headerShown: false,
-        }}
-      />
       <Stack.Screen
         name="Greeting"
         component={Greeting}
@@ -94,6 +97,25 @@ function StackNav() {
         options={{
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+    </Stack.Navigator>
+  )
+}
+
+function StackNav() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTintColor: '#353535',
+        headerBackTitleStyle: { color: '#353535' },
+      }}
+    >
+      <Stack.Screen
+        name="Home"
+        component={MyTabs}
+        options={{
+          headerShown: false,
         }}
       />
       <Stack.Group
@@ -215,6 +237,7 @@ function MyTabs() {
         name="Course"
         component={DraweCourses}
         options={{
+          // unmountOnBlur: true,
           tabBarLabel: 'Курсы',
           tabBarIcon: ({ focused }) => <IconCourses focused={focused} />,
         }}
@@ -258,9 +281,168 @@ function MyTabs() {
 }
 
 export function Navigations() {
+  const [isLoading, setIsLoading] = useState(true)
+  const [isLogged, setIsLogged] = useState(false)
+  const [userToken, setUserToken] = useState(null)
+  const [userProfile, setUserProfile] = useState(null)
+  const [loggingIn, setloggingIn] = useState(false)
+  const [error, setError] = useState(null)
+  const [isUpdate, setIsUpdate] = useState(false)
+
+  useEffect(() => {
+    AsyncStorage.getItem('userProfile').then((value) => {
+      if (value) {
+        setUserProfile(JSON.parse(value)),
+          setIsLoading(false),
+          setIsLogged(true)
+      } else {
+        setIsLoading(false), setIsLogged(false)
+      }
+    })
+  }, [])
+
+  // Выход
+
+  const doLogout = async () => {
+    try {
+      await AsyncStorage.removeItem('userProfile')
+      setloggingIn(true)
+      setUserProfile(null)
+      setloggingIn(false)
+      setIsLogged(false)
+      return true
+    } catch (exception) {
+      setError('Error deleting data')
+      return false
+    }
+  }
+
+  // Авторизация
+
+  const doLogin = async (email, password) => {
+    //console.log(email + '...' + password);
+    setloggingIn(true)
+    setError(null)
+    let formData = new FormData()
+    formData.append('type', 'login')
+    formData.append('email', email)
+    formData.append('password', password)
+    try {
+      let response = await fetch(loginUrl, {
+        method: 'POST',
+        body: formData,
+      })
+      let json = await response.json()
+      //console.log(json);
+      if (json.status != false) {
+        setError(null)
+        try {
+          await AsyncStorage.setItem(
+            'userProfile',
+            JSON.stringify({
+              isLoggedIn: json.status,
+              authToken: json.token,
+              id: json.id,
+              name: json.name,
+              avatar: json.avatar,
+              email: json.email,
+              display_name: json.display_name,
+            })
+          )
+        } catch {
+          setError('Error storing data on device')
+        }
+        setUserProfile({
+          isLoggedIn: json.status,
+          authToken: json.token,
+          id: json.id,
+          name: json.name,
+          avatar: json.avatar,
+          email: json.email,
+          display_name: json.display_name,
+        })
+        setIsLogged(true)
+        setUserProfile(json)
+        setUserToken(json.token)
+      } else {
+        setIsLogged(false)
+        setError('Login Failed')
+      }
+      setloggingIn(false)
+    } catch (error) {
+      //console.error(error);
+      setError('Error connecting to server')
+      setloggingIn(false)
+    }
+  }
+
+  // Обновление данных
+  const doUpdate = async (displayName) => {
+    await AsyncStorage.getItem('userProfile')
+      .then((data) => {
+        data = JSON.parse(data)
+
+        data.display_name = displayName
+
+        AsyncStorage.setItem(
+          'userProfile',
+          JSON.stringify({
+            isLoggedIn: data.isLoggedIn,
+            authToken: data.authToken,
+            id: data.id,
+            name: data.name,
+            avatar: data.avatar,
+            email: data.email,
+            display_name: data.display_name,
+          })
+        )
+
+        setUserProfile({
+          isLoggedIn: data.isLoggedIn,
+          authToken: data.authToken,
+          id: data.id,
+          name: data.name,
+          avatar: data.avatar,
+          email: data.email,
+          display_name: data.display_name,
+        })
+      })
+      .done()
+  }
+
+  // Доступ к данным
+  const wContext = {
+    userProfile: userProfile,
+    loggingIn: loggingIn,
+    error: error,
+    doSome: () => {
+      doSome()
+    },
+    doLogin: (email, password) => {
+      doLogin(email, password)
+    },
+    doLogout: () => {
+      doLogout()
+    },
+    doUpdate: (displayName) => {
+      doUpdate(displayName)
+    },
+  }
+
+  if (isLoading) {
+    // Checking if already logged in
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator animating={true} size="large" />
+      </View>
+    )
+  }
+
   return (
-    <NavigationContainer>
-      <StackNav />
-    </NavigationContainer>
+    <mainContext.Provider value={wContext}>
+      <NavigationContainer initialRouteName="Greeting">
+        {isLogged == false ? <StackAuth /> : <StackNav />}
+      </NavigationContainer>
+    </mainContext.Provider>
   )
 }

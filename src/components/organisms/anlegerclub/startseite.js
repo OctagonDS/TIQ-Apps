@@ -39,16 +39,10 @@ const GradientBtn = ({ name }) => (
 
 export const Startseite = (props) => {
   const video = React.useRef(null)
-  const [refreshing, setRefreshing] = React.useState(false)
   const [status, setStatus] = React.useState({})
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true)
-    wait(2000).then(() => setRefreshing(false))
-  }, [])
-
-  function statusPlsy() {
-    if (status.isPlaying || status.positionMillis > 0) {
+  function statusPlay() {
+    if (status.isPlaying) {
       return { display: 'none' }
     } else {
       return {
@@ -63,9 +57,6 @@ export const Startseite = (props) => {
   return (
     <View style={gStyle.main}>
       <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
         contentContainerStyle={{
           paddingBottom: Platform.OS === 'android' ? 90 : 110,
         }}
@@ -86,11 +77,24 @@ export const Startseite = (props) => {
             resizeMode="contain"
             isLooping
             onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-            posterSource={require('../../../../src/assets/img/posterAnleger.jpg')}
-            usePoster={true}
+            posterSource={{
+              uri: 'https://1693712952.rsc.cdn77.org/109043/assets/1631259341220_1612095506214_Herzlich_Wilkommen_Anlegerclub.jpg',
+            }}
+            usePoster
             posterStyle={{ alignSelf: 'center', width: 320, height: 200 }}
           />
-          <View style={statusPlsy()}>
+          <View
+            style={
+              status.isPlaying || status.positionMillis > 0
+                ? { display: 'none' }
+                : {
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    position: 'absolute',
+                    alignSelf: 'center',
+                  }
+            }
+          >
             <TouchableOpacity
               style={{ width: 68, height: 68 }}
               onPress={() => video.current.playAsync()}

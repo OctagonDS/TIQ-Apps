@@ -96,7 +96,7 @@ export const Startseite = (props) => {
             }
           >
             <TouchableOpacity
-              style={{ width: 68, height: 68 }}
+              style={{ width: 50, height: 50 }}
               onPress={() => video.current.playAsync()}
             >
               <GradientBtn />

@@ -11,6 +11,7 @@ import {
   StyleSheet,
   Animated,
   TouchableOpacity,
+  Platform,
 } from 'react-native'
 import { gStyle } from '../../../styles/style'
 import { IcoFireTop } from '../../atoms/iconFireTop'

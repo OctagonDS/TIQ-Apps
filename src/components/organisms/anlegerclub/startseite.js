@@ -41,19 +41,6 @@ export const Startseite = (props) => {
   const video = React.useRef(null)
   const [status, setStatus] = React.useState({})
 
-  function statusPlay() {
-    if (status.isPlaying) {
-      return { display: 'none' }
-    } else {
-      return {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        position: 'absolute',
-        alignSelf: 'center',
-      }
-    }
-  }
-
   return (
     <View style={gStyle.main}>
       <ScrollView

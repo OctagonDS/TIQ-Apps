@@ -262,7 +262,7 @@ function MyTabs() {
         name="Anleger"
         component={DraweAnleger}
         options={{
-          unmountOnBlur: true,
+          // unmountOnBlur: true,
           tabBarLabel: 'Анлегер клуб',
           tabBarIcon: ({ focused }) => <IconAnleger focused={focused} />,
         }}

@@ -12,6 +12,7 @@ import {
   Animated,
   TouchableOpacity,
   useWindowDimensions,
+  Platform,
 } from 'react-native'
 import { gStyle } from '../../../styles/style'
 import HTML from 'react-native-render-html'

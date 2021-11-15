@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   Button,
   TextInput,
+  Platform,
 } from 'react-native'
 import { gStyle } from '../../../styles/style'
 import { IcoFireTop } from '../../atoms/iconFireTop'

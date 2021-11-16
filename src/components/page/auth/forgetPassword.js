@@ -97,7 +97,7 @@ export const ForgetPass = ({ navigation: { goBack }, navigation }) => {
           <View style={{ marginTop: '8%' }}>
             <View style={styles.label}>
               <Text style={{ color: '#FF741F' }}>
-                Benutzername oder E-Mail-Adresse{' '}
+                Benutzername oder E-Mail-Adresse
                 <Text style={{ color: '#DA1414' }}>*</Text>
               </Text>
             </View>

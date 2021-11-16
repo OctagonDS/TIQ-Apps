@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useRef } from 'react'
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
-  TouchableWithoutFeedback,
+  Animated,
 } from 'react-native'
 import { gStyle } from '../../../styles/style'
 import { ArrowLeft } from '../../atoms/arrowLeft'
@@ -28,6 +28,29 @@ const GradientBtn = ({ name }) => (
   </LinearGradient>
 )
 
+const FadeInView = (props) => {
+  const fadeAnim = useRef(new Animated.Value(0)).current // Initial value for opacity: 0
+
+  React.useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 400,
+      useNativeDriver: true,
+    }).start()
+  }, [fadeAnim])
+
+  return (
+    <Animated.View // Special animatable View
+      style={{
+        ...props.style,
+        opacity: fadeAnim, // Bind opacity to animated value
+      }}
+    >
+      {props.children}
+    </Animated.View>
+  )
+}
+
 export const SignIn = ({ navigation: { goBack }, navigation }) => {
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
@@ -39,18 +62,26 @@ export const SignIn = ({ navigation: { goBack }, navigation }) => {
       style={{ flex: 1 }}
     >
       <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.arrow}
         >
           <ArrowLeft />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={{ flex: 1, justifyContent: 'center' }}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.arrow}
+          >
+            <ArrowLeft />
+          </TouchableOpacity>
           <Text style={styles.title}>Anmelden</Text>
           {error && (
-            <View style={styles.error}>
-              <Text style={styles.errortext}>{error}</Text>
-            </View>
+            <FadeInView>
+              <View style={styles.error}>
+                <Text style={styles.errortext}>{error}</Text>
+              </View>
+            </FadeInView>
           )}
           <View style={{ marginTop: '8%' }}>
             <View style={styles.labelmail}>
@@ -106,9 +137,9 @@ export const SignIn = ({ navigation: { goBack }, navigation }) => {
 
 export const styles = StyleSheet.create({
   arrow: {
-    marginLeft: '8%',
-    marginTop: '12%',
-    position: 'absolute',
+    left: '8%',
+    top: '0%',
+    // position: 'absolute',
     zIndex: 1,
   },
   label: {

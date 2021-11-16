@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Platform,
   TouchableOpacity,
@@ -290,6 +290,7 @@ export function Navigations() {
   const [userProfile, setUserProfile] = useState(null)
   const [loggingIn, setloggingIn] = useState(false)
   const [error, setError] = useState(null)
+  const [errorReset, setErrorReset] = useState(null)
   const [successReset, setSuccessReset] = useState(null)
   const [isUpdate, setIsUpdate] = useState(false)
 
@@ -384,7 +385,7 @@ export function Navigations() {
     //console.log(email + '...' + password);
     setloggingIn(false)
     setSuccessReset(null)
-    setError(null)
+    setErrorReset(null)
     let formData = new FormData()
     formData.append('login', email)
     try {
@@ -396,11 +397,11 @@ export function Navigations() {
       if (json.code == 200) {
         setSuccessReset('Überprüfe deine E-Mail auf einen.')
       } else {
-        setError('Kein solcher Account')
+        setErrorReset('Kein solcher Account')
       }
     } catch (error) {
       //console.error(error);
-      setError('Error connecting to server')
+      setErrorReset('Error connecting to server')
       setloggingIn(false)
     }
   }
@@ -446,6 +447,7 @@ export function Navigations() {
     loggingIn: loggingIn,
     error: error,
     successReset: successReset,
+    errorReset: errorReset,
     doSome: () => {
       doSome()
     },

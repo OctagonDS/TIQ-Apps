@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  Keyboard,
 } from 'react-native'
 import { gStyle } from '../../../styles/style'
 import { ArrowLeft } from '../../atoms/arrowLeft'
@@ -27,19 +28,40 @@ const GradientBtn = ({ name }) => (
 )
 
 export const SignUp = ({ navigation: { goBack }, navigation }) => {
+  const [keyboardStatus, setKeyboardStatus] = useState(undefined)
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardStatus('true')
+    })
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardStatus('false')
+    })
+
+    return () => {
+      showSubscription.remove()
+      hideSubscription.remove()
+    }
+  }, [])
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
       <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.arrow}
         >
           <ArrowLeft />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={{ flex: 1, justifyContent: 'center' }}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.arrow}
+          >
+            <ArrowLeft />
+          </TouchableOpacity>
           <Text style={styles.title}>Registrieren</Text>
           <View style={{ marginTop: '8%' }}>
             <View style={styles.labelmail}>
@@ -99,9 +121,9 @@ export const SignUp = ({ navigation: { goBack }, navigation }) => {
 
 export const styles = StyleSheet.create({
   arrow: {
-    marginLeft: '8%',
-    marginTop: '12%',
-    position: 'absolute',
+    left: '8%',
+    top: '0%',
+    // position: 'absolute',
     zIndex: 1,
   },
   label: {

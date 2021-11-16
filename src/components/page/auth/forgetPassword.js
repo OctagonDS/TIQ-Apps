@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useRef } from 'react'
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  Animated,
 } from 'react-native'
 import { gStyle } from '../../../styles/style'
 import { ArrowLeft } from '../../atoms/arrowLeft'
@@ -27,9 +28,33 @@ const GradientBtn = ({ name }) => (
   </LinearGradient>
 )
 
+const FadeInView = (props) => {
+  const fadeAnim = useRef(new Animated.Value(0)).current // Initial value for opacity: 0
+
+  React.useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 400,
+      useNativeDriver: true,
+    }).start()
+  }, [fadeAnim])
+
+  return (
+    <Animated.View // Special animatable View
+      style={{
+        ...props.style,
+        opacity: fadeAnim, // Bind opacity to animated value
+      }}
+    >
+      {props.children}
+    </Animated.View>
+  )
+}
+
 export const ForgetPass = ({ navigation: { goBack }, navigation }) => {
   const [email, setEmail] = useState(null)
-  const { successReset, loggingIn, doReset, error } = useContext(mainContext)
+  const { successReset, loggingIn, doReset, errorReset } =
+    useContext(mainContext)
 
   return (
     <KeyboardAvoidingView
@@ -56,16 +81,18 @@ export const ForgetPass = ({ navigation: { goBack }, navigation }) => {
               <Text style={styles.successtext}>{successReset}</Text>
             </View>
           )}
-          {error && (
-            <View
-              style={
-                error == null || successReset != null
-                  ? { display: 'none' }
-                  : styles.error
-              }
-            >
-              <Text style={styles.errortext}>{error}</Text>
-            </View>
+          {errorReset && (
+            <FadeInView>
+              <View
+                style={
+                  errorReset == null || successReset != null
+                    ? { display: 'none' }
+                    : styles.error
+                }
+              >
+                <Text style={styles.errortext}>{errorReset}</Text>
+              </View>
+            </FadeInView>
           )}
           <View style={{ marginTop: '8%' }}>
             <View style={styles.label}>
@@ -101,8 +128,8 @@ export const ForgetPass = ({ navigation: { goBack }, navigation }) => {
 
 export const styles = StyleSheet.create({
   arrow: {
-    marginLeft: '8%',
-    marginTop: '12%',
+    left: '8%',
+    top: '12%',
     position: 'absolute',
     zIndex: 1,
   },
@@ -168,7 +195,7 @@ export const styles = StyleSheet.create({
     width: '80%',
     borderRadius: 5,
     borderColor: '#f5c6cb',
-    marginTop: 10,
+    marginTop: 15,
     alignSelf: 'center',
   },
   errortext: {

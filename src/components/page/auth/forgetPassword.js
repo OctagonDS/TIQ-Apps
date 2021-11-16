@@ -28,6 +28,8 @@ const GradientBtn = ({ name }) => (
   </LinearGradient>
 )
 
+// Анимация
+
 const FadeInView = (props) => {
   const fadeAnim = useRef(new Animated.Value(0)).current // Initial value for opacity: 0
 

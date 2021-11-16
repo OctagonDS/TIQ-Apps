@@ -25,7 +25,7 @@ const GradientBtn = ({ name }) => (
     end={{ x: 1, y: 0 }}
     style={{
       flex: 1,
-      borderRadius: 100,
+      borderRadius: 25,
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
@@ -45,7 +45,8 @@ export const Startseite = (props) => {
     <View style={gStyle.main}>
       <ScrollView
         contentContainerStyle={{
-          paddingBottom: Platform.OS === 'android' ? 90 : 110,
+          paddingBottom: Platform.OS === 'android' ? 90 : 125,
+          paddingTop: 10,
         }}
       >
         {/* https://iq-online.club/TIQ-VIDEO/Anlegerclub/Start-Videos/Startseite%20Anlegerclub%20Willkommen.mp4 */}
@@ -68,7 +69,12 @@ export const Startseite = (props) => {
               uri: 'https://1693712952.rsc.cdn77.org/109043/assets/1631259341220_1612095506214_Herzlich_Wilkommen_Anlegerclub.jpg',
             }}
             usePoster
-            posterStyle={{ alignSelf: 'center', width: 320, height: 200 }}
+            posterStyle={{
+              alignSelf: 'center',
+              width: 320,
+              height: 200,
+              resizeMode: 'cover',
+            }}
           />
           <View
             style={

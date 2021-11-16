@@ -30,6 +30,8 @@ const GradientBtn = ({ name }) => (
 export const SignUp = ({ navigation: { goBack }, navigation }) => {
   const [keyboardStatus, setKeyboardStatus] = useState(undefined)
 
+  // Прослушка события клавиатуры
+
   useEffect(() => {
     const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardStatus('true')
@@ -43,6 +45,7 @@ export const SignUp = ({ navigation: { goBack }, navigation }) => {
       hideSubscription.remove()
     }
   }, [])
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

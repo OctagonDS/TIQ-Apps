@@ -55,7 +55,7 @@ export const SignIn = ({ navigation: { goBack }, navigation }) => {
           <View style={{ marginTop: '8%' }}>
             <View style={styles.labelmail}>
               <Text style={{ color: '#FF741F' }}>
-                Email <Text style={{ color: '#DA1414' }}>*</Text>
+                Username or Email <Text style={{ color: '#DA1414' }}>*</Text>
               </Text>
             </View>
             <TextInput
@@ -125,7 +125,7 @@ export const styles = StyleSheet.create({
   },
   labelmail: {
     backgroundColor: '#fff',
-    width: '15%',
+    width: '38%',
     height: 15,
     borderRadius: 4,
     position: 'absolute',

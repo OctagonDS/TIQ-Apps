@@ -1,3 +1,3 @@
-const loginUrl = 'https://kurse.traderiq.net/wp-react-login.php' //CHANGE THIS AS NEEDED
+const loginUrl = 'https://kurse.traderiq.net/api/wp-react-login.php' //CHANGE THIS AS NEEDED
 
 export { loginUrl }

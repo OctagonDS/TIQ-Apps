@@ -43,6 +43,7 @@ import { Modules } from '../components/page/child/module'
 import { DraweModules } from './Courses/draweModules'
 
 import { loginUrl } from '../store/const/const'
+import { resetUrl } from '../store/const/constReset'
 import mainContext, { doSome } from '../store/context/context'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -87,6 +88,7 @@ function StackAuth() {
         name="ForgetPass"
         component={ForgetPass}
         options={{
+          unmountOnBlur: true,
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
@@ -288,6 +290,7 @@ export function Navigations() {
   const [userProfile, setUserProfile] = useState(null)
   const [loggingIn, setloggingIn] = useState(false)
   const [error, setError] = useState(null)
+  const [successReset, setSuccessReset] = useState(null)
   const [isUpdate, setIsUpdate] = useState(false)
 
   useEffect(() => {
@@ -366,9 +369,35 @@ export function Navigations() {
         setUserToken(json.token)
       } else {
         setIsLogged(false)
-        setError('Login Failed')
+        setError('Ungültige E-Mail oder Passwort')
       }
       setloggingIn(false)
+    } catch (error) {
+      //console.error(error);
+      setError('Error connecting to server')
+      setloggingIn(false)
+    }
+  }
+
+  // Сброс пароля
+  const doReset = async (email) => {
+    //console.log(email + '...' + password);
+    setloggingIn(false)
+    setSuccessReset(null)
+    setError(null)
+    let formData = new FormData()
+    formData.append('login', email)
+    try {
+      let response = await fetch(resetUrl, {
+        method: 'POST',
+        body: formData,
+      })
+      let json = await response.json()
+      if (json.code == 200) {
+        setSuccessReset('Überprüfe deine E-Mail auf einen.')
+      } else {
+        setError('Kein solcher Account')
+      }
     } catch (error) {
       //console.error(error);
       setError('Error connecting to server')
@@ -416,6 +445,7 @@ export function Navigations() {
     userProfile: userProfile,
     loggingIn: loggingIn,
     error: error,
+    successReset: successReset,
     doSome: () => {
       doSome()
     },
@@ -424,6 +454,9 @@ export function Navigations() {
     },
     doLogout: () => {
       doLogout()
+    },
+    doReset: (email) => {
+      doReset(email)
     },
     doUpdate: (displayName) => {
       doUpdate(displayName)

@@ -16,7 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { IconCourses } from '../components/atoms/iconCurses'
 import { IconMentor } from '../components/atoms/iconMentor'
 import { Iconfeedback } from '../components/atoms/iconFeedback'
-import { IconAnleger } from '../components/atoms/iconAnleger'
+import IconAnleger from '../components/atoms/iconAnleger'
 import { IconNot } from '../components/atoms/iconNotifications'
 import { ArrowLeftScreen } from '../components/atoms/arrowLeftScreen'
 import { IconSearchClose } from '../components/atoms/iconSearchClose'
@@ -284,7 +284,7 @@ function MyTabs() {
   )
 }
 
-export function Navigations() {
+function Navigations() {
   const [isLoading, setIsLoading] = useState(true)
   const [isLogged, setIsLogged] = useState(false)
   const [userToken, setUserToken] = useState(null)
@@ -541,3 +541,5 @@ export function Navigations() {
     </mainContext.Provider>
   )
 }
+
+export default Navigations

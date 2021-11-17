@@ -1,8 +1,8 @@
-import React from "react"
-import { View, StyleSheet } from "react-native"
-import Svg, { Path } from "react-native-svg"
+import React from 'react'
+import { View, StyleSheet } from 'react-native'
+import Svg, { Path } from 'react-native-svg'
 
-export const ArrowLeft = (props) => {
+const ArrowLeft = (props) => {
   return (
     <View>
       <Svg
@@ -22,3 +22,5 @@ export const ArrowLeft = (props) => {
 }
 
 const styles = StyleSheet.create({})
+
+export default ArrowLeft

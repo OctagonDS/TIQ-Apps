@@ -10,7 +10,7 @@ import {
   Platform,
 } from 'react-native'
 import { gStyle } from '../../../styles/style'
-import { ArrowLeft } from '../../atoms/arrowLeft'
+import ArrowLeft from '../../atoms/arrowLeft'
 import { LinearGradient } from 'expo-linear-gradient'
 
 const image = require('../../../assets/img/black-geo.png')

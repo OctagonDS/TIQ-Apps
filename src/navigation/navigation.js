@@ -33,7 +33,6 @@ import { Greeting } from '../components/page/auth/greeting'
 import { ForgetPass } from '../components/page/auth/forgetPassword'
 import { SignIn } from '../components/page/auth/signIn'
 import { SignUp } from '../components/page/auth/signUp'
-import { SuccessReg } from '../components/page/auth/successReg'
 import { ProfilePage } from '../components/page/menu/profile'
 import { SuccessScale } from '../components/page/menu/successScale'
 import { SearchModal } from '../components/page/menu/search'
@@ -90,14 +89,6 @@ function StackAuth() {
         component={ForgetPass}
         options={{
           unmountOnBlur: true,
-          headerShown: false,
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-      <Stack.Screen
-        name="SuccessReg"
-        component={SuccessReg}
-        options={{
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
@@ -292,7 +283,9 @@ function Navigations() {
   const [loggingIn, setloggingIn] = useState(false)
   const [error, setError] = useState(null)
   const [errorReset, setErrorReset] = useState(null)
+  const [errorUp, setErrorUp] = useState(null)
   const [successReset, setSuccessReset] = useState(null)
+  const [successUp, setSuccessUp] = useState(null)
   const [isUpdate, setIsUpdate] = useState(false)
 
   useEffect(() => {
@@ -383,55 +376,58 @@ function Navigations() {
 
   // Регистрация
 
-  const doSingUp = async (email, password) => {
+  const doSingUp = async (email, name, phoneNumber) => {
     //console.log(email + '...' + password);
-    setloggingIn(true)
-    setError(null)
-    let formData = new FormData()
-    formData.append('type', 'login')
-    formData.append('email', email)
-    formData.append('password', password)
+    setloggingIn(false)
+    setErrorUp(null)
+    setSuccessUp(null)
+    let myHeaders = new Headers()
+    myHeaders.append(
+      'Authorization',
+      'Bearer fcvJCBq0XY-JAj34UoyvR3QygbDF2LE8CfxR0gJQjuk'
+    )
+    myHeaders.append('Content-Type', 'application/json')
+    let raw = JSON.stringify({
+      contact: {
+        first_name: name,
+        mail: email,
+        duplicate_check_method: 'email',
+        duplicate_merge_method: 'update_add',
+        terms: [280],
+      },
+    })
     try {
-      let response = await fetch(loginUrl, {
-        method: 'POST',
-        body: formData,
-      })
-      let json = await response.json()
-      if (json.status != false) {
-        setError(null)
-        try {
-          await AsyncStorage.setItem(
-            'userProfile',
-            JSON.stringify({
-              isLoggedIn: json.status,
-              authToken: json.token,
-              id: json.id,
-              name: json.name,
-              avatar: json.avatar,
-              email: json.email,
-              display_name: json.display_name,
-            })
-          )
-        } catch {
-          setError('Error storing data on device')
+      let dubl = await fetch(
+        `https://q0ydly.eu-2.quentn.com/public/api/v1/contact/${email}`,
+        {
+          method: 'GET',
+          headers: myHeaders,
         }
-        setUserProfile({
-          isLoggedIn: json.status,
-          authToken: json.token,
-          id: json.id,
-          name: json.name,
-          avatar: json.avatar,
-          email: json.email,
-          display_name: json.display_name,
-        })
-        setIsLogged(true)
-        setUserProfile(json)
-        setUserToken(json.token)
+      )
+      let jsondubl = await dubl.json()
+      if (email == null || name == null || phoneNumber == null) {
+        setErrorUp('Nicht alle Felder sind ausgefüllt')
+      } else if (jsondubl.error == true) {
+        try {
+          let response = await fetch(signUpUrl, {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+          })
+          let json = await response.json()
+          setSuccessUp(
+            'Die Zugangsdaten zum App kommen per E-Mail. Dafür brauchen wir Deine Genehmigung.'
+          )
+        } catch (error) {
+          //console.error(error);
+          setError('Error connecting to server')
+          setloggingIn(false)
+        }
       } else {
-        setIsLogged(false)
-        setError('Ungültige E-Mail oder Passwort')
+        setErrorUp(
+          'Ein Benutzer mit derselben E-Mail-Adresse existiert bereits'
+        )
       }
-      setloggingIn(false)
     } catch (error) {
       //console.error(error);
       setError('Error connecting to server')
@@ -507,11 +503,16 @@ function Navigations() {
     error: error,
     successReset: successReset,
     errorReset: errorReset,
+    successUp: successUp,
+    errorUp: errorUp,
     doSome: () => {
       doSome()
     },
     doLogin: (email, password) => {
       doLogin(email, password)
+    },
+    doSingUp: (email, name, phoneNumber) => {
+      doSingUp(email, name, phoneNumber)
     },
     doLogout: () => {
       doLogout()

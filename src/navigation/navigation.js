@@ -44,6 +44,7 @@ import { DraweModules } from './Courses/draweModules'
 
 import { loginUrl } from '../store/const/const'
 import { resetUrl } from '../store/const/constReset'
+import { signUpUrl, signUpUrlAdmin } from '../store/const/constSignUp'
 import mainContext, { doSome } from '../store/context/context'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -325,6 +326,64 @@ export function Navigations() {
   // Авторизация
 
   const doLogin = async (email, password) => {
+    //console.log(email + '...' + password);
+    setloggingIn(true)
+    setError(null)
+    let formData = new FormData()
+    formData.append('type', 'login')
+    formData.append('email', email)
+    formData.append('password', password)
+    try {
+      let response = await fetch(loginUrl, {
+        method: 'POST',
+        body: formData,
+      })
+      let json = await response.json()
+      if (json.status != false) {
+        setError(null)
+        try {
+          await AsyncStorage.setItem(
+            'userProfile',
+            JSON.stringify({
+              isLoggedIn: json.status,
+              authToken: json.token,
+              id: json.id,
+              name: json.name,
+              avatar: json.avatar,
+              email: json.email,
+              display_name: json.display_name,
+            })
+          )
+        } catch {
+          setError('Error storing data on device')
+        }
+        setUserProfile({
+          isLoggedIn: json.status,
+          authToken: json.token,
+          id: json.id,
+          name: json.name,
+          avatar: json.avatar,
+          email: json.email,
+          display_name: json.display_name,
+        })
+        setIsLogged(true)
+        setUserProfile(json)
+        setUserToken(json.token)
+      } else {
+        setIsLogged(false)
+        setError('Ungültige E-Mail oder Passwort')
+      }
+      setloggingIn(false)
+    } catch (error) {
+      //console.error(error);
+      setError('Error connecting to server')
+      setloggingIn(false)
+    }
+  }
+
+  // Регистрация
+
+  const doSingUp = async (email, password) => {
     //console.log(email + '...' + password);
     setloggingIn(true)
     setError(null)

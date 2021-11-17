@@ -14,7 +14,7 @@ import mainContext from '../../../store/context/context'
 
 export const ProfilePage = (props) => {
   const [displayName, setDisplayName] = useState(null)
-  const { userProfile, loggingIn, doLogout, doUpdate } = useContext(mainContext)
+  const { userProfile, loggingIn, doUpdate } = useContext(mainContext)
 
   return (
     <View style={gStyle.main}>

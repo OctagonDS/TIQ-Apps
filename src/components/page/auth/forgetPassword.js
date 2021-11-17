@@ -79,9 +79,11 @@ export const ForgetPass = ({ navigation: { goBack }, navigation }) => {
             </Text>
           </View>
           {successReset && (
-            <View style={styles.success}>
-              <Text style={styles.successtext}>{successReset}</Text>
-            </View>
+            <FadeInView>
+              <View style={styles.success}>
+                <Text style={styles.successtext}>{successReset}</Text>
+              </View>
+            </FadeInView>
           )}
           {errorReset && (
             <FadeInView>
@@ -185,7 +187,7 @@ export const styles = StyleSheet.create({
     width: '80%',
     borderRadius: 5,
     borderColor: '#d6e9c6',
-    marginTop: 10,
+    marginTop: 15,
     alignSelf: 'center',
   },
   successtext: {

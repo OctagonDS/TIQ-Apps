@@ -53,6 +53,7 @@ const tagsStyles = {
   },
   a: {
     color: '#ff741f',
+    textDecorationLine: 'none',
   },
 }
 
@@ -434,15 +435,6 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
     marginBottom: 10,
-  },
-  textStyle: {
-    color: '#000',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
   },
   modalTitle: {
     marginBottom: 15,

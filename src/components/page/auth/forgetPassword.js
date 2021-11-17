@@ -64,13 +64,19 @@ export const ForgetPass = ({ navigation: { goBack }, navigation }) => {
       style={{ flex: 1 }}
     >
       <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.arrow}
         >
           <ArrowLeft />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={{ flex: 1, justifyContent: 'center' }}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.arrow}
+          >
+            <ArrowLeft />
+          </TouchableOpacity>
           <View style={{ marginTop: '8%', marginLeft: '5%', width: '90%' }}>
             <Text style={styles.text}>
               Bitte gib deinen Benutzernamen oder deine E-Mail-Adresse an. Du
@@ -133,8 +139,8 @@ export const ForgetPass = ({ navigation: { goBack }, navigation }) => {
 export const styles = StyleSheet.create({
   arrow: {
     left: '8%',
-    top: '12%',
-    position: 'absolute',
+    top: '0%',
+    // position: 'absolute',
     zIndex: 1,
   },
   label: {

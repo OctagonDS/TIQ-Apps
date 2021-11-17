@@ -33,7 +33,11 @@ local.properties
 
 # node.js
 #
+<<<<<<< HEAD
 node_modules /
+=======
+node_modules/
+>>>>>>> parent of 61c5d0c0 (node)
 npm-debug.log
 yarn-error.log
 
@@ -52,3 +56,4 @@ buck-out/
 # Expo
 .expo/
 web-build/
+node_modules

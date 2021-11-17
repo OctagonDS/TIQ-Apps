@@ -344,7 +344,11 @@ export const Greeting = ({ navigation }) => {
             Laut{' '}
             <Text
               style={{ color: '#FF741F' }}
-              onPress={() => WebBrowser.openBrowserAsync('https://google.com')}
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  'https://www.provenexpert.com/traderiq-gmbh'
+                )
+              }
             >
               Provenexpert
             </Text>

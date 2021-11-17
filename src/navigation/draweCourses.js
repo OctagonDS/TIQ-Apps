@@ -1,27 +1,27 @@
-import React from "react"
+import React from 'react'
 import {
   View,
   Text,
   StyleSheet,
   Platform,
   TouchableOpacity,
-} from "react-native"
+} from 'react-native'
 import {
   DrawerActions,
   useNavigation,
   useFocusEffect,
-} from "@react-navigation/native"
-import { CustomDrawer } from "../components/organisms/customDrawer"
-import { ArrowLeftScreen } from "../components/atoms/arrowLeftScreen"
+} from '@react-navigation/native'
+import { CustomDrawer } from '../components/organisms/customDrawer'
+import { ArrowLeftScreen } from '../components/atoms/arrowLeftScreen'
 
-import { IconBurger } from "../components/atoms/iconBurger"
-import { IconSearch } from "../components/atoms/iconSearch"
-import { IconRef } from "../components/atoms/iconRef"
+import { IconBurger } from '../components/atoms/iconBurger'
+import { IconSearch } from '../components/atoms/iconSearch'
+import { IconRef } from '../components/atoms/iconRef'
 
-import { Courses } from "../components/page/courses"
-import { Productpage } from "../components/page/child/product"
+import { Courses } from '../components/page/courses'
+import { Productpage } from '../components/page/child/product'
 
-import { createDrawerNavigator } from "@react-navigation/drawer"
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Drawer = createDrawerNavigator()
 
@@ -42,21 +42,21 @@ export function DraweCourses({ navigation: { goBack } }) {
       // defaultStatus="open"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
-        drawerPosition: "right",
-        drawerType: "slide",
+        drawerPosition: 'right',
+        drawerType: 'slide',
         drawerStyle: {
-          backgroundImg: "#c6cbef",
-          width: "80%",
+          backgroundImg: '#c6cbef',
+          width: '80%',
         },
         headerStyle: { elevation: 0, shadowOpacity: 0 },
-        headerTitleAlign: "center",
+        headerTitleAlign: 'center',
         // headerShown: false,
         headerLeft: false,
         headerTitle: () => {
           const navigation = useNavigation()
 
           return (
-            <TouchableOpacity onPress={() => navigation.navigate("Search")}>
+            <TouchableOpacity onPress={() => navigation.navigate('Search')}>
               <IconSearch />
             </TouchableOpacity>
           )
@@ -65,7 +65,7 @@ export function DraweCourses({ navigation: { goBack } }) {
           const navigation = useNavigation()
 
           return (
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity
               // onPress={() => alert("Ты поделись ссылкой своей!")}
               >
@@ -87,7 +87,7 @@ export function DraweCourses({ navigation: { goBack } }) {
         name="CoursesDrawer"
         component={Courses}
         options={{
-          title: "Курсы",
+          title: 'Курсы',
         }}
       />
       <Drawer.Screen
@@ -102,7 +102,7 @@ export function DraweCourses({ navigation: { goBack } }) {
               </TouchableOpacity>
             )
           },
-          title: "Продукт",
+          title: 'Продукт',
         }}
       />
     </Drawer.Navigator>

@@ -1,13 +1,24 @@
-import React from "react"
-import { View, Text, ScrollView, StyleSheet, Platform } from "react-native"
-import { gStyle } from "../../styles/style"
+import React from 'react'
+import { View, Text, ScrollView, StyleSheet, Platform } from 'react-native'
+import { gStyle } from '../../styles/style'
 
 export const Mentor = (props) => {
   return (
-    <View style={gStyle.main}>
-      <ScrollView>
-        {/* <Text style={gStyle.title}>Страница менторы</Text> */}
-      </ScrollView>
+    <View
+      style={[
+        gStyle.main,
+        {
+          justifyContent: 'center',
+          paddingHorizontal: 10,
+          paddingBottom: '25%',
+        },
+      ]}
+    >
+      <Text
+        style={{ textAlign: 'center', fontFamily: 'ub-medium', fontSize: 18 }}
+      >
+        Dieser Abschnitt ist vorübergehend nicht verfügbar
+      </Text>
     </View>
   )
 }

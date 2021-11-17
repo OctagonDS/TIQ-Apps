@@ -69,7 +69,7 @@ const GradientBtn = ({ name }) => (
 
 const GradientBtnClose = ({ name }) => (
   <LinearGradient
-    colors={['#FB1818', '#FE4141']}
+    colors={['#FF741F', '#E86312']}
     start={{ x: 0, y: 0 }}
     end={{ x: 1, y: 0 }}
     style={{

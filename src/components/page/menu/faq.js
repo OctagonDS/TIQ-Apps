@@ -14,6 +14,7 @@ import Accordion from 'react-native-collapsible/Accordion'
 const BACON_IPSUM =
   'Bacon ipsum dolor amet chuck turducken landjaeger tongue spare ribs. Picanha beef prosciutto meatball turkey shoulder shank salami cupim doner jowl pork belly cow. Chicken shankle rump swine tail frankfurter meatloaf ground round flank ham hock tongue shank andouille boudin brisket. '
 
+const text = <Text>Привет</Text>
 const CONTENT = [
   {
     title: 'First',
@@ -21,7 +22,7 @@ const CONTENT = [
   },
   {
     title: 'Second',
-    content: BACON_IPSUM,
+    content: text,
   },
   {
     title: 'Third',
@@ -29,6 +30,14 @@ const CONTENT = [
   },
   {
     title: 'Fourth',
+    content: BACON_IPSUM,
+  },
+  {
+    title: 'Fifth',
+    content: BACON_IPSUM,
+  },
+  {
+    title: 'Fifth',
     content: BACON_IPSUM,
   },
   {
@@ -60,7 +69,10 @@ export class FaqPage extends Component {
   renderContent(section, _, isActive) {
     return (
       <View
-        style={[styles.content, isActive ? styles.active : styles.inactive]}
+        style={[
+          styles.content,
+          isActive ? styles.activeContent : styles.inactiveContent,
+        ]}
       >
         <Text>{section.content}</Text>
       </View>
@@ -73,8 +85,6 @@ export class FaqPage extends Component {
     return (
       <View style={gStyle.main}>
         <ScrollView contentContainerStyle={{ paddingTop: 30 }}>
-          <Text style={styles.title}>Accordion Example</Text>
-
           <Accordion
             activeSections={activeSections}
             sections={CONTENT}
@@ -85,6 +95,10 @@ export class FaqPage extends Component {
             duration={400}
             onChange={this.setSections}
             renderAsFlatList={false}
+            sectionContainerStyle={{
+              paddingHorizontal: 10,
+              paddingVertical: 3,
+            }}
           />
         </ScrollView>
       </View>
@@ -111,17 +125,30 @@ const styles = StyleSheet.create({
   headerText: {
     textAlign: 'center',
     fontSize: 16,
-    fontWeight: '500',
+    fontFamily: 'ub-medium',
+    color: '#454A4F',
   },
   content: {
     padding: 20,
     backgroundColor: '#fff',
   },
   active: {
-    backgroundColor: 'rgba(255,255,255,1)',
+    backgroundColor: '#C4C4C4',
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5,
   },
   inactive: {
-    backgroundColor: 'rgba(245,252,255,1)',
+    backgroundColor: '#C4C4C4',
+    borderRadius: 5,
+  },
+  activeContent: {
+    backgroundColor: '#D9D8D8',
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+  },
+  inactiveContent: {
+    backgroundColor: '#C4C4C4',
+    borderRadius: 5,
   },
   selectors: {
     marginBottom: 10,

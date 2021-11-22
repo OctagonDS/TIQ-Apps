@@ -1016,7 +1016,7 @@ const styles = StyleSheet.create({
   },
   line: {
     height: 3,
-    width: 350,
+    width: '95%',
     backgroundColor: '#4E4D4D',
     marginTop: 20,
     alignSelf: 'center',

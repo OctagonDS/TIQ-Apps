@@ -23,10 +23,10 @@ import { IconShieldUl } from '../atoms/iconShieldUl'
 const image = require('../../assets/img/black-geo.png')
 const imageGray = require('../../assets/img/grey-geo.png')
 const anlegerLock = require('../../assets/img/anlegerlock.png')
-const blockOne = 'https://fe20295.online-server.cloud/img/tyrtyr.png'
-const blockTwo = 'https://fe20295.online-server.cloud/img/ghedfs.png'
-const blockThree = 'https://fe20295.online-server.cloud/img/ghjk.png'
-const blockFour = 'https://fe20295.online-server.cloud/img/hrthrt.png'
+const blockOne = require('../../assets/img/tyrtyr.png')
+const blockTwo = require('../../assets/img/ghedfs.png')
+const blockThree = require('../../assets/img/ghjk.png')
+const blockFour = require('../../assets/img/hrthrt.png')
 const Andrey = require('../../assets/img/Andrei-Anissimov.png')
 const Marco = require('../../assets/img/Marco-Ahnert.png')
 const People = require('../../assets/img/1745_oooo.png')
@@ -298,12 +298,7 @@ Dein Andrei Anissimov, Herausgeber.`}
               }}
             >
               <View style={styles.anlegerModul}>
-                <Image
-                  style={styles.imageBlocks}
-                  source={{
-                    uri: blockOne,
-                  }}
-                />
+                <Image style={styles.imageBlocks} source={blockOne} />
                 <Text style={styles.blockText}>Starter Depot</Text>
               </View>
             </ImageBackground>
@@ -381,12 +376,7 @@ Dein Andrei Anissimov, Herausgeber.`}
               }}
             >
               <View style={styles.anlegerModul}>
-                <Image
-                  style={styles.imageBlocks}
-                  source={{
-                    uri: blockTwo,
-                  }}
-                />
+                <Image style={styles.imageBlocks} source={blockTwo} />
                 <Text style={styles.blockText}>Trader Cockpit</Text>
               </View>
             </ImageBackground>
@@ -497,12 +487,7 @@ Dein Andrei Anissimov, Herausgeber.`}
               }}
             >
               <View style={styles.anlegerModul}>
-                <Image
-                  style={styles.imageBlocks}
-                  source={{
-                    uri: blockThree,
-                  }}
-                />
+                <Image style={styles.imageBlocks} source={blockThree} />
                 <Text style={styles.blockText}>Trend Depot</Text>
               </View>
             </ImageBackground>
@@ -613,12 +598,7 @@ Dein Andrei Anissimov, Herausgeber.`}
               }}
             >
               <View style={styles.anlegerModul}>
-                <Image
-                  style={styles.imageBlocks}
-                  source={{
-                    uri: blockFour,
-                  }}
-                />
+                <Image style={styles.imageBlocks} source={blockFour} />
                 <Text style={styles.blockText}>Stillhalter Depot</Text>
               </View>
             </ImageBackground>

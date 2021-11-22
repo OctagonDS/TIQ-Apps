@@ -254,7 +254,7 @@ function MyTabs() {
         component={DraweNotifications}
         options={{
           tabBarLabel: 'Уведомления',
-          tabBarBadge: 6,
+          tabBarBadge: 9,
           tabBarBadgeStyle: { marginTop: 10 },
           tabBarIcon: ({ focused }) => <IconNot focused={focused} />,
         }}

@@ -157,6 +157,7 @@ export const Notifications = (props) => {
                   paddingRight: 10,
                   fontSize: 11,
                   marginTop: 4,
+                  color: '#ACB3BF',
                 }}
               >
                 {item.time}

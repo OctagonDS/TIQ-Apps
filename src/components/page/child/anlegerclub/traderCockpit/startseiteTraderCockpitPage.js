@@ -18,6 +18,7 @@ import mainContext from '../../../../../store/context/context'
 
 const image = require('../../../../../assets/img/black-geo.png')
 const imageGray = require('../../../../../assets/img/grey-geo.png')
+const ghjk = require('../../../../../assets/img/ghjk.png')
 const poster1 =
   'https://kurse.traderiq.net/wp-content/uploads/2021/10/DSC_7578-1-1024x683.jpg'
 const poster2 =
@@ -133,6 +134,47 @@ Dein Andrei Anissimov, Herausgeber.`}
             </Text>
           </ImageBackground>
         </View>
+        <View>
+          <ImageBackground
+            source={imageGray}
+            resizeMode="cover"
+            style={[styles.imageBlock, {}]}
+            imageStyle={{
+              borderRadius: 5,
+              alignSelf: 'flex-end',
+              borderWidth: 1,
+              borderColor: '#ccc',
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                marginTop: 15,
+              }}
+            >
+              <Image style={styles.imageBlocks} source={ghjk} />
+              <Text style={[styles.blockText, { paddingRight: '10%' }]}>
+                Marktanalysen und saisonalitäten
+              </Text>
+            </View>
+            <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
+              <Text
+                style={{
+                  textAlign: 'left',
+                  marginTop: 15,
+                  fontFamily: 'ub-reg',
+                  fontSize: 16,
+                  color: '#4E4D4D',
+                }}
+              >
+                {`Eine der einfachsten und zeitschonendsten Strategien überhaupt. Ein Mal pro Monat wird das Depot mit einem raffinierten Handelssystem angepasst. Damit produziert das System zuverlässig hohe Gewinne.
+
+So investierst Du besser als jeder Fond – mit gerade Mal 10 Minuten pro Monat.`}
+              </Text>
+            </View>
+          </ImageBackground>
+        </View>
       </ScrollView>
     </View>
   )
@@ -158,26 +200,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   imageBlock: {
-    width: 160,
-    height: 160,
+    width: '90%',
+    // height: 160,
     marginTop: 15,
     borderRadius: 8,
     alignSelf: 'center',
-    justifyContent: 'center',
   },
   blockText: {
     color: '#FF741F',
     fontFamily: 'ub-medium',
     fontSize: 19,
-    textAlign: 'center',
-    marginTop: 5,
+    textAlign: 'left',
+    alignSelf: 'center',
   },
   imageBlocks: {
     width: 80,
     height: 80,
     resizeMode: 'contain',
     alignSelf: 'center',
-    // alignContent: 'center',
+    marginHorizontal: 10,
   },
   imageAvatar: {
     overflow: 'hidden',

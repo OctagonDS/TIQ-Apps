@@ -156,7 +156,7 @@ Dein Andrei Anissimov, Herausgeber.`}
               }}
             >
               <Image style={styles.imageBlocks} source={ghjk} />
-              <Text style={[styles.blockText, { paddingRight: '10%' }]}>
+              <Text style={[styles.blockText, { width: '70%' }]}>
                 Marktanalysen und saisonalitäten
               </Text>
             </View>
@@ -197,7 +197,7 @@ So investierst Du besser als jeder Fond – mit gerade Mal 10 Minuten pro Monat.
               }}
             >
               <Image style={styles.imageBlocks} source={das} />
-              <Text style={[styles.blockText, { paddingRight: '10%' }]}>
+              <Text style={[styles.blockText, { width: '70%' }]}>
                 Das Cockpit
               </Text>
             </View>
@@ -238,7 +238,7 @@ Dich erwartet die komplette Marktkontrolle für die richtigen Trading-Entscheidu
               }}
             >
               <Image style={styles.imageBlocks} source={dm} />
-              <Text style={[styles.blockText, { paddingRight: '10%' }]}>
+              <Text style={[styles.blockText, { width: '70%' }]}>
                 Die handelssignale
               </Text>
             </View>

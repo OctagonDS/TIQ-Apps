@@ -218,7 +218,7 @@ So investierst Du besser als jeder Fond – mit gerade Mal 10 Minuten pro Monat.
                 <GradientHold />
               </View>
             </View>
-            <View style={{ flexDirection: 'column', paddingRight: 25 }}>
+            <View style={{ flexDirection: 'column', width: '70%' }}>
               <Text style={styles.itemTitle}>Mai 2021:</Text>
               <Text style={styles.itemTitle}>HALTEN DAX-ETF LONG</Text>
             </View>
@@ -241,7 +241,7 @@ Ein Neueinstieg ist nicht sinnvoll.`}
                 <GradientBuy />
               </View>
             </View>
-            <View style={{ flexDirection: 'column', paddingRight: 25 }}>
+            <View style={{ flexDirection: 'column', width: '70%' }}>
               <Text style={styles.itemTitle}>Oktober 2021:</Text>
               <Text style={styles.itemTitle}>
                 VERKAUFEN DAX-ETF SHORT / KAUFEN DAX-ETF LONG

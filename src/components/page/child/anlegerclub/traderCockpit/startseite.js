@@ -14,6 +14,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { Startseite } from '../startseite'
 import { StartseiteTraderCockpitPage } from './startseiteTraderCockpitPage'
+import { СockpitPage } from './сockpitPage'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -52,7 +53,7 @@ export function TraderCockpit() {
       <Tab.Screen
         name="Cockpit"
         options={{ unmountOnBlur: true }}
-        component={Startseite}
+        component={СockpitPage}
       />
       <Tab.Screen
         name="Commodities"

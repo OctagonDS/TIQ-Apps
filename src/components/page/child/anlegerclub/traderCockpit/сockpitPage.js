@@ -1,0 +1,265 @@
+import React, { useState, useRef, useContext } from 'react'
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Platform,
+  Button,
+  RefreshControl,
+  TouchableOpacity,
+  ImageBackground,
+  Image,
+} from 'react-native'
+import { gStyle } from '../../../../../styles/style'
+import { LinearGradient } from 'expo-linear-gradient'
+import { IconPlay } from '../../../../atoms/iconPlay'
+import mainContext from '../../../../../store/context/context'
+
+const image = require('../../../../../assets/img/black-geo.png')
+const imageGray = require('../../../../../assets/img/grey-geo.png')
+const ghjk = require('../../../../../assets/img/ghjk.png')
+const das = require('../../../../../assets/img/ikonki-wich.png')
+const dm = require('../../../../../assets/img/dm.png')
+const poster1 =
+  'https://kurse.traderiq.net/wp-content/uploads/2021/10/DSC_7578-1-1024x683.jpg'
+const poster2 =
+  'https://kurse.traderiq.net/wp-content/uploads/2021/10/DSC_7959-1024x683.jpg'
+
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout))
+}
+
+export const СockpitPage = (props) => {
+  const { userProfile } = useContext(mainContext)
+
+  return (
+    <View style={gStyle.main}>
+      <ScrollView
+        contentContainerStyle={{
+          paddingBottom: Platform.OS === 'android' ? 90 : 125,
+          paddingTop: 10,
+        }}
+      >
+        <View>
+          <Text
+            style={{
+              fontFamily: 'ub-medium',
+              fontSize: 27,
+              textAlign: 'center',
+              color: '#FF741F',
+            }}
+          >
+            Trader Cockpit
+          </Text>
+          <View style={{ marginTop: 3 }}>
+            <Text
+              style={{
+                fontFamily: 'ub-medium',
+                fontSize: 17,
+                textAlign: 'center',
+                color: '#FF741F',
+              }}
+            >
+              Handelssignale für maximale Gewinne
+            </Text>
+          </View>
+        </View>
+        <View>
+          <ImageBackground
+            source={image}
+            resizeMode="cover"
+            style={[styles.imageBack, {}]}
+            imageStyle={{ borderRadius: 5 }}
+          >
+            <Text
+              style={{
+                color: '#fff',
+                fontFamily: 'ub-medium',
+                fontSize: 25,
+                textAlign: 'center',
+              }}
+            >
+              Module im Trader Cockpit
+            </Text>
+          </ImageBackground>
+        </View>
+        <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
+          <View>
+            <ImageBackground
+              source={imageGray}
+              resizeMode="cover"
+              style={[styles.imageBlock, {}]}
+              imageStyle={{
+                borderRadius: 5,
+                alignSelf: 'flex-end',
+                borderWidth: 1,
+                borderColor: '#ccc',
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+              >
+                <Image style={styles.imageBlocks} source={ghjk} />
+                <Text style={[styles.blockText, { width: 180 }]}>
+                  Marktanalysen und saisonalitäten
+                </Text>
+              </View>
+              <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
+                <Text
+                  style={{
+                    textAlign: 'left',
+                    marginTop: 15,
+                    fontFamily: 'ub-reg',
+                    fontSize: 16,
+                    color: '#4E4D4D',
+                  }}
+                >
+                  {`Eine der einfachsten und zeitschonendsten Strategien überhaupt. Ein Mal pro Monat wird das Depot mit einem raffinierten Handelssystem angepasst. Damit produziert das System zuverlässig hohe Gewinne.
+
+So investierst Du besser als jeder Fond – mit gerade Mal 10 Minuten pro Monat.`}
+                </Text>
+              </View>
+            </ImageBackground>
+          </View>
+          <View>
+            <ImageBackground
+              source={imageGray}
+              resizeMode="cover"
+              style={[styles.imageBlock, {}]}
+              imageStyle={{
+                borderRadius: 5,
+                alignSelf: 'flex-end',
+                borderWidth: 1,
+                borderColor: '#ccc',
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+              >
+                <Image style={styles.imageBlocks} source={das} />
+                <Text style={[styles.blockText, { width: '70%' }]}>
+                  Das Cockpit
+                </Text>
+              </View>
+              <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
+                <Text
+                  style={{
+                    textAlign: 'left',
+                    marginTop: 15,
+                    fontFamily: 'ub-reg',
+                    fontSize: 16,
+                    color: '#4E4D4D',
+                  }}
+                >
+                  {`Hier findest Du auf einen Blick alles, was das Trader-Herz begehrt. Alle wichtigen Marktdaten auf einen Blick zusammengefasst – damit entgeht Dir bei Deinen täglichen Aufgaben nichts mehr.
+
+Dich erwartet die komplette Marktkontrolle für die richtigen Trading-Entscheidungen.`}
+                </Text>
+              </View>
+            </ImageBackground>
+          </View>
+          <View>
+            <ImageBackground
+              source={imageGray}
+              resizeMode="cover"
+              style={[styles.imageBlock, {}]}
+              imageStyle={{
+                borderRadius: 5,
+                alignSelf: 'flex-end',
+                borderWidth: 1,
+                borderColor: '#ccc',
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+              >
+                <Image style={styles.imageBlocks} source={dm} />
+                <Text style={[styles.blockText, { width: '70%' }]}>
+                  Die handelssignale
+                </Text>
+              </View>
+              <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
+                <Text
+                  style={{
+                    textAlign: 'left',
+                    marginTop: 15,
+                    fontFamily: 'ub-reg',
+                    fontSize: 16,
+                    color: '#4E4D4D',
+                  }}
+                >
+                  {`Commodities, Indizes, Forex und Krypto – sobald ein neues Handelssignal entsteht bist Du informiert. Jedes Handelssignal bekommst Du als E-Mail in Dein Postfach und als Telegram-Nachricht auf Dein Handy – so verpasst Du nichts mehr.
+
+Damit handelst Du im richtigen Moment – ohne selbst vor den Charts zu sitzen.`}
+                </Text>
+              </View>
+            </ImageBackground>
+          </View>
+        </ScrollView>
+      </ScrollView>
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  imageBack: {
+    flex: 1,
+    width: '95%',
+    height: 75,
+    marginTop: 15,
+    borderRadius: 8,
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+  imageBackTwo: {
+    flex: 1,
+    width: 350,
+    height: 75,
+    marginTop: 15,
+    borderRadius: 8,
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+  imageBlock: {
+    width: 300,
+    // height: 160,
+    marginTop: 15,
+    borderRadius: 8,
+    marginHorizontal: 10,
+    alignSelf: 'center',
+  },
+  blockText: {
+    color: '#FF741F',
+    fontFamily: 'ub-medium',
+    fontSize: 19,
+    textAlign: 'left',
+    alignSelf: 'center',
+  },
+  imageBlocks: {
+    width: 80,
+    height: 80,
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    marginHorizontal: 10,
+  },
+  imageAvatar: {
+    overflow: 'hidden',
+    borderRadius: 45,
+    width: 90,
+    height: 90,
+    backgroundColor: '#fff',
+  },
+})

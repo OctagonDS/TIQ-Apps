@@ -266,7 +266,7 @@ Ich wünsche Dir maximalen Börsenerfolg!
 Dein Andrei Anissimov, Herausgeber.`}
           </Text>
         </View>
-        <View style={{ position: 'relative' }}>
+        <View>
           <ImageBackground
             source={image}
             resizeMode="cover"
@@ -290,7 +290,7 @@ Dein Andrei Anissimov, Herausgeber.`}
             <ImageBackground
               source={imageGray}
               resizeMode="cover"
-              style={styles.imageBlock}
+              style={[styles.imageBlock, {}]}
               imageStyle={{
                 borderRadius: 5,
                 borderWidth: 1,
@@ -722,7 +722,7 @@ Dein Andrei Anissimov, Herausgeber.`}
           <ImageBackground
             source={image}
             resizeMode="cover"
-            style={styles.imageBackTwo}
+            style={[styles.imageBackTwo, {}]}
             imageStyle={{ borderRadius: 5 }}
           >
             <Text
@@ -928,7 +928,7 @@ const styles = StyleSheet.create({
   },
   imageBackTwo: {
     flex: 1,
-    width: 350,
+    width: '95%',
     height: 75,
     marginTop: 15,
     borderRadius: 8,
@@ -936,7 +936,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   imageBlock: {
-    width: 340,
+    width: '90%',
     height: 70,
     marginTop: 15,
     borderRadius: 8,

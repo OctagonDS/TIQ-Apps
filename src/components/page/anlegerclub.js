@@ -27,8 +27,9 @@ const blockOne = 'https://fe20295.online-server.cloud/img/tyrtyr.png'
 const blockTwo = 'https://fe20295.online-server.cloud/img/ghedfs.png'
 const blockThree = 'https://fe20295.online-server.cloud/img/ghjk.png'
 const blockFour = 'https://fe20295.online-server.cloud/img/hrthrt.png'
-const Andrey =
-  'https://fe20295.online-server.cloud/img/Andrei-Anissimov-1536x1536.png'
+const Andrey = require('../../assets/img/Andrei-Anissimov.png')
+const Marco = require('../../assets/img/Marco-Ahnert.png')
+const People = require('../../assets/img/1745_oooo.png')
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
@@ -746,22 +747,174 @@ Dein Andrei Anissimov, Herausgeber.`}
             <Image
               style={{ width: 90, height: 90 }}
               resizeMode="cover"
-              source={{
-                uri: Andrey,
-              }}
+              source={Andrey}
             />
           </View>
+          <View>
+            <Text
+              style={{
+                color: '#50555C',
+                fontFamily: 'ub-medium',
+                fontSize: 20,
+                marginLeft: 10,
+                // width: 240,
+                paddingRight: 10,
+              }}
+            >
+              Andrei Anissimov
+            </Text>
+            <Text
+              style={{
+                color: '#50555C',
+                fontFamily: 'ub-medium',
+                fontSize: 20,
+                marginLeft: 10,
+                // width: 240,
+                paddingRight: 10,
+              }}
+            >
+              Gründer und Herausgeber
+            </Text>
+          </View>
+        </View>
+        <View style={{ marginHorizontal: 10 }}>
           <Text
             style={{
-              color: '#50555C',
-              fontFamily: 'ub-medium',
-              fontSize: 20,
-              marginLeft: 10,
-              // width: 240,
-              paddingRight: 10,
+              textAlign: 'left',
+              marginTop: 20,
+              fontFamily: 'ub-reg',
+              fontSize: 16,
             }}
           >
-            Andrei Anissimov Gründer und Herausgeber
+            {`Mit der Anmeldung hast Du den Grundstein für Deinen nachhaltigen Börsenerfolg gelegt. Ab sofort bekommst Du regelmäßig die Top-Empfehlungen unserer Redaktion – fertig ausgearbeitete Trades, die Du sofort umsetzen kannst.
+
+Noch nie war es einfacher, an der Börse erfolgreich zu investieren! Wir recherchieren die besten Trade-Empfehlungen – Du verbuchst die Gewinne. Damit investierst Du sicher und profitabel – und das mit minimalem Zeiteinsatz, ohne selbst Profi werden zu müssen. 
+
+Ich wünsche Dir maximalen Börsenerfolg!
+
+Dein Andrei Anissimov, Herausgeber.`}
+          </Text>
+        </View>
+        <View style={styles.line}></View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            // marginHorizontal: 10,
+            paddingHorizontal: 10,
+            // width: '80%',
+            marginTop: 20,
+          }}
+        >
+          <View style={styles.imageAvatar}>
+            <Image
+              style={{ width: 90, height: 90 }}
+              resizeMode="cover"
+              source={Marco}
+            />
+          </View>
+          <View>
+            <Text
+              style={{
+                color: '#50555C',
+                fontFamily: 'ub-medium',
+                fontSize: 20,
+                marginLeft: 10,
+                // width: 240,
+                paddingRight: 10,
+              }}
+            >
+              Marco Ahnert
+            </Text>
+            <Text
+              style={{
+                color: '#50555C',
+                fontFamily: 'ub-medium',
+                fontSize: 20,
+                marginLeft: 10,
+                // width: 240,
+                paddingRight: 10,
+              }}
+            >
+              Chefredakteur
+            </Text>
+          </View>
+        </View>
+        <View style={{ marginHorizontal: 10 }}>
+          <Text
+            style={{
+              textAlign: 'left',
+              marginTop: 20,
+              fontFamily: 'ub-reg',
+              fontSize: 16,
+            }}
+          >
+            {`Marco ist als Chefredakteur das Gehirn, aber auch das Herz hinter dem Club. Er hält alle Fäden in der Hand und kümmert sich jeden Tag um die Depots, Trade-Empfehlungen und die Anliegen der Mitglieder.
+
+Angefangen bei Null hat er mittlerweile sein Depot mehrfach verdoppelt und ist selbst mit dem Börsenhandel finanziell unabhängig. Sein innigster Wunsch ist es, den Mitgliedern konkrete Empfehlungen an die Hand zu geben und dafür zu sogen, dass jeder hohe und stabile Renditen an der Börse erhält.`}
+          </Text>
+        </View>
+
+        <View style={styles.line}></View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            // marginHorizontal: 10,
+            paddingHorizontal: 10,
+            // width: '80%',
+            marginTop: 20,
+          }}
+        >
+          <View style={styles.imageAvatar}>
+            <Image
+              style={{ width: 90, height: 90 }}
+              resizeMode="cover"
+              source={People}
+            />
+          </View>
+          <View>
+            <Text
+              style={{
+                color: '#50555C',
+                fontFamily: 'ub-medium',
+                fontSize: 20,
+                marginLeft: 10,
+                // width: 240,
+                paddingRight: 10,
+              }}
+            >
+              Absolventen
+            </Text>
+            <Text
+              style={{
+                color: '#50555C',
+                fontFamily: 'ub-medium',
+                fontSize: 20,
+                marginLeft: 10,
+                // width: 240,
+                paddingRight: 10,
+              }}
+            >
+              Redaktionsteam
+            </Text>
+          </View>
+        </View>
+        <View style={{ marginHorizontal: 10 }}>
+          <Text
+            style={{
+              textAlign: 'left',
+              marginTop: 20,
+              fontFamily: 'ub-reg',
+              fontSize: 16,
+            }}
+          >
+            {`Ein Team von gut ausgebildeten Tradern und Investoren unterstützt den Chefredakteur.
+
+Die Märkte permanent nach besten Trades zu screenen, die Tradeempfehlungen zu recherchieren und für die Mitglieder aufzuarbeiten, ist die Aufgabe der sich das Redaktionsteam hinter Marco Ahnert jeden Tag aufs Neue stellt.
+
+Viele der Trade-Empfehlungen des Clubs stammen aus den Depots des Redaktionsteams. Eine Armee von Tradern, die für Dich täglich den Markt analysiert.
+`}
           </Text>
         </View>
       </ScrollView>
@@ -866,5 +1019,13 @@ const styles = StyleSheet.create({
     fontFamily: 'ub-reg',
     fontSize: 15,
     width: '80%',
+  },
+  line: {
+    height: 3,
+    width: 350,
+    backgroundColor: '#4E4D4D',
+    marginTop: 20,
+    alignSelf: 'center',
+    borderRadius: 3,
   },
 })

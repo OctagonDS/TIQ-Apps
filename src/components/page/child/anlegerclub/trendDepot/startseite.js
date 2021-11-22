@@ -13,6 +13,7 @@ import { gStyle } from '../../../../../styles/style'
 import { NavigationContainer } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { Startseite } from '../startseite'
+import { StartseiteTrendDepotPage } from './startseiteTrendDepotPage'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -43,7 +44,7 @@ export function TrendDepot() {
         },
       }}
     >
-      <Tab.Screen name="Startseite" component={Startseite} />
+      <Tab.Screen name="Startseite" component={StartseiteTrendDepotPage} />
       <Tab.Screen name="Depot" component={Startseite} />
       <Tab.Screen name="Watchlist" component={Startseite} />
       <Tab.Screen name="Signale" component={Startseite} />

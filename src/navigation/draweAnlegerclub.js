@@ -96,6 +96,7 @@ export function DraweAnleger() {
         name="StarterDepot"
         component={StarterDepot}
         options={{
+          unmountOnBlur: true,
           headerLeft: () => {
             const navigation = useNavigation()
             return (
@@ -111,6 +112,7 @@ export function DraweAnleger() {
         name="TraderCockpit"
         component={TraderCockpit}
         options={{
+          unmountOnBlur: true,
           headerLeft: () => {
             const navigation = useNavigation()
             return (
@@ -126,6 +128,7 @@ export function DraweAnleger() {
         name="TrendDepot"
         component={TrendDepot}
         options={{
+          unmountOnBlur: true,
           headerLeft: () => {
             const navigation = useNavigation()
             return (
@@ -141,6 +144,7 @@ export function DraweAnleger() {
         name="StillhalterDepot"
         component={StillhalterDepot}
         options={{
+          unmountOnBlur: true,
           headerLeft: () => {
             const navigation = useNavigation()
             return (

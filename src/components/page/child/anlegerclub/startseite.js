@@ -22,8 +22,7 @@ const blockOne = 'https://fe20295.online-server.cloud/img/tyrtyr.png'
 const blockTwo = 'https://fe20295.online-server.cloud/img/ghedfs.png'
 const blockThree = 'https://fe20295.online-server.cloud/img/ghjk.png'
 const blockFour = 'https://fe20295.online-server.cloud/img/hrthrt.png'
-const Andrey =
-  'https://fe20295.online-server.cloud/img/Andrei-Anissimov-1536x1536.png'
+const Andrey = require('../../../../assets/img/Andrei-Anissimov.png')
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
@@ -248,9 +247,7 @@ Dein Andrei Anissimov, Herausgeber.`}
             <Image
               style={{ width: 90, height: 90 }}
               resizeMode="cover"
-              source={{
-                uri: Andrey,
-              }}
+              source={Andrey}
             />
           </View>
           <Text

@@ -87,7 +87,7 @@ export const SignIn = ({ navigation: { goBack }, navigation }) => {
           <View style={{ marginTop: '8%' }}>
             <View style={styles.labelmail}>
               <Text style={{ color: '#FF741F' }}>
-                Benutzername oder E-Mail-Adresse
+                Email
                 <Text style={{ color: '#DA1414' }}>*</Text>
               </Text>
             </View>

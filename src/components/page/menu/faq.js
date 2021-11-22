@@ -11,38 +11,38 @@ import { gStyle } from '../../../styles/style'
 import Constants from 'expo-constants'
 import Accordion from 'react-native-collapsible/Accordion'
 
-const BACON_IPSUM =
-  'Bacon ipsum dolor amet chuck turducken landjaeger tongue spare ribs. Picanha beef prosciutto meatball turkey shoulder shank salami cupim doner jowl pork belly cow. Chicken shankle rump swine tail frankfurter meatloaf ground round flank ham hock tongue shank andouille boudin brisket. '
-
-const text = <Text>Привет</Text>
+const LoremIpsum =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+const LoremIpsum2 =
+  'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.'
 const CONTENT = [
   {
-    title: 'First',
-    content: BACON_IPSUM,
+    title: 'Beliebteste Frage 1',
+    content: LoremIpsum,
   },
   {
-    title: 'Second',
-    content: text,
+    title: 'Beliebteste Frage 2',
+    content: LoremIpsum2,
   },
   {
-    title: 'Third',
-    content: BACON_IPSUM,
+    title: 'Beliebteste Frage 3',
+    content: LoremIpsum,
   },
   {
-    title: 'Fourth',
-    content: BACON_IPSUM,
+    title: 'Beliebteste Frage 4',
+    content: LoremIpsum,
   },
   {
-    title: 'Fifth',
-    content: BACON_IPSUM,
+    title: 'Beliebteste Frage 5',
+    content: LoremIpsum,
   },
   {
-    title: 'Fifth',
-    content: BACON_IPSUM,
+    title: 'Beliebteste Frage 6',
+    content: LoremIpsum,
   },
   {
-    title: 'Fifth',
-    content: BACON_IPSUM,
+    title: 'Beliebteste Frage 7',
+    content: LoremIpsum,
   },
 ]
 
@@ -74,7 +74,11 @@ export class FaqPage extends Component {
           isActive ? styles.activeContent : styles.inactiveContent,
         ]}
       >
-        <Text>{section.content}</Text>
+        <Text
+          style={{ color: '#50555C', fontFamily: 'ub-reg', textAlign: 'left' }}
+        >
+          {section.content}
+        </Text>
       </View>
     )
   }
@@ -84,7 +88,9 @@ export class FaqPage extends Component {
 
     return (
       <View style={gStyle.main}>
-        <ScrollView contentContainerStyle={{ paddingTop: 30 }}>
+        <ScrollView
+          contentContainerStyle={{ paddingTop: 30, paddingBottom: 30 }}
+        >
           <Accordion
             activeSections={activeSections}
             sections={CONTENT}
@@ -123,32 +129,26 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   headerText: {
-    textAlign: 'center',
+    textAlign: 'left',
     fontSize: 16,
     fontFamily: 'ub-medium',
-    color: '#454A4F',
+    color: '#fff',
   },
   content: {
     padding: 20,
     backgroundColor: '#fff',
   },
   active: {
-    backgroundColor: '#C4C4C4',
-    borderTopRightRadius: 5,
-    borderTopLeftRadius: 5,
+    backgroundColor: '#FF741F',
   },
   inactive: {
-    backgroundColor: '#C4C4C4',
-    borderRadius: 5,
+    backgroundColor: '#FF741F',
   },
   activeContent: {
-    backgroundColor: '#D9D8D8',
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+    backgroundColor: 'rgba(255,116,31,0.3)',
   },
   inactiveContent: {
     backgroundColor: '#C4C4C4',
-    borderRadius: 5,
   },
   selectors: {
     marginBottom: 10,

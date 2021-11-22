@@ -5,6 +5,7 @@ import {
   View,
   Text,
   ActivityIndicator,
+  Alert,
 } from 'react-native'
 import {
   createStackNavigator,
@@ -12,6 +13,7 @@ import {
 } from '@react-navigation/stack'
 import { NavigationContainer, useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import base64 from 'react-native-base64'
 
 import { IconCourses } from '../components/atoms/iconCurses'
 import { IconMentor } from '../components/atoms/iconMentor'
@@ -38,8 +40,7 @@ import { SuccessScale } from '../components/page/menu/successScale'
 import { SearchModal } from '../components/page/menu/search'
 import { FavoritPage } from '../components/page/menu/favorites'
 import { FaqPage } from '../components/page/menu/faq'
-import { Modules } from '../components/page/child/module'
-import { DraweModules } from './Courses/draweModules'
+import { Modules } from '../components/page/child/courses/module'
 
 import { loginUrl } from '../store/const/const'
 import { resetUrl } from '../store/const/constReset'
@@ -186,19 +187,6 @@ function StackNav() {
           }}
         />
       </Stack.Group>
-      <Stack.Group
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen
-          name="Modules"
-          component={DraweModules}
-          options={{
-            title: 'Модули',
-          }}
-        />
-      </Stack.Group>
     </Stack.Navigator>
   )
 }
@@ -266,7 +254,7 @@ function MyTabs() {
         component={DraweNotifications}
         options={{
           tabBarLabel: 'Уведомления',
-          // tabBarBadge: 0,
+          tabBarBadge: 6,
           tabBarBadgeStyle: { marginTop: 10 },
           tabBarIcon: ({ focused }) => <IconNot focused={focused} />,
         }}
@@ -286,7 +274,6 @@ function Navigations() {
   const [errorUp, setErrorUp] = useState(null)
   const [successReset, setSuccessReset] = useState(null)
   const [successUp, setSuccessUp] = useState(null)
-  const [isUpdate, setIsUpdate] = useState(false)
 
   useEffect(() => {
     AsyncStorage.getItem('userProfile').then((value) => {
@@ -322,6 +309,11 @@ function Navigations() {
     //console.log(email + '...' + password);
     setloggingIn(true)
     setError(null)
+
+    let showHeaders = new Headers()
+    showHeaders.append('Accept', 'application/json')
+    showHeaders.append('Content-Type', 'application/json')
+
     let formData = new FormData()
     formData.append('type', 'login')
     formData.append('email', email)
@@ -332,6 +324,26 @@ function Navigations() {
         body: formData,
       })
       let json = await response.json()
+
+      // let responseShow = await fetch(
+      //   `https://fe20295.online-server.cloud/api/v1/userapp/show/${email}`,
+      //   {
+      //     method: 'GET',
+      //     headers: showHeaders,
+      //   }
+      // )
+      // let jsonShow = await responseShow.json()
+      // let responseShowAdmin = await fetch(
+      //   `https://fe20295.online-server.cloud/api/v1/userapp/show_admin/${email}`,
+      //   {
+      //     method: 'GET',
+      //     headers: showHeaders,
+      //   }
+      // )
+      // let jsonShowAdmin = await responseShowAdmin.json()
+      // console.log(jsonShow)
+      // console.log(jsonShowAdmin)
+      // console.log(json)
       if (json.status != false) {
         setError(null)
         try {
@@ -360,7 +372,15 @@ function Navigations() {
           display_name: json.display_name,
         })
         setIsLogged(true)
-        setUserProfile(json)
+        setUserProfile({
+          isLoggedIn: json.status,
+          authToken: json.token,
+          id: json.id,
+          name: json.name,
+          avatar: json.avatar,
+          email: json.email,
+          display_name: json.display_name,
+        })
         setUserToken(json.token)
       } else {
         setIsLogged(false)
@@ -381,6 +401,8 @@ function Navigations() {
     setloggingIn(false)
     setErrorUp(null)
     setSuccessUp(null)
+
+    // Квентин и WP
     let myHeaders = new Headers()
     myHeaders.append(
       'Authorization',
@@ -396,6 +418,17 @@ function Navigations() {
         terms: [280],
       },
     })
+
+    // Admin
+    let adminHeaders = new Headers()
+    adminHeaders.append('Accept', 'application/json')
+    adminHeaders.append('Content-Type', 'application/json')
+    let rawAdmin = JSON.stringify({
+      name: name,
+      email: email,
+      phone_number: phoneNumber,
+    })
+
     try {
       let dubl = await fetch(
         `https://q0ydly.eu-2.quentn.com/public/api/v1/contact/${email}`,
@@ -415,6 +448,13 @@ function Navigations() {
             body: raw,
           })
           let json = await response.json()
+
+          let responseAdmin = await fetch(signUpUrlAdmin, {
+            method: 'POST',
+            headers: adminHeaders,
+            body: rawAdmin,
+          })
+          let jsonAdmin = await responseAdmin.json()
           setSuccessUp(
             'Die Zugangsdaten zum App kommen per E-Mail. Dafür brauchen wir Deine Genehmigung.'
           )
@@ -462,17 +502,62 @@ function Navigations() {
   }
 
   // Обновление данных
-  const doUpdate = async (displayName) => {
-    await AsyncStorage.getItem('userProfile')
-      .then((data) => {
-        data = JSON.parse(data)
+  const doUpdate = async (displayName, emailAuth) => {
+    var myHeaders = new Headers()
+    myHeaders.append(
+      'Authorization',
+      'Basic ' +
+        base64.encode(
+          'accountas@mail.ru' + ':' + 'WX63 sbgi fPdP nZzR CnqS pII7'
+        )
+    )
+    myHeaders.append('Content-Type', 'application/json')
+    myHeaders.append(
+      'Cookie',
+      'SSESSe8c55d4a74dd4da51d62b6d4207298c0=fa38bd2d825f2bacefadaee2fbbad2fc; ncore_session=BhctmLUbtpnfm9L8JoMEXbdCWkU4cd; ppwp_wp_session=672e48f1877d6cb2531df292d22fbf23%7C%7C1637223544%7C%7C1637223184'
+    )
+    console.log(userProfile)
+    var raw = JSON.stringify({
+      name: !displayName.trim() ? userProfile.display_name : displayName,
+      email: !emailAuth.trim() ? userProfile.email : emailAuth,
+    })
 
-        // Новые данные
-        data.display_name = displayName
+    let response = await fetch(
+      `https://kurse.traderiq.net/wp-json/wp/v2/users/${userProfile.id}`,
+      {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+      }
+    )
+    let json = await response.json()
 
-        AsyncStorage.setItem(
-          'userProfile',
-          JSON.stringify({
+    console.log(json.data)
+    if (json.data != undefined) {
+      Alert.alert('Заголовок', 'Почта уже существует')
+      return
+    } else {
+      await AsyncStorage.getItem('userProfile')
+        .then((data) => {
+          data = JSON.parse(data)
+
+          // Новые данные
+          data.display_name = !displayName.trim() ? json.name : displayName
+          data.email = !emailAuth.trim() ? json.email : emailAuth
+
+          AsyncStorage.setItem(
+            'userProfile',
+            JSON.stringify({
+              isLoggedIn: data.isLoggedIn,
+              authToken: data.authToken,
+              id: data.id,
+              name: data.name,
+              avatar: data.avatar,
+              email: data.email,
+              display_name: data.display_name,
+            })
+          )
+          setUserProfile({
             isLoggedIn: data.isLoggedIn,
             authToken: data.authToken,
             id: data.id,
@@ -481,19 +566,9 @@ function Navigations() {
             email: data.email,
             display_name: data.display_name,
           })
-        )
-
-        setUserProfile({
-          isLoggedIn: data.isLoggedIn,
-          authToken: data.authToken,
-          id: data.id,
-          name: data.name,
-          avatar: data.avatar,
-          email: data.email,
-          display_name: data.display_name,
         })
-      })
-      .done()
+        .done()
+    }
   }
 
   // Доступ к данным
@@ -520,8 +595,8 @@ function Navigations() {
     doReset: (email) => {
       doReset(email)
     },
-    doUpdate: (displayName) => {
-      doUpdate(displayName)
+    doUpdate: (displayName, emailAuth) => {
+      doUpdate(displayName, emailAuth)
     },
   }
 

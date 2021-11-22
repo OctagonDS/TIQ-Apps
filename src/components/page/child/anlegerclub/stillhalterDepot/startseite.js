@@ -9,15 +9,14 @@ import {
   Image,
   RefreshControl,
 } from 'react-native'
-import { gStyle } from '../../styles/style'
+import { gStyle } from '../../../../../styles/style'
 import { NavigationContainer } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import { CourseSlideOne } from '../page/child/courses/courseSlideOne'
-import { CourseSlideTwo } from '../page/child/courses/courseSlideTwo'
+import { Startseite } from '../startseite'
 
 const Tab = createMaterialTopTabNavigator()
 
-export function Courses() {
+export function StillhalterDepot() {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -28,21 +27,27 @@ export function Courses() {
         tabBarStyle: {
           elevation: 0,
           shadowOpacity: 0,
+          backgroundColor: '#454A4F',
         },
-        tabBarActiveTintColor: '#FF741F',
-        tabBarInactiveTintColor: '#545A60',
+        tabBarScrollEnabled: true,
+        tabBarActiveTintColor: '#FFFFFF',
+        tabBarInactiveTintColor: '#ACB3BF',
         tabBarIndicatorStyle: {
           backgroundColor: '#FF741F',
         },
+        tabBarItemStyle: { width: 120 },
         tabBarLabelStyle: {
           fontFamily: 'ub-medium',
           textTransform: 'none',
-          fontSize: 14,
+          fontSize: 16,
         },
       }}
     >
-      <Tab.Screen name="Kostenlose Kurse" component={CourseSlideOne} />
-      <Tab.Screen name="Bezahlte Kurse" component={CourseSlideTwo} />
+      <Tab.Screen name="Startseite" component={Startseite} />
+      <Tab.Screen name="Depot" component={Startseite} />
+      <Tab.Screen name="Watchlist" component={Startseite} />
+      <Tab.Screen name="Signale" component={Startseite} />
+      <Tab.Screen name="Clubtreffen" component={Startseite} />
     </Tab.Navigator>
   )
 }

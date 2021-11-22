@@ -19,7 +19,7 @@ import { IconSearch } from '../components/atoms/iconSearch'
 import { IconRef } from '../components/atoms/iconRef'
 
 import { Courses } from '../components/page/courses'
-import { Productpage } from '../components/page/child/product'
+import { Modules } from '../components/page/child/courses/module'
 
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
@@ -91,9 +91,10 @@ export function DraweCourses({ navigation: { goBack } }) {
         }}
       />
       <Drawer.Screen
-        name="Product"
-        component={Productpage}
+        name="draweModules"
+        component={Modules}
         options={{
+          unmountOnBlur: true,
           headerLeft: () => {
             const navigation = useNavigation()
             return (
@@ -102,7 +103,7 @@ export function DraweCourses({ navigation: { goBack } }) {
               </TouchableOpacity>
             )
           },
-          title: 'Продукт',
+          title: 'Анлегер клуб',
         }}
       />
     </Drawer.Navigator>

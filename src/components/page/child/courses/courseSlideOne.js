@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react'
 import {
   View,
   Text,
-  ScrollView,
   ImageBackground,
   ActivityIndicator,
   FlatList,
@@ -11,20 +10,19 @@ import {
   StyleSheet,
   Animated,
   TouchableOpacity,
-  Button,
-  TextInput,
   Platform,
 } from 'react-native'
-import { gStyle } from '../../../styles/style'
-import { IcoFireTop } from '../../atoms/iconFireTop'
-import mainContext from '../../../store/context/context'
+import { gStyle } from '../../../../styles/style'
+import { IcoFireTop } from '../../../atoms/iconFireTop'
+import { IcoLock } from '../../../atoms/iconLock'
+import mainContext from '../../../../store/context/context'
 
 // Переменные
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 
-const image = require('../../../assets/img/grey-geo.png')
+const image = require('../../../../assets/img/grey-geo.png')
 const url = 'https://fe20295.online-server.cloud/api/v1/courses'
 const progressPercent = '80'
 
@@ -37,7 +35,7 @@ export function CourseSlideOne({ navigation }) {
   const [refreshing, setRefreshing] = React.useState(false)
 
   const [displayName, setDisplayName] = useState(null)
-  const { userProfile, loggingIn, doLogout, doUpdate } = useContext(mainContext)
+  const { userProfile } = useContext(mainContext)
 
   const getCourses = async () => {
     try {
@@ -89,12 +87,12 @@ export function CourseSlideOne({ navigation }) {
             paddingTop: '2%',
             paddingBottom: Platform.OS === 'android' ? 72 : 110,
           }}
-          keyExtractor={({ id }, index) => id}
+          keyExtractor={({ id }, index) => id.toString()}
           renderItem={({ item }) => (
             <View style={styles.courses}>
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate('Modules', {
+                  navigation.navigate('Course', {
                     screen: 'draweModules',
                     params: {
                       itemId: item.id,
@@ -119,6 +117,20 @@ export function CourseSlideOne({ navigation }) {
                     <IcoFireTop />
                   </TouchableOpacity>
                 </ImageBackground>
+                <View
+                  style={{
+                    position: 'absolute',
+                    backgroundColor: 'rgba(62,62,62,0.4)',
+                    borderRadius: 5,
+                    width: 165,
+                    height: 165,
+                    zIndex: 3,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <IcoLock />
+                </View>
               </TouchableOpacity>
               <View style={{ width: 165, height: 60 }}>
                 <View style={styles.progress}>
@@ -139,7 +151,7 @@ export function CourseSlideOne({ navigation }) {
                 <View>
                   <TouchableOpacity
                     onPress={() =>
-                      navigation.navigate('Modules', {
+                      navigation.navigate('Course', {
                         screen: 'draweModules',
                         params: {
                           itemId: item.id,

@@ -13,15 +13,15 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native'
-import { gStyle } from '../../../styles/style'
-import { IcoFireTop } from '../../atoms/iconFireTop'
+import { gStyle } from '../../../../styles/style'
+import { IcoFireTop } from '../../../atoms/iconFireTop'
 
 // Переменные
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 
-const image = require('../../../assets/img/grey-geo.png')
+const image = require('../../../../assets/img/grey-geo.png')
 const url = 'https://fe20295.online-server.cloud/api/v1/courses'
 const progressPercent = '20'
 
@@ -88,7 +88,7 @@ export function CourseSlideTwo({ navigation }) {
             <View style={styles.courses}>
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate('Modules', {
+                  navigation.navigate('Course', {
                     screen: 'draweModules',
                     params: {
                       itemId: item.id,
@@ -133,9 +133,11 @@ export function CourseSlideTwo({ navigation }) {
                 <View>
                   <TouchableOpacity
                     onPress={() =>
-                      navigation.navigate('Modules', {
+                      navigation.navigate('Course', {
                         screen: 'draweModules',
-                        params: { itemId: item.id },
+                        params: {
+                          itemId: item.id,
+                        },
                       })
                     }
                   >

@@ -82,7 +82,7 @@ const GradientBtnClose = ({ name }) => (
     }}
   >
     <View style={{}}>
-      <IconCloseModal />
+      <IconCloseModal fill="#fff" />
     </View>
   </LinearGradient>
 )

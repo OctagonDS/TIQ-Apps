@@ -14,14 +14,14 @@ import {
   useWindowDimensions,
   Platform,
 } from 'react-native'
-import { gStyle } from '../../../styles/style'
+import { gStyle } from '../../../../styles/style'
 import HTML from 'react-native-render-html'
 
 // Переменне
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
-const image = require('../../../assets/img/black-geo.png')
+const image = require('../../../../assets/img/black-geo.png')
 const tagsStyles = {
   p: {
     color: '#fff',
@@ -96,7 +96,7 @@ export function Modules({ props, route }) {
   useEffect(() => {
     getModules()
     return () => {
-      setData({})
+      setData([])
     }
   }, [])
 

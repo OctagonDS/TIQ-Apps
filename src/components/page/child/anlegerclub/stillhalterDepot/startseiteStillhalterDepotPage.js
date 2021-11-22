@@ -169,7 +169,7 @@ Dein Andrei Anissimov, Herausgeber.`}
           <ImageBackground
             source={image}
             resizeMode="cover"
-            style={styles.imageBack}
+            style={[styles.imageBack, {}]}
             imageStyle={{ borderRadius: 5 }}
           >
             <Text
@@ -192,7 +192,7 @@ Dein Andrei Anissimov, Herausgeber.`}
 const styles = StyleSheet.create({
   imageBack: {
     flex: 1,
-    width: 350,
+    width: '95%',
     height: 75,
     marginTop: 15,
     borderRadius: 8,

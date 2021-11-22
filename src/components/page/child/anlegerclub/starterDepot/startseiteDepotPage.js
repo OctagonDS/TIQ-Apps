@@ -171,7 +171,7 @@ Dein Andrei Anissimov, Herausgeber.`}
           <ImageBackground
             source={image}
             resizeMode="cover"
-            style={styles.imageBack}
+            style={[styles.imageBack, {}]}
             imageStyle={{ borderRadius: 5 }}
           >
             <Text
@@ -190,7 +190,7 @@ Dein Andrei Anissimov, Herausgeber.`}
           <ImageBackground
             source={imageGray}
             resizeMode="cover"
-            style={styles.imageBlock}
+            style={[styles.imageBlock, {}]}
             imageStyle={{
               borderRadius: 5,
               alignSelf: 'flex-end',
@@ -228,7 +228,7 @@ So findest Du die besten Aktien – ohne selbst stundenlang suchen zu müssen.`}
           <ImageBackground
             source={imageGray}
             resizeMode="cover"
-            style={styles.imageBlock}
+            style={[styles.imageBlock, {}]}
             imageStyle={{
               borderRadius: 5,
               alignSelf: 'flex-end',
@@ -267,7 +267,7 @@ Damit bekommst Du schnell einen Überblick über die Auswahlkriterien der Redakt
           <ImageBackground
             source={imageGray}
             resizeMode="cover"
-            style={styles.imageBlock}
+            style={[styles.imageBlock, {}]}
             imageStyle={{
               borderRadius: 5,
               alignSelf: 'flex-end',
@@ -306,7 +306,7 @@ So baust Du Schritt für Schritt Dein sicheres und profitables Aktiendepot auf.
           <ImageBackground
             source={imageGray}
             resizeMode="cover"
-            style={styles.imageBlock}
+            style={[styles.imageBlock, {}]}
             imageStyle={{
               borderRadius: 5,
               alignSelf: 'flex-end',
@@ -350,7 +350,7 @@ So investierst Du besser als jeder Fond – mit gerade Mal 10 Minuten pro Monat.
 const styles = StyleSheet.create({
   imageBack: {
     flex: 1,
-    width: 350,
+    width: '95%',
     height: 75,
     marginTop: 15,
     borderRadius: 8,
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   imageBlock: {
-    width: 340,
+    width: '90%',
     // height: 160,
     marginTop: 15,
     borderRadius: 8,

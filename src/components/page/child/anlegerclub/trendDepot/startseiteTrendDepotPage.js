@@ -175,7 +175,7 @@ Ich wünsche Dir viel Erfolg bei der Umsetzung!`}
           <ImageBackground
             source={image}
             resizeMode="cover"
-            style={styles.imageBack}
+            style={[styles.imageBack, {}]}
             imageStyle={{ borderRadius: 5 }}
           >
             <Text
@@ -198,7 +198,7 @@ Ich wünsche Dir viel Erfolg bei der Umsetzung!`}
 const styles = StyleSheet.create({
   imageBack: {
     flex: 1,
-    width: 350,
+    width: '95%',
     height: 75,
     marginTop: 15,
     borderRadius: 8,

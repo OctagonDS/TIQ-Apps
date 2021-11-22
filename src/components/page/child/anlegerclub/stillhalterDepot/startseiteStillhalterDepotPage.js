@@ -141,6 +141,7 @@ export const StartseiteStillhalterDepotPage = (props) => {
             marginTop: 10,
             fontFamily: 'ub-medium',
             fontSize: 20,
+            color: '#333',
           }}
         >
           Herzlich Willkommen, {userProfile.display_name}!
@@ -152,6 +153,7 @@ export const StartseiteStillhalterDepotPage = (props) => {
               marginTop: 25,
               fontFamily: 'ub-reg',
               fontSize: 16,
+              color: '#333',
             }}
           >
             {`Das Stillhalter – Depot wurde entwickelt, um stabile Gewinne aus regelmäßigen Optionsprämien zu kassieren. Stillhalter zu sein, ist eine der spannendsten Möglichkeiten, wortwörtlich auf Knopfdruck, Einkommen zu generieren. Du kannst damit mehr Geld verdienen als ein Angestellter und das mit viel weniger Zeitaufwand.

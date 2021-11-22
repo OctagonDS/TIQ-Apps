@@ -77,6 +77,7 @@ export const StartseiteTraderCockpitPage = (props) => {
             marginTop: 10,
             fontFamily: 'ub-medium',
             fontSize: 20,
+            color: '#333',
           }}
         >
           Herzlich Willkommen, {userProfile.display_name}!
@@ -88,6 +89,7 @@ export const StartseiteTraderCockpitPage = (props) => {
               marginTop: 25,
               fontFamily: 'ub-reg',
               fontSize: 16,
+              color: '#333',
             }}
           >
             {`Das Trader Cockpit wurde entwickelt, um Dir die besten Trade-Signale aus einer Vielzahl von Märkten zu geben. Damit kannst Du wortwörtlich auf Knopfdruck Einkommen generieren. Du kannst damit mehr Geld verdienen als ein Angestellter und das mit viel weniger Zeitaufwand.

@@ -36,11 +36,11 @@ export function StillhalterDepot() {
         tabBarIndicatorStyle: {
           backgroundColor: '#FF741F',
         },
-        tabBarItemStyle: { width: 120 },
+        tabBarItemStyle: { width: 'auto' },
         tabBarLabelStyle: {
           fontFamily: 'ub-medium',
           textTransform: 'none',
-          fontSize: 16,
+          fontSize: 14,
         },
       }}
     >

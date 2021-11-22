@@ -31,7 +31,7 @@ export function TraderCockpit() {
           backgroundColor: '#454A4F',
         },
         tabBarScrollEnabled: true,
-        tabBarItemStyle: { width: 120 },
+        tabBarItemStyle: { width: 'auto' },
         tabBarActiveTintColor: '#FFFFFF',
         tabBarInactiveTintColor: '#ACB3BF',
         tabBarIndicatorStyle: {

@@ -149,6 +149,7 @@ export const StartseiteTrendDepotPage = (props) => {
             marginTop: 10,
             fontFamily: 'ub-medium',
             fontSize: 20,
+            color: '#333',
           }}
         >
           Herzlich Willkommen, {userProfile.display_name}!
@@ -160,6 +161,7 @@ export const StartseiteTrendDepotPage = (props) => {
               marginTop: 25,
               fontFamily: 'ub-reg',
               fontSize: 16,
+              color: '#333',
             }}
           >
             {`Das Trend-Depot wurde entwickelt, um höchste Gewinne aus den größten Trends mitzunehmen. Trader und Investor zu sein, ist eine der spannendsten Möglichkeiten, wortwörtlich auf Knopfdruck, Einkommen zu generieren. Du kannst damit mehr Geld verdienen als ein Angestellter und das mit viel weniger Zeitaufwand.

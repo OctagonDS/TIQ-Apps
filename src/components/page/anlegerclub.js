@@ -83,6 +83,7 @@ export function Anleger({ navigation }) {
   const [accordion3, setAccordion3] = useState(false)
   const [accordion4, setAccordion4] = useState(false)
 
+  // userProfile.id === 8395
   const Access = async () => {
     if (userProfile.id === 0) {
       return setModalVisible(true)
@@ -240,6 +241,7 @@ export function Anleger({ navigation }) {
             marginTop: 13,
             fontFamily: 'ub-medium',
             fontSize: 20,
+            color: '#333',
           }}
         >
           Herzlich Willkommen im Mitgliederbereich, {userProfile.display_name}!
@@ -251,6 +253,7 @@ export function Anleger({ navigation }) {
               marginTop: 25,
               fontFamily: 'ub-reg',
               fontSize: 16,
+              color: '#333',
             }}
           >
             {`Mit der Anmeldung hast Du den Grundstein für Deinen nachhaltigen Börsenerfolg gelegt. Ab sofort bekommst Du regelmäßig die Top-Empfehlungen unserer Redaktion – fertig ausgearbeitete Trades, die Du sofort umsetzen kannst.
@@ -737,9 +740,7 @@ Dein Andrei Anissimov, Herausgeber.`}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            // marginHorizontal: 10,
             paddingHorizontal: 10,
-            // width: '80%',
             marginTop: 20,
           }}
         >
@@ -757,7 +758,6 @@ Dein Andrei Anissimov, Herausgeber.`}
                 fontFamily: 'ub-medium',
                 fontSize: 20,
                 marginLeft: 10,
-                // width: 240,
                 paddingRight: 10,
               }}
             >
@@ -769,7 +769,6 @@ Dein Andrei Anissimov, Herausgeber.`}
                 fontFamily: 'ub-medium',
                 fontSize: 20,
                 marginLeft: 10,
-                // width: 240,
                 paddingRight: 10,
               }}
             >
@@ -784,15 +783,14 @@ Dein Andrei Anissimov, Herausgeber.`}
               marginTop: 20,
               fontFamily: 'ub-reg',
               fontSize: 16,
+              color: '#333',
             }}
           >
-            {`Mit der Anmeldung hast Du den Grundstein für Deinen nachhaltigen Börsenerfolg gelegt. Ab sofort bekommst Du regelmäßig die Top-Empfehlungen unserer Redaktion – fertig ausgearbeitete Trades, die Du sofort umsetzen kannst.
+            {`Der Anlegerclub ist Chefsache! Für Andrei ist es eine Herzensangelegenheit, jedem zu zeigen, wie einfach hohe Renditen an der Börse gemacht werden können.
 
-Noch nie war es einfacher, an der Börse erfolgreich zu investieren! Wir recherchieren die besten Trade-Empfehlungen – Du verbuchst die Gewinne. Damit investierst Du sicher und profitabel – und das mit minimalem Zeiteinsatz, ohne selbst Profi werden zu müssen. 
+Andrei hat, als Chefredakteur mehrerer Börsenbriefe, umfangreiche Erfahrungen gesammelt und weiß, worauf es ankommt: „Die Trade Ideen müssen einfach, gut recherchiert und profitabel sein, damit jeder sie umsetzen kann“.
 
-Ich wünsche Dir maximalen Börsenerfolg!
-
-Dein Andrei Anissimov, Herausgeber.`}
+Sein Versprechen an die Mitglieder: „Unser Anlegerclub wir mehr Geld bringen als er kostet“.`}
           </Text>
         </View>
         <View style={styles.line}></View>
@@ -800,9 +798,7 @@ Dein Andrei Anissimov, Herausgeber.`}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            // marginHorizontal: 10,
             paddingHorizontal: 10,
-            // width: '80%',
             marginTop: 20,
           }}
         >
@@ -820,7 +816,6 @@ Dein Andrei Anissimov, Herausgeber.`}
                 fontFamily: 'ub-medium',
                 fontSize: 20,
                 marginLeft: 10,
-                // width: 240,
                 paddingRight: 10,
               }}
             >
@@ -847,6 +842,7 @@ Dein Andrei Anissimov, Herausgeber.`}
               marginTop: 20,
               fontFamily: 'ub-reg',
               fontSize: 16,
+              color: '#333',
             }}
           >
             {`Marco ist als Chefredakteur das Gehirn, aber auch das Herz hinter dem Club. Er hält alle Fäden in der Hand und kümmert sich jeden Tag um die Depots, Trade-Empfehlungen und die Anliegen der Mitglieder.
@@ -860,9 +856,7 @@ Angefangen bei Null hat er mittlerweile sein Depot mehrfach verdoppelt und ist s
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            // marginHorizontal: 10,
             paddingHorizontal: 10,
-            // width: '80%',
             marginTop: 20,
           }}
         >
@@ -880,7 +874,6 @@ Angefangen bei Null hat er mittlerweile sein Depot mehrfach verdoppelt und ist s
                 fontFamily: 'ub-medium',
                 fontSize: 20,
                 marginLeft: 10,
-                // width: 240,
                 paddingRight: 10,
               }}
             >
@@ -892,7 +885,6 @@ Angefangen bei Null hat er mittlerweile sein Depot mehrfach verdoppelt und ist s
                 fontFamily: 'ub-medium',
                 fontSize: 20,
                 marginLeft: 10,
-                // width: 240,
                 paddingRight: 10,
               }}
             >
@@ -907,6 +899,7 @@ Angefangen bei Null hat er mittlerweile sein Depot mehrfach verdoppelt und ist s
               marginTop: 20,
               fontFamily: 'ub-reg',
               fontSize: 16,
+              color: '#333',
             }}
           >
             {`Ein Team von gut ausgebildeten Tradern und Investoren unterstützt den Chefredakteur.

@@ -31,6 +31,7 @@ export function StarterDepot() {
           backgroundColor: '#454A4F',
         },
         tabBarScrollEnabled: true,
+        tabBarItemStyle: { width: 'auto' },
         tabBarActiveTintColor: '#FFFFFF',
         tabBarInactiveTintColor: '#ACB3BF',
         tabBarIndicatorStyle: {

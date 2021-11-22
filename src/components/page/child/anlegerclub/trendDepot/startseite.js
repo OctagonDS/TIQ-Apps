@@ -30,6 +30,7 @@ export function TrendDepot() {
           backgroundColor: '#454A4F',
         },
         tabBarScrollEnabled: true,
+        tabBarItemStyle: { width: 120 },
         tabBarActiveTintColor: '#FFFFFF',
         tabBarInactiveTintColor: '#ACB3BF',
         tabBarIndicatorStyle: {

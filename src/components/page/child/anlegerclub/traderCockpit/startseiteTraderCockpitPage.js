@@ -19,6 +19,8 @@ import mainContext from '../../../../../store/context/context'
 const image = require('../../../../../assets/img/black-geo.png')
 const imageGray = require('../../../../../assets/img/grey-geo.png')
 const ghjk = require('../../../../../assets/img/ghjk.png')
+const das = require('../../../../../assets/img/ikonki-wich.png')
+const dm = require('../../../../../assets/img/dm.png')
 const poster1 =
   'https://kurse.traderiq.net/wp-content/uploads/2021/10/DSC_7578-1-1024x683.jpg'
 const poster2 =
@@ -171,6 +173,88 @@ Dein Andrei Anissimov, Herausgeber.`}
                 {`Eine der einfachsten und zeitschonendsten Strategien überhaupt. Ein Mal pro Monat wird das Depot mit einem raffinierten Handelssystem angepasst. Damit produziert das System zuverlässig hohe Gewinne.
 
 So investierst Du besser als jeder Fond – mit gerade Mal 10 Minuten pro Monat.`}
+              </Text>
+            </View>
+          </ImageBackground>
+        </View>
+        <View>
+          <ImageBackground
+            source={imageGray}
+            resizeMode="cover"
+            style={[styles.imageBlock, {}]}
+            imageStyle={{
+              borderRadius: 5,
+              alignSelf: 'flex-end',
+              borderWidth: 1,
+              borderColor: '#ccc',
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                marginTop: 15,
+              }}
+            >
+              <Image style={styles.imageBlocks} source={das} />
+              <Text style={[styles.blockText, { paddingRight: '10%' }]}>
+                Das Cockpit
+              </Text>
+            </View>
+            <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
+              <Text
+                style={{
+                  textAlign: 'left',
+                  marginTop: 15,
+                  fontFamily: 'ub-reg',
+                  fontSize: 16,
+                  color: '#4E4D4D',
+                }}
+              >
+                {`Hier findest Du auf einen Blick alles, was das Trader-Herz begehrt. Alle wichtigen Marktdaten auf einen Blick zusammengefasst – damit entgeht Dir bei Deinen täglichen Aufgaben nichts mehr.
+
+Dich erwartet die komplette Marktkontrolle für die richtigen Trading-Entscheidungen.`}
+              </Text>
+            </View>
+          </ImageBackground>
+        </View>
+        <View>
+          <ImageBackground
+            source={imageGray}
+            resizeMode="cover"
+            style={[styles.imageBlock, {}]}
+            imageStyle={{
+              borderRadius: 5,
+              alignSelf: 'flex-end',
+              borderWidth: 1,
+              borderColor: '#ccc',
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                marginTop: 15,
+              }}
+            >
+              <Image style={styles.imageBlocks} source={dm} />
+              <Text style={[styles.blockText, { paddingRight: '10%' }]}>
+                Die handelssignale
+              </Text>
+            </View>
+            <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
+              <Text
+                style={{
+                  textAlign: 'left',
+                  marginTop: 15,
+                  fontFamily: 'ub-reg',
+                  fontSize: 16,
+                  color: '#4E4D4D',
+                }}
+              >
+                {`Commodities, Indizes, Forex und Krypto – sobald ein neues Handelssignal entsteht bist Du informiert. Jedes Handelssignal bekommst Du als E-Mail in Dein Postfach und als Telegram-Nachricht auf Dein Handy – so verpasst Du nichts mehr.
+
+Damit handelst Du im richtigen Moment – ohne selbst vor den Charts zu sitzen.`}
               </Text>
             </View>
           </ImageBackground>

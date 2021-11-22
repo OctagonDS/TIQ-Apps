@@ -242,6 +242,7 @@ export function Anleger({ navigation }) {
             fontFamily: 'ub-medium',
             fontSize: 20,
             color: '#333',
+            paddingHorizontal: 20,
           }}
         >
           Herzlich Willkommen im Mitgliederbereich, {userProfile.display_name}!
@@ -265,11 +266,11 @@ Ich wünsche Dir maximalen Börsenerfolg!
 Dein Andrei Anissimov, Herausgeber.`}
           </Text>
         </View>
-        <View>
+        <View style={{ position: 'relative' }}>
           <ImageBackground
             source={image}
             resizeMode="cover"
-            style={styles.imageBack}
+            style={[styles.imageBack, {}]}
             imageStyle={{ borderRadius: 5 }}
           >
             <Text
@@ -918,7 +919,7 @@ Viele der Trade-Empfehlungen des Clubs stammen aus den Depots des Redaktionsteam
 const styles = StyleSheet.create({
   imageBack: {
     flex: 1,
-    width: 350,
+    width: '95%',
     height: 75,
     marginTop: 15,
     borderRadius: 8,

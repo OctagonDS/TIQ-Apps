@@ -14,6 +14,10 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { Startseite } from '../startseite'
 import { StartseiteDepotPage } from './startseiteDepotPage'
+import { AktieDesMonats } from './aktieDesMonats'
+import { RealDepot } from './realDepot'
+import { DaxMillionar } from './daxMillionar'
+import { RealTimeSignale } from './realTimeSignale'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -44,11 +48,31 @@ export function StarterDepot() {
         },
       }}
     >
-      <Tab.Screen name="Startseite" component={StartseiteDepotPage} />
-      <Tab.Screen name="Aktie des monats" component={Startseite} />
-      <Tab.Screen name="Depot" component={Startseite} />
-      <Tab.Screen name="Dax millionär" component={Startseite} />
-      <Tab.Screen name="Trade signale" component={Startseite} />
+      <Tab.Screen
+        name="Startseite"
+        options={{ unmountOnBlur: true }}
+        component={StartseiteDepotPage}
+      />
+      <Tab.Screen
+        name="Aktie des monats"
+        options={{ unmountOnBlur: true }}
+        component={AktieDesMonats}
+      />
+      <Tab.Screen
+        name="Depot"
+        options={{ unmountOnBlur: true }}
+        component={RealDepot}
+      />
+      <Tab.Screen
+        name="Dax millionär"
+        options={{ unmountOnBlur: true }}
+        component={DaxMillionar}
+      />
+      <Tab.Screen
+        name="Trade signale"
+        options={{ unmountOnBlur: true }}
+        component={RealTimeSignale}
+      />
     </Tab.Navigator>
   )
 }

@@ -48,10 +48,26 @@ export function StillhalterDepot() {
         name="Startseite"
         component={StartseiteStillhalterDepotPage}
       />
-      <Tab.Screen name="Depot" component={Startseite} />
-      <Tab.Screen name="Watchlist" component={Startseite} />
-      <Tab.Screen name="Signale" component={Startseite} />
-      <Tab.Screen name="Clubtreffen" component={Startseite} />
+      <Tab.Screen
+        name="Depot"
+        options={{ unmountOnBlur: true }}
+        component={Startseite}
+      />
+      <Tab.Screen
+        name="Watchlist"
+        options={{ unmountOnBlur: true }}
+        component={Startseite}
+      />
+      <Tab.Screen
+        name="Signale"
+        options={{ unmountOnBlur: true }}
+        component={Startseite}
+      />
+      <Tab.Screen
+        name="Clubtreffen"
+        options={{ unmountOnBlur: true }}
+        component={Startseite}
+      />
     </Tab.Navigator>
   )
 }

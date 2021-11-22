@@ -44,13 +44,41 @@ export function TraderCockpit() {
         },
       }}
     >
-      <Tab.Screen name="Startseite" component={StartseiteTraderCockpitPage} />
-      <Tab.Screen name="Cockpit" component={Startseite} />
-      <Tab.Screen name="Commodities" component={Startseite} />
-      <Tab.Screen name="Indizes" component={Startseite} />
-      <Tab.Screen name="Forex" component={Startseite} />
-      <Tab.Screen name="Krypto" component={Startseite} />
-      <Tab.Screen name="Signale" component={Startseite} />
+      <Tab.Screen
+        name="Startseite"
+        options={{ unmountOnBlur: true }}
+        component={StartseiteTraderCockpitPage}
+      />
+      <Tab.Screen
+        name="Cockpit"
+        options={{ unmountOnBlur: true }}
+        component={Startseite}
+      />
+      <Tab.Screen
+        name="Commodities"
+        options={{ unmountOnBlur: true }}
+        component={Startseite}
+      />
+      <Tab.Screen
+        name="Indizes"
+        options={{ unmountOnBlur: true }}
+        component={Startseite}
+      />
+      <Tab.Screen
+        name="Forex"
+        options={{ unmountOnBlur: true }}
+        component={Startseite}
+      />
+      <Tab.Screen
+        name="Krypto"
+        options={{ unmountOnBlur: true }}
+        component={Startseite}
+      />
+      <Tab.Screen
+        name="Signale"
+        options={{ unmountOnBlur: true }}
+        component={Startseite}
+      />
     </Tab.Navigator>
   )
 }

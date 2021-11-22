@@ -311,7 +311,7 @@ Dein Andrei Anissimov, Herausgeber.`}
           {accordion === true ? (
             <View
               style={{
-                width: 320,
+                width: '85%',
                 alignSelf: 'center',
               }}
             >
@@ -372,7 +372,7 @@ Dein Andrei Anissimov, Herausgeber.`}
             <ImageBackground
               source={imageGray}
               resizeMode="cover"
-              style={styles.imageBlock}
+              style={[styles.imageBlock, {}]}
               imageStyle={{
                 borderRadius: 5,
                 // justifyContent: 'space-between',
@@ -394,7 +394,7 @@ Dein Andrei Anissimov, Herausgeber.`}
           {accordion2 === true ? (
             <View
               style={{
-                width: 320,
+                width: '85%',
                 alignSelf: 'center',
               }}
             >
@@ -489,7 +489,7 @@ Dein Andrei Anissimov, Herausgeber.`}
             <ImageBackground
               source={imageGray}
               resizeMode="cover"
-              style={styles.imageBlock}
+              style={[styles.imageBlock, {}]}
               imageStyle={{
                 borderRadius: 5,
                 borderWidth: 1,
@@ -510,7 +510,7 @@ Dein Andrei Anissimov, Herausgeber.`}
           {accordion3 === true ? (
             <View
               style={{
-                width: 320,
+                width: '85%',
                 alignSelf: 'center',
               }}
             >
@@ -605,7 +605,7 @@ Dein Andrei Anissimov, Herausgeber.`}
             <ImageBackground
               source={imageGray}
               resizeMode="cover"
-              style={styles.imageBlock}
+              style={[styles.imageBlock, {}]}
               imageStyle={{
                 borderRadius: 5,
                 borderWidth: 1,
@@ -626,7 +626,7 @@ Dein Andrei Anissimov, Herausgeber.`}
           {accordion4 === true ? (
             <View
               style={{
-                width: 320,
+                width: '85%',
                 alignSelf: 'center',
               }}
             >

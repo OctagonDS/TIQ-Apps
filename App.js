@@ -14,6 +14,10 @@ const fonts = () =>
     'ub-medium': require('./src/assets/fonts/Ubuntu-Medium.ttf'),
     'ub-mediumitalic': require('./src/assets/fonts/Ubuntu-MediumItalic.ttf'),
     'ub-reg': require('./src/assets/fonts/Ubuntu-Regular.ttf'),
+    'os-light': require('./src/assets/fonts/OpenSans-Light.ttf'),
+    'os-reg': require('./src/assets/fonts/OpenSans-Regular.ttf'),
+    'os-medium': require('./src/assets/fonts/OpenSans-Medium.ttf'),
+    'os-bold': require('./src/assets/fonts/OpenSans-Bold.ttf'),
   })
 
 export default function App() {

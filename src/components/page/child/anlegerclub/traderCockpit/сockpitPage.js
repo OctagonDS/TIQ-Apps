@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {
   View,
   Text,
@@ -21,6 +21,14 @@ const imageGray = require('../../../../../assets/img/grey-geo.png')
 const ghjk = require('../../../../../assets/img/ghjk.png')
 const das = require('../../../../../assets/img/ikonki-wich.png')
 const dm = require('../../../../../assets/img/dm.png')
+import {
+  Grid,
+  AreaChart,
+  LineChart,
+  XAxis,
+  YAxis,
+} from 'react-native-svg-charts'
+
 const poster1 =
   'https://kurse.traderiq.net/wp-content/uploads/2021/10/DSC_7578-1-1024x683.jpg'
 const poster2 =
@@ -32,6 +40,129 @@ const wait = (timeout) => {
 
 export const СockpitPage = (props) => {
   const { userProfile } = useContext(mainContext)
+  const [news, setNews] = useState([])
+
+  const data = [
+    {
+      label: 'Один',
+      value: 50,
+    },
+    {
+      value: 10,
+    },
+    {
+      label: 'Два',
+      value: 85,
+    },
+    {
+      value: 95,
+    },
+    {
+      label: 'Три',
+      value: 10,
+    },
+    {
+      value: 35,
+    },
+    {
+      label: 'Четыре',
+      value: 20,
+    },
+    {
+      value: 80,
+    },
+    {
+      label: 'Пять',
+      value: 40,
+    },
+    {
+      value: 60,
+    },
+    {
+      label: 'Шесть',
+      value: 65,
+    },
+  ]
+
+  const data2 = [
+    {
+      label: 'Один',
+      value: 20,
+    },
+    {
+      value: 60,
+    },
+    {
+      label: 'Два',
+      value: 80,
+    },
+    {
+      value: 30,
+    },
+    {
+      label: 'Три',
+      value: 70,
+    },
+    {
+      value: 60,
+    },
+    {
+      label: 'Четыре',
+      value: 60,
+    },
+    {
+      value: 10,
+    },
+    {
+      label: 'Пять',
+      value: 20,
+    },
+    {
+      value: 90,
+    },
+    {
+      label: 'Шесть',
+      value: 70,
+    },
+  ]
+
+  const NewsTicker = async () => {
+    return setNews([
+      {
+        id: 1,
+        news: 'N-tv.de',
+        image:
+          'https://api.stockdio.com/visualization/financial/charts/GetImage.ashx?url=https://bilder4.n-tv.de/img/incoming/crop22948359/3481322772-cImg_16_9-w1200/3075651f898f556c785983cfdad0a849.jpg',
+        title: 'Gewinne schmelzen ab: Powell-Ernennung drückt Techwerte',
+        time: 'vor 10 Stunden',
+      },
+      {
+        id: 2,
+        news: 'FAZ.NET',
+        image:
+          'https://api.stockdio.com/visualization/financial/charts/GetImage.ashx?url=https://media1.faz.net/ppmedia/aktuell/4290311194/1.7646923/facebook_teaser_fplus/will-den-aktienhandel-von.jpg',
+        title: 'Neobroker im Visier der Europäischen Kommission',
+        time: 'vor 11 Stunden',
+      },
+      {
+        id: 3,
+        news: 'Spiegel Online',
+        image:
+          'https://api.stockdio.com/visualization/financial/charts/GetImage.ashx?url=https://cdn.prod.www.spiegel.de/images/5061e2a0-69e7-42bd-96ea-68a95352f583_w1280_r1.77_fpx34_fpy49.jpg',
+        title:
+          'Wirtschaftsprüfer unter Druck: EY erstattet Anzeige wegen Wambach-Bericht zum Fall Wirecard',
+        time: 'vor 11 Stunden',
+      },
+    ])
+  }
+
+  useEffect(() => {
+    NewsTicker()
+  }, [])
+
+  const axesSvg = { fontSize: 10, fill: '#828D99' }
+  const verticalContentInset = { top: 10, bottom: 10 }
+  const xAxisHeight = 30
 
   return (
     <View style={gStyle.main}>
@@ -65,6 +196,140 @@ export const СockpitPage = (props) => {
             </Text>
           </View>
         </View>
+        <ScrollView horizontal={true}>
+          <View style={{ marginTop: 25 }}>
+            <View style={{ marginLeft: 20 }}>
+              <Text
+                style={{
+                  fontSize: 30,
+                  color: '#30333A',
+                  textAlign: 'left',
+                  fontFamily: 'os-reg',
+                }}
+              >
+                6 791.67 $
+              </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: '#89d477',
+                  textAlign: 'left',
+                  fontFamily: 'os-reg',
+                }}
+              >
+                +0.32 %
+              </Text>
+            </View>
+            <View
+              style={{
+                height: 300,
+                width: 350,
+                padding: 25,
+                paddingTop: 10,
+                flexDirection: 'row',
+              }}
+            >
+              <YAxis
+                data={data}
+                yAccessor={({ item }) => item.value}
+                formatLabel={(value) => `${value}$`}
+                style={{ marginBottom: xAxisHeight }}
+                numberOfTicks={5}
+                contentInset={verticalContentInset}
+                svg={axesSvg}
+              />
+              <View style={{ flex: 1, marginLeft: 25 }}>
+                <AreaChart
+                  style={{ flex: 1 }}
+                  data={data}
+                  numberOfTicks={5}
+                  yAccessor={({ item }) => item.value}
+                  contentInset={verticalContentInset}
+                  svg={{ stroke: '#FF741F', fill: 'rgba(255,116,31,0.1)' }}
+                >
+                  <Grid />
+                </AreaChart>
+                <XAxis
+                  style={{
+                    marginHorizontal: -10,
+                    height: xAxisHeight,
+                    marginTop: 10,
+                  }}
+                  data={data}
+                  formatLabel={(index, _) => data[index].label}
+                  contentInset={{ left: 30, right: 30 }}
+                  svg={axesSvg}
+                />
+              </View>
+            </View>
+          </View>
+          <View style={{ marginTop: 25 }}>
+            <View style={{ marginLeft: 20 }}>
+              <Text
+                style={{
+                  fontSize: 30,
+                  color: '#30333A',
+                  textAlign: 'left',
+                  fontFamily: 'os-reg',
+                }}
+              >
+                32 476.43 $
+              </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: '#f6696a',
+                  textAlign: 'left',
+                  fontFamily: 'os-reg',
+                }}
+              >
+                -0.68 %
+              </Text>
+            </View>
+            <View
+              style={{
+                height: 300,
+                width: 350,
+                padding: 25,
+                paddingTop: 10,
+                flexDirection: 'row',
+              }}
+            >
+              <YAxis
+                data={data2}
+                yAccessor={({ item }) => item.value}
+                formatLabel={(value) => `${value}$`}
+                style={{ marginBottom: xAxisHeight }}
+                numberOfTicks={5}
+                contentInset={verticalContentInset}
+                svg={axesSvg}
+              />
+              <View style={{ flex: 1, marginLeft: 25 }}>
+                <AreaChart
+                  style={{ flex: 1 }}
+                  data={data2}
+                  numberOfTicks={5}
+                  yAccessor={({ item }) => item.value}
+                  contentInset={verticalContentInset}
+                  svg={{ stroke: '#FF741F', fill: 'rgba(255,116,31,0.1)' }}
+                >
+                  <Grid />
+                </AreaChart>
+                <XAxis
+                  style={{
+                    marginHorizontal: -10,
+                    height: xAxisHeight,
+                    marginTop: 10,
+                  }}
+                  data={data2}
+                  formatLabel={(index, _) => data[index].label}
+                  contentInset={{ left: 30, right: 30 }}
+                  svg={axesSvg}
+                />
+              </View>
+            </View>
+          </View>
+        </ScrollView>
         <View>
           <ImageBackground
             source={image}
@@ -80,135 +345,59 @@ export const СockpitPage = (props) => {
                 textAlign: 'center',
               }}
             >
-              Module im Trader Cockpit
+              News ticker
             </Text>
           </ImageBackground>
         </View>
-        <ScrollView horizontal={true} style={{ flexDirection: 'row' }}>
-          <View>
-            <ImageBackground
-              source={imageGray}
-              resizeMode="cover"
-              style={[styles.imageBlock, {}]}
-              imageStyle={{
-                borderRadius: 5,
-                alignSelf: 'flex-end',
-                borderWidth: 1,
-                borderColor: '#ccc',
-              }}
-            >
-              <View
+        {news.map((userData) => (
+          <View
+            key={userData.id}
+            style={{
+              flexDirection: 'row',
+              marginTop: 20,
+              justifyContent: 'space-between',
+              marginHorizontal: 25,
+              height: 80,
+            }}
+          >
+            <View style={{ width: '60%' }}>
+              <Text
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  marginTop: 15,
+                  color: '#50555C',
+                  fontFamily: 'os-reg',
+                  fontSize: 13,
+                  textTransform: 'uppercase',
                 }}
               >
-                <Image style={styles.imageBlocks} source={ghjk} />
-                <Text style={[styles.blockText, { width: 180 }]}>
-                  Marktanalysen und saisonalitäten
-                </Text>
-              </View>
-              <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
-                <Text
-                  style={{
-                    textAlign: 'left',
-                    marginTop: 15,
-                    fontFamily: 'ub-reg',
-                    fontSize: 16,
-                    color: '#4E4D4D',
-                  }}
-                >
-                  {`Eine der einfachsten und zeitschonendsten Strategien überhaupt. Ein Mal pro Monat wird das Depot mit einem raffinierten Handelssystem angepasst. Damit produziert das System zuverlässig hohe Gewinne.
-
-So investierst Du besser als jeder Fond – mit gerade Mal 10 Minuten pro Monat.`}
-                </Text>
-              </View>
-            </ImageBackground>
-          </View>
-          <View>
-            <ImageBackground
-              source={imageGray}
-              resizeMode="cover"
-              style={[styles.imageBlock, {}]}
-              imageStyle={{
-                borderRadius: 5,
-                alignSelf: 'flex-end',
-                borderWidth: 1,
-                borderColor: '#ccc',
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  marginTop: 15,
-                }}
+                {userData.news}
+              </Text>
+              <Text
+                style={{ color: '#FF741F', fontFamily: 'os-reg', fontSize: 15 }}
               >
-                <Image style={styles.imageBlocks} source={das} />
-                <Text style={[styles.blockText, { width: '70%' }]}>
-                  Das Cockpit
-                </Text>
-              </View>
-              <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
-                <Text
-                  style={{
-                    textAlign: 'left',
-                    marginTop: 15,
-                    fontFamily: 'ub-reg',
-                    fontSize: 16,
-                    color: '#4E4D4D',
-                  }}
-                >
-                  {`Hier findest Du auf einen Blick alles, was das Trader-Herz begehrt. Alle wichtigen Marktdaten auf einen Blick zusammengefasst – damit entgeht Dir bei Deinen täglichen Aufgaben nichts mehr.
-
-Dich erwartet die komplette Marktkontrolle für die richtigen Trading-Entscheidungen.`}
-                </Text>
-              </View>
-            </ImageBackground>
-          </View>
-          <View>
-            <ImageBackground
-              source={imageGray}
-              resizeMode="cover"
-              style={[styles.imageBlock, {}]}
-              imageStyle={{
-                borderRadius: 5,
-                alignSelf: 'flex-end',
-                borderWidth: 1,
-                borderColor: '#ccc',
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  marginTop: 15,
-                }}
+                {userData.title.substring(0, 30)}...
+              </Text>
+              <Text
+                style={{ color: '#50555C', fontFamily: 'os-reg', fontSize: 10 }}
               >
-                <Image style={styles.imageBlocks} source={dm} />
-                <Text style={[styles.blockText, { width: '70%' }]}>
-                  Die handelssignale
-                </Text>
-              </View>
-              <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
-                <Text
-                  style={{
-                    textAlign: 'left',
-                    marginTop: 15,
-                    fontFamily: 'ub-reg',
-                    fontSize: 16,
-                    color: '#4E4D4D',
-                  }}
-                >
-                  {`Commodities, Indizes, Forex und Krypto – sobald ein neues Handelssignal entsteht bist Du informiert. Jedes Handelssignal bekommst Du als E-Mail in Dein Postfach und als Telegram-Nachricht auf Dein Handy – so verpasst Du nichts mehr.
-
-Damit handelst Du im richtigen Moment – ohne selbst vor den Charts zu sitzen.`}
-                </Text>
-              </View>
-            </ImageBackground>
+                {userData.time}
+              </Text>
+            </View>
+            <View style={{ width: '40%' }}>
+              <Image
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: 5,
+                  marginHorizontal: 5,
+                }}
+                resizeMode="cover"
+                source={{
+                  uri: userData.image,
+                }}
+              />
+            </View>
           </View>
-        </ScrollView>
+        ))}
       </ScrollView>
     </View>
   )

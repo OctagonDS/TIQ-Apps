@@ -211,16 +211,33 @@ export const СockpitPage = (props) => {
         <ScrollView horizontal={true}>
           <View style={{ marginTop: 25 }}>
             <View style={{ marginLeft: 20 }}>
-              <Text
+              <View
                 style={{
-                  fontSize: 30,
-                  color: '#30333A',
-                  textAlign: 'left',
-                  fontFamily: 'os-reg',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginRight: 20,
                 }}
               >
-                6 791.67 $
-              </Text>
+                <Text
+                  style={{
+                    fontSize: 30,
+                    color: '#30333A',
+                    textAlign: 'left',
+                    fontFamily: 'os-reg',
+                  }}
+                >
+                  29,774.11
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 30,
+                    color: 'rgba(130,141,153,0.6)',
+                    fontFamily: 'os-reg',
+                  }}
+                >
+                  N225
+                </Text>
+              </View>
               <Text
                 style={{
                   fontSize: 16,
@@ -229,7 +246,7 @@ export const СockpitPage = (props) => {
                   fontFamily: 'os-reg',
                 }}
               >
-                +0.32 %
+                +0.09%
               </Text>
             </View>
             <View
@@ -277,16 +294,33 @@ export const СockpitPage = (props) => {
           </View>
           <View style={{ marginTop: 25 }}>
             <View style={{ marginLeft: 20 }}>
-              <Text
+              <View
                 style={{
-                  fontSize: 30,
-                  color: '#30333A',
-                  textAlign: 'left',
-                  fontFamily: 'os-reg',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginRight: 20,
                 }}
               >
-                32 476.43 $
-              </Text>
+                <Text
+                  style={{
+                    fontSize: 30,
+                    color: '#30333A',
+                    textAlign: 'left',
+                    fontFamily: 'os-reg',
+                  }}
+                >
+                  16,115.69
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 30,
+                    color: 'rgba(130,141,153,0.6)',
+                    fontFamily: 'os-reg',
+                  }}
+                >
+                  DAX
+                </Text>
+              </View>
               <Text
                 style={{
                   fontSize: 16,
@@ -295,7 +329,7 @@ export const СockpitPage = (props) => {
                   fontFamily: 'os-reg',
                 }}
               >
-                -0.68 %
+                -0.27%
               </Text>
             </View>
             <View
@@ -511,7 +545,7 @@ export const СockpitPage = (props) => {
                     textAlign: 'right',
                   }}
                 >
-                  36 873.02 $
+                  55,970.60 $
                 </Text>
                 <Text
                   style={{
@@ -521,7 +555,7 @@ export const СockpitPage = (props) => {
                     textAlign: 'right',
                   }}
                 >
-                  +0.64 %
+                  -2.53%
                 </Text>
               </View>
             </View>
@@ -591,7 +625,7 @@ export const СockpitPage = (props) => {
                     textAlign: 'right',
                   }}
                 >
-                  2 396.32 $
+                  4,110.34 $
                 </Text>
                 <Text
                   style={{
@@ -601,7 +635,7 @@ export const СockpitPage = (props) => {
                     textAlign: 'right',
                   }}
                 >
-                  -2.86 %
+                  -2.18%
                 </Text>
               </View>
             </View>

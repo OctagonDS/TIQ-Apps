@@ -15,6 +15,11 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { Startseite } from '../startseite'
 import { StartseiteTraderCockpitPage } from './startseiteTraderCockpitPage'
 import { СockpitPage } from './сockpitPage'
+import { Commodities } from './commodities'
+import { Indizes } from './indizes'
+import { Forex } from './forex'
+import { Krypto } from './krypto'
+import { Signale } from './signale'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -58,27 +63,27 @@ export function TraderCockpit() {
       <Tab.Screen
         name="Commodities"
         options={{ unmountOnBlur: true }}
-        component={Startseite}
+        component={Commodities}
       />
       <Tab.Screen
         name="Indizes"
         options={{ unmountOnBlur: true }}
-        component={Startseite}
+        component={Indizes}
       />
       <Tab.Screen
         name="Forex"
         options={{ unmountOnBlur: true }}
-        component={Startseite}
+        component={Forex}
       />
       <Tab.Screen
         name="Krypto"
         options={{ unmountOnBlur: true }}
-        component={Startseite}
+        component={Krypto}
       />
       <Tab.Screen
         name="Signale"
         options={{ unmountOnBlur: true }}
-        component={Startseite}
+        component={Signale}
       />
     </Tab.Navigator>
   )

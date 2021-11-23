@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {
   View,
   Text,
@@ -15,6 +15,8 @@ import { gStyle } from '../../../../../styles/style'
 import { LinearGradient } from 'expo-linear-gradient'
 import { IconPlay } from '../../../../atoms/iconPlay'
 import mainContext from '../../../../../store/context/context'
+import { IcoBTC } from '../../../../atoms/iconCockpit/iconBTC'
+import { IcoEthereum } from '../../../../atoms/iconCockpit/iconEthereum'
 
 const image = require('../../../../../assets/img/black-geo.png')
 const imageGray = require('../../../../../assets/img/grey-geo.png')
@@ -81,7 +83,7 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 
-export const RealTimeSignale = (props) => {
+export const Signale = (props) => {
   const { userProfile } = useContext(mainContext)
 
   return (
@@ -101,7 +103,7 @@ export const RealTimeSignale = (props) => {
               color: '#FF741F',
             }}
           >
-            Real time handelssignale
+            Signale
           </Text>
           <View style={{ marginTop: 3 }}>
             <Text
@@ -112,7 +114,7 @@ export const RealTimeSignale = (props) => {
                 color: '#FF741F',
               }}
             >
-              Starter Depot Trader IQ Anlegerclub
+              Trader Cockpit Trader IQ Anlegerclub
             </Text>
           </View>
         </View>
@@ -122,30 +124,6 @@ export const RealTimeSignale = (props) => {
             resizeMode="cover"
             source={poster1}
           />
-        </View>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginTop: 25,
-            fontFamily: 'ub-medium',
-            fontSize: 20,
-            color: '#333',
-          }}
-        >
-          Die Trade Alert des Real-Depots.
-        </Text>
-        <View style={{ marginHorizontal: 10 }}>
-          <Text
-            style={{
-              textAlign: 'left',
-              marginTop: 25,
-              fontFamily: 'ub-reg',
-              fontSize: 16,
-              color: '#333',
-            }}
-          >
-            {`Du kannst immer dann investieren wenn Du Zeit hast – oder dann, wenn der Einstieg perfekt ist und wir einkaufen.`}
-          </Text>
         </View>
         <View>
           <ImageBackground

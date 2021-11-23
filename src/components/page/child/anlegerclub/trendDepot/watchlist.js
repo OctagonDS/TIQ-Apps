@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import {
   View,
   Text,
@@ -15,75 +15,12 @@ import { gStyle } from '../../../../../styles/style'
 import { LinearGradient } from 'expo-linear-gradient'
 import { IconPlay } from '../../../../atoms/iconPlay'
 import mainContext from '../../../../../store/context/context'
-import { IcoBTC } from '../../../../atoms/iconCockpit/iconBTC'
-import { IcoEthereum } from '../../../../atoms/iconCockpit/iconEthereum'
 
 const image = require('../../../../../assets/img/black-geo.png')
 const imageGray = require('../../../../../assets/img/grey-geo.png')
-const poster1 = require('../../../../../assets/img/BuySell.png')
+const poster1 = require('../../../../../assets/img/watchlist.jpg')
 
-const GradientHold = ({ name }) => (
-  <LinearGradient
-    colors={['#d9a604', '#fcd107']}
-    start={{ x: 0, y: 0 }}
-    end={{ x: 1, y: 0 }}
-    style={{
-      flex: 1,
-      borderRadius: 25,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}
-  >
-    <View style={{}}>
-      <Text style={{ fontFamily: 'ub-medium', color: '#fff' }}>HOLD</Text>
-    </View>
-  </LinearGradient>
-)
-
-const GradientBuy = ({ name }) => (
-  <LinearGradient
-    colors={['#4c9523', '#96be11']}
-    start={{ x: 0, y: 0 }}
-    end={{ x: 1, y: 0 }}
-    style={{
-      flex: 1,
-      borderRadius: 25,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}
-  >
-    <View style={{}}>
-      <Text style={{ fontFamily: 'ub-medium', color: '#fff' }}>BUY</Text>
-    </View>
-  </LinearGradient>
-)
-
-const GradientSell = ({ name }) => (
-  <LinearGradient
-    colors={['#ad061c', '#d30017']}
-    start={{ x: 0, y: 0 }}
-    end={{ x: 1, y: 0 }}
-    style={{
-      flex: 1,
-      borderRadius: 25,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}
-  >
-    <View style={{}}>
-      <Text style={{ fontFamily: 'ub-medium', color: '#fff' }}>SELL</Text>
-    </View>
-  </LinearGradient>
-)
-
-const wait = (timeout) => {
-  return new Promise((resolve) => setTimeout(resolve, timeout))
-}
-
-export const Signale = (props) => {
+export const DepotWatchlist = (props) => {
   const { userProfile } = useContext(mainContext)
 
   return (
@@ -103,7 +40,7 @@ export const Signale = (props) => {
               color: '#FF741F',
             }}
           >
-            Signale
+            Watchlist
           </Text>
           <View style={{ marginTop: 3 }}>
             <Text
@@ -114,7 +51,7 @@ export const Signale = (props) => {
                 color: '#FF741F',
               }}
             >
-              Trader Cockpit Trader IQ Anlegerclub
+              Trend Depot Trader IQ Anlegerclub
             </Text>
           </View>
         </View>
@@ -124,6 +61,34 @@ export const Signale = (props) => {
             resizeMode="cover"
             source={poster1}
           />
+        </View>
+        <Text
+          style={{
+            textAlign: 'center',
+            marginTop: 25,
+            fontFamily: 'ub-medium',
+            fontSize: 20,
+            color: '#333',
+          }}
+        >
+          Diese Aktien beobachtet das Redaktionsteam
+        </Text>
+        <View style={{ marginHorizontal: 10 }}>
+          <Text
+            style={{
+              textAlign: 'left',
+              marginTop: 25,
+              fontFamily: 'ub-reg',
+              fontSize: 16,
+              color: '#333',
+            }}
+          >
+            {`Wir haben eine Watchlist mit Aktien angelegt, die den Markt immer wieder deutlich übertreffen.
+
+Wir greifen auf eine über 20 jährige Erfahrung in der Analyse von unterbewerteten Underdog-Aktien in unterschiedlichen Sektoren und Branchen zurück und aktualisieren die Watchlist tagesaktuell.
+
+Mit dem Aktienranking der Experten hast Du immer die Sicherheit in die besten Unternehmen zu investieren.`}
+          </Text>
         </View>
         <View>
           <ImageBackground
@@ -140,9 +105,22 @@ export const Signale = (props) => {
                 textAlign: 'center',
               }}
             >
-              Trade archiv
+              Aktien watchlist
             </Text>
           </ImageBackground>
+        </View>
+        <View style={{ marginTop: 15 }}>
+          <Text
+            style={{
+              marginTop: 15,
+              textAlign: 'center',
+              fontSize: 18,
+              fontFamily: 'ub-medium',
+              color: '#666',
+            }}
+          >
+            Импорт API
+          </Text>
         </View>
       </ScrollView>
     </View>

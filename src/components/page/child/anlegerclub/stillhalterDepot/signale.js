@@ -83,7 +83,7 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 
-export const Signale = (props) => {
+export const SignaleStillhalter = (props) => {
   const { userProfile } = useContext(mainContext)
 
   return (
@@ -103,7 +103,7 @@ export const Signale = (props) => {
               color: '#FF741F',
             }}
           >
-            Signale
+            Handelssignale
           </Text>
           <View style={{ marginTop: 3 }}>
             <Text
@@ -114,7 +114,7 @@ export const Signale = (props) => {
                 color: '#FF741F',
               }}
             >
-              Trader Cockpit Trader IQ Anlegerclub
+              Stillhalter Depot Trader IQ Anlegerclub
             </Text>
           </View>
         </View>

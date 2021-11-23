@@ -13,6 +13,10 @@ import { gStyle } from '../../../../../styles/style'
 import { NavigationContainer } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { Startseite } from '../startseite'
+import { RealStillhalterDepot } from './realDepot'
+import { StillhalterWatchlist } from './watchlist'
+import { SignaleStillhalter } from './signale'
+import { ClubtreffenStillhalter } from './clubtreffen'
 import { StartseiteStillhalterDepotPage } from './startseiteStillhalterDepotPage'
 
 const Tab = createMaterialTopTabNavigator()
@@ -51,22 +55,22 @@ export function StillhalterDepot() {
       <Tab.Screen
         name="Depot"
         options={{ unmountOnBlur: true }}
-        component={Startseite}
+        component={RealStillhalterDepot}
       />
       <Tab.Screen
         name="Watchlist"
         options={{ unmountOnBlur: true }}
-        component={Startseite}
+        component={StillhalterWatchlist}
       />
       <Tab.Screen
         name="Signale"
         options={{ unmountOnBlur: true }}
-        component={Startseite}
+        component={SignaleStillhalter}
       />
       <Tab.Screen
         name="Clubtreffen"
         options={{ unmountOnBlur: true }}
-        component={Startseite}
+        component={ClubtreffenStillhalter}
       />
     </Tab.Navigator>
   )

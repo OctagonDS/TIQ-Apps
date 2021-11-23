@@ -13,6 +13,10 @@ import { gStyle } from '../../../../../styles/style'
 import { NavigationContainer } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { Startseite } from '../startseite'
+import { RealTrendDepot } from './realDepot'
+import { DepotWatchlist } from './watchlist'
+import { SignaleTrendDepot } from './signale'
+import { ClubtreffenDepot } from './clubtreffen'
 import { StartseiteTrendDepotPage } from './startseiteTrendDepotPage'
 
 const Tab = createMaterialTopTabNavigator()
@@ -52,22 +56,22 @@ export function TrendDepot() {
       <Tab.Screen
         name="Depot"
         options={{ unmountOnBlur: true }}
-        component={Startseite}
+        component={RealTrendDepot}
       />
       <Tab.Screen
         name="Watchlist"
         options={{ unmountOnBlur: true }}
-        component={Startseite}
+        component={DepotWatchlist}
       />
       <Tab.Screen
         name="Signale"
         options={{ unmountOnBlur: true }}
-        component={Startseite}
+        component={SignaleTrendDepot}
       />
       <Tab.Screen
         name="Clubtreffen"
         options={{ unmountOnBlur: true }}
-        component={Startseite}
+        component={ClubtreffenDepot}
       />
     </Tab.Navigator>
   )

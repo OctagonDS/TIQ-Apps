@@ -15,6 +15,8 @@ import { gStyle } from '../../../../../styles/style'
 import { LinearGradient } from 'expo-linear-gradient'
 import { IconPlay } from '../../../../atoms/iconPlay'
 import mainContext from '../../../../../store/context/context'
+import { IcoBTC } from '../../../../atoms/iconCockpit/iconBTC'
+import { IcoEthereum } from '../../../../atoms/iconCockpit/iconEthereum'
 
 const image = require('../../../../../assets/img/black-geo.png')
 const imageGray = require('../../../../../assets/img/grey-geo.png')
@@ -42,6 +44,8 @@ export const СockpitPage = (props) => {
   const { userProfile } = useContext(mainContext)
   const [news, setNews] = useState([])
 
+  const dataBTC = [10, 40, 20, 80, 60, 20, 25, 90, 90, 110, 80, 60]
+  const dataEthereum = [40, 50, 80, 40, 30, 70, 60, 50, 50, 40, 60, 80]
   const data = [
     {
       label: 'Один',
@@ -152,6 +156,14 @@ export const СockpitPage = (props) => {
         title:
           'Wirtschaftsprüfer unter Druck: EY erstattet Anzeige wegen Wambach-Bericht zum Fall Wirecard',
         time: 'vor 11 Stunden',
+      },
+      {
+        id: 4,
+        news: 'ecomento.de',
+        image:
+          'https://api.stockdio.com/visualization/financial/charts/GetImage.ashx?url=https://ecomento.de/wp-content/uploads/2021/11/Elaris-BEO-PIO-Hafen.jpg',
+        title: 'Elaris meldet Ankunft der ersten 150 Elektroautos aus China',
+        time: 'vor 13 Stunden',
       },
     ])
   }
@@ -374,7 +386,7 @@ export const СockpitPage = (props) => {
               <Text
                 style={{ color: '#FF741F', fontFamily: 'os-reg', fontSize: 15 }}
               >
-                {userData.title.substring(0, 30)}...
+                {userData.title.substring(0, 40)}...
               </Text>
               <Text
                 style={{ color: '#50555C', fontFamily: 'os-reg', fontSize: 10 }}
@@ -398,6 +410,213 @@ export const СockpitPage = (props) => {
             </View>
           </View>
         ))}
+        <View>
+          <ImageBackground
+            source={image}
+            resizeMode="cover"
+            style={[styles.imageBack, {}]}
+            imageStyle={{ borderRadius: 5 }}
+          >
+            <Text
+              style={{
+                color: '#fff',
+                fontFamily: 'ub-medium',
+                fontSize: 25,
+                textAlign: 'center',
+              }}
+            >
+              Forex heatmap
+            </Text>
+          </ImageBackground>
+        </View>
+        <View>
+          <Text
+            style={{ textAlign: 'center', marginVertical: 10, fontSize: 18 }}
+          >
+            ТУТ ДАННЫЕ ФОРЕКСА
+          </Text>
+        </View>
+        <View>
+          <ImageBackground
+            source={image}
+            resizeMode="cover"
+            style={[styles.imageBack, {}]}
+            imageStyle={{ borderRadius: 5 }}
+          >
+            <Text
+              style={{
+                color: '#fff',
+                fontFamily: 'ub-medium',
+                fontSize: 25,
+                textAlign: 'center',
+              }}
+            >
+              Kryptowährungen
+            </Text>
+          </ImageBackground>
+        </View>
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: 20,
+              justifyContent: 'space-around',
+              marginHorizontal: 10,
+              alignItems: 'center',
+            }}
+          >
+            <IcoBTC />
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '75%',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <View>
+                <Text style={{ fontFamily: 'os-reg', color: '#30333A' }}>
+                  BTC
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'os-reg',
+                    color: 'rgba(130,141,153,0.6)',
+                  }}
+                >
+                  Bitcoin
+                </Text>
+              </View>
+              <View
+                style={{
+                  width: 65,
+                }}
+              >
+                <AreaChart
+                  style={{ height: 45 }}
+                  data={dataBTC}
+                  numberOfTicks={0}
+                  yMin={10}
+                  contentInset={verticalContentInset}
+                  svg={{ stroke: '#FF741F', fill: 'rgba(255,116,31,0.1)' }}
+                >
+                  <Grid />
+                </AreaChart>
+              </View>
+              <View>
+                <Text
+                  style={{
+                    fontFamily: 'os-reg',
+                    color: '#30333A',
+                    textAlign: 'right',
+                  }}
+                >
+                  36 873.02 $
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'os-reg',
+                    color: '#4E4D4D',
+                    fontSize: 12,
+                    textAlign: 'right',
+                  }}
+                >
+                  +0.64 %
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={{
+              borderBottomWidth: 1,
+              borderColor: '#50555C',
+              paddingTop: 15,
+              marginRight: 10,
+              width: '75%',
+              alignSelf: 'flex-end',
+            }}
+          ></View>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: 20,
+              justifyContent: 'space-around',
+              marginHorizontal: 10,
+              alignItems: 'center',
+            }}
+          >
+            <IcoEthereum />
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '75%',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <View>
+                <Text style={{ fontFamily: 'os-reg', color: '#30333A' }}>
+                  ETH
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'os-reg',
+                    color: 'rgba(130,141,153,0.6)',
+                  }}
+                >
+                  Ethereum
+                </Text>
+              </View>
+              <View
+                style={{
+                  width: 65,
+                }}
+              >
+                <AreaChart
+                  style={{ height: 45 }}
+                  data={dataEthereum}
+                  numberOfTicks={0}
+                  yMin={10}
+                  contentInset={{ top: 10, bottom: 10 }}
+                  svg={{ stroke: '#FF741F', fill: 'rgba(255,116,31,0.1)' }}
+                >
+                  <Grid />
+                </AreaChart>
+              </View>
+              <View>
+                <Text
+                  style={{
+                    fontFamily: 'os-reg',
+                    color: '#30333A',
+                    textAlign: 'right',
+                  }}
+                >
+                  2 396.32 $
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'os-reg',
+                    color: '#4E4D4D',
+                    fontSize: 12,
+                    textAlign: 'right',
+                  }}
+                >
+                  -2.86 %
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={{
+              borderBottomWidth: 1,
+              borderColor: '#50555C',
+              paddingTop: 15,
+              marginRight: 10,
+              width: '75%',
+              alignSelf: 'flex-end',
+            }}
+          ></View>
+        </View>
       </ScrollView>
     </View>
   )

@@ -18,7 +18,7 @@ import mainContext from '../../../../../store/context/context'
 
 const image = require('../../../../../assets/img/black-geo.png')
 const imageGray = require('../../../../../assets/img/grey-geo.png')
-const poster1 = require('../../../../../assets/img/mokaup-online-DAX-Millionär.png')
+const poster1 = require('../../../../../assets/img/mokaup-online-DAX-Millionar.png')
 const hold = require('../../../../../assets/img/buy-sell-hold-1.png')
 
 const GradientHold = ({ name }) => (

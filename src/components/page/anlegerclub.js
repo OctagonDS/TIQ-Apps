@@ -341,6 +341,18 @@ Dein Andrei Anissimov, Herausgeber.`}
                     Redaktionsempfehlung Aktie des Monats
                   </Text>
                 </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: 10,
+                  }}
+                >
+                  <IconShieldUl />
+                  <Text style={styles.accordionText}>
+                    DAX-Millionär Handelssignale
+                  </Text>
+                </View>
                 <View style={{ alignItems: 'center', marginTop: 24 }}>
                   <TouchableOpacity
                     onPress={() => {
@@ -989,7 +1001,7 @@ const styles = StyleSheet.create({
   },
   accordionText: {
     textAlign: 'left',
-    color: '#333',
+    color: '#454A4F',
     fontFamily: 'ub-reg',
     fontSize: 15,
     width: '80%',

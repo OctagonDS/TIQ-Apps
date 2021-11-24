@@ -188,6 +188,19 @@ Lasse Dich von der Aktie des Monats überraschen!`}
             </Text>
           </ImageBackground>
         </View>
+        <View style={{ marginTop: 15 }}>
+          <Text
+            style={{
+              marginTop: 15,
+              textAlign: 'center',
+              fontSize: 18,
+              fontFamily: 'ub-medium',
+              color: '#666',
+            }}
+          >
+            Видео из базы / Архив
+          </Text>
+        </View>
       </ScrollView>
     </View>
   )

@@ -170,9 +170,9 @@ Dein Andrei Anissimov, Herausgeber.`}
                   color: '#4E4D4D',
                 }}
               >
-                {`Eine der einfachsten und zeitschonendsten Strategien überhaupt. Ein Mal pro Monat wird das Depot mit einem raffinierten Handelssystem angepasst. Damit produziert das System zuverlässig hohe Gewinne.
+                {`Commodities, Indizes, Forex und Krypto – hier findest Du die Charts der wichtigsten Märkte für einen schnellen Überblick. Die Übersicht der Saisonalitäten liefert Dir wichtige Einblicke in die Märkte.
 
-So investierst Du besser als jeder Fond – mit gerade Mal 10 Minuten pro Monat.`}
+Die wöchentliche Marktanalyse des Chefredakteurs bereitet Dich ideal auf die Handelswoche vor.`}
               </Text>
             </View>
           </ImageBackground>

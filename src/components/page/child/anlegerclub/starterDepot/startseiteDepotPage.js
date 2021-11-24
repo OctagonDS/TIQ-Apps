@@ -24,7 +24,7 @@ const adm = require('../../../../../assets/img/adm.png')
 const euro_e = require('../../../../../assets/img/euro-e.png')
 const ghjk = require('../../../../../assets/img/ghjk.png')
 const dm = require('../../../../../assets/img/dm.png')
-const Andrey = require('../../../../../assets/img/Andrei-Anissimov.png')
+const Andrey = require('../../../../../assets/img//AA-2048x2048.jpg')
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
@@ -344,7 +344,7 @@ So investierst Du besser als jeder Fond – mit gerade Mal 10 Minuten pro Monat.
               marginTop: 10,
               fontFamily: 'ub-medium',
               fontSize: 16,
-              paddingHorizontal: 15,
+              paddingHorizontal: '10%',
             }}
           >
             Für den berufstätigen und vielbeschäftigten Börseninvestor - so

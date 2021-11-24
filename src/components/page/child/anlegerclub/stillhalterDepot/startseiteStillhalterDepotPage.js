@@ -23,7 +23,7 @@ const imageGray = require('../../../../../assets/img/grey-geo.png')
 const cir = require('../../../../../assets/img/ikonki-cir.png')
 const wich = require('../../../../../assets/img/ikonki-wich.png')
 const lud = require('../../../../../assets/img/ikonki-lud.png')
-const Andrey = require('../../../../../assets/img/Andrei-Anissimov.png')
+const Andrey = require('../../../../../assets/img/AA-2048x2048.jpg')
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
@@ -305,7 +305,7 @@ So setzst Du die Empfehlungen des Clubs richtig um – und investierst vom Anfan
               marginTop: 10,
               fontFamily: 'ub-medium',
               fontSize: 16,
-              paddingHorizontal: 15,
+              paddingHorizontal: '10%',
             }}
           >
             Für den langfristigen Cashflow-Investor - so verdienst Du an der

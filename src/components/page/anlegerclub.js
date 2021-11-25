@@ -19,6 +19,7 @@ import { IconPlay } from '../atoms/iconPlay'
 import mainContext from '../../store/context/context'
 import { IconCloseModal } from '../atoms/iconCloseM'
 import { IconShieldUl } from '../atoms/iconShieldUl'
+import * as WebBrowser from 'expo-web-browser'
 
 const image = require('../../assets/img/black-geo.png')
 const imageGray = require('../../assets/img/grey-geo.png')
@@ -83,9 +84,10 @@ export function Anleger({ navigation }) {
   const [accordion3, setAccordion3] = useState(false)
   const [accordion4, setAccordion4] = useState(false)
 
+  const a = false
   // userProfile.id === 8395
   const Access = async () => {
-    if (userProfile.id === 0) {
+    if (a === true) {
       return setModalVisible(true)
     }
   }
@@ -354,21 +356,41 @@ Dein Andrei Anissimov, Herausgeber.`}
                   </Text>
                 </View>
                 <View style={{ alignItems: 'center', marginTop: 24 }}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      navigation.navigate('StarterDepot')
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontFamily: 'ub-medium',
-                        color: '#FF741F',
+                  {a === true ? (
+                    <TouchableOpacity
+                      onPress={() => {
+                        WebBrowser.openBrowserAsync(
+                          'https://traderiq.net/anlegerclub/'
+                        )
                       }}
                     >
-                      zum Mitgliederbereich
-                    </Text>
-                  </TouchableOpacity>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: 'ub-medium',
+                          color: '#FF741F',
+                        }}
+                      >
+                        Mehr erfahren
+                      </Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate('StarterDepot')
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: 'ub-medium',
+                          color: '#FF741F',
+                        }}
+                      >
+                        zum Mitgliederbereich
+                      </Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
               </View>
             </View>
@@ -466,21 +488,41 @@ Dein Andrei Anissimov, Herausgeber.`}
                   </Text>
                 </View>
                 <View style={{ alignItems: 'center', marginTop: 24 }}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      navigation.navigate('TraderCockpit')
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontFamily: 'ub-medium',
-                        color: '#FF741F',
+                  {a === true ? (
+                    <TouchableOpacity
+                      onPress={() => {
+                        WebBrowser.openBrowserAsync(
+                          'https://traderiq.net/anlegerclub/'
+                        )
                       }}
                     >
-                      zum Mitgliederbereich
-                    </Text>
-                  </TouchableOpacity>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: 'ub-medium',
+                          color: '#FF741F',
+                        }}
+                      >
+                        Mehr erfahren
+                      </Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate('TraderCockpit')
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: 'ub-medium',
+                          color: '#FF741F',
+                        }}
+                      >
+                        zum Mitgliederbereich
+                      </Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
               </View>
             </View>
@@ -577,21 +619,41 @@ Dein Andrei Anissimov, Herausgeber.`}
                   <Text style={styles.accordionText}>Live Clubtreffen</Text>
                 </View>
                 <View style={{ alignItems: 'center', marginTop: 24 }}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      navigation.navigate('TrendDepot')
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontFamily: 'ub-medium',
-                        color: '#FF741F',
+                  {a === true ? (
+                    <TouchableOpacity
+                      onPress={() => {
+                        WebBrowser.openBrowserAsync(
+                          'https://traderiq.net/anlegerclub/'
+                        )
                       }}
                     >
-                      zum Mitgliederbereich
-                    </Text>
-                  </TouchableOpacity>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: 'ub-medium',
+                          color: '#FF741F',
+                        }}
+                      >
+                        Mehr erfahren
+                      </Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate('TrendDepot')
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: 'ub-medium',
+                          color: '#FF741F',
+                        }}
+                      >
+                        zum Mitgliederbereich
+                      </Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
               </View>
             </View>
@@ -688,21 +750,41 @@ Dein Andrei Anissimov, Herausgeber.`}
                   <Text style={styles.accordionText}>Live Clubtreffen</Text>
                 </View>
                 <View style={{ alignItems: 'center', marginTop: 24 }}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      navigation.navigate('StillhalterDepot')
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontFamily: 'ub-medium',
-                        color: '#FF741F',
+                  {a === true ? (
+                    <TouchableOpacity
+                      onPress={() => {
+                        WebBrowser.openBrowserAsync(
+                          'https://traderiq.net/anlegerclub/'
+                        )
                       }}
                     >
-                      zum Mitgliederbereich
-                    </Text>
-                  </TouchableOpacity>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: 'ub-medium',
+                          color: '#FF741F',
+                        }}
+                      >
+                        Mehr erfahren
+                      </Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate('StillhalterDepot')
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: 'ub-medium',
+                          color: '#FF741F',
+                        }}
+                      >
+                        zum Mitgliederbereich
+                      </Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
               </View>
             </View>

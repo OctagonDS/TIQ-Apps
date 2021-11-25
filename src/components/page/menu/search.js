@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Alert,
 } from 'react-native'
 import { gStyle } from '../../../styles/style'
 import mainContext from '../../../store/context/context'
@@ -20,6 +21,7 @@ export const SearchModal = ({ props, navigation }) => {
   const [isLoading, setLoading] = useState(true)
   const [query, setQuery] = useState('')
   const [dataCourses, setDataCourses] = useState([])
+  const [dataLessons, setDataLessons] = useState([])
   const [dataKey, setDataKey] = useState([])
   const [dataNo, setDataNo] = useState(false)
   const [no, setNo] = useState(true)
@@ -40,6 +42,7 @@ export const SearchModal = ({ props, navigation }) => {
       const json = await response.json()
       setDataKey(json.key)
       setDataCourses(json.results_course)
+      setDataLessons(json.results_lesson)
       if (
         json.results_course.length === 0 &&
         json.results_lesson.length === 0
@@ -71,7 +74,6 @@ export const SearchModal = ({ props, navigation }) => {
           style={styles.input}
           placeholder="Was suchen wir?"
           onChangeText={(query) => setQuery(query)}
-          autoCapitalize="none"
           autoCompleteType="off"
           autoCorrect={false}
         />
@@ -114,19 +116,23 @@ export const SearchModal = ({ props, navigation }) => {
                 paddingTop: 10,
               }}
             >
-              <Text
-                style={{
-                  fontFamily: 'ub-reg',
-                  fontSize: 14,
-                  marginLeft: 25,
-                  color: '#4E4D4D',
-                }}
-              >
-                Kurse:{' '}
-                <Text style={{ fontFamily: 'ub-bold', color: '#FF741F' }}>
-                  {dataCourses.length}
+              {dataCourses.length != 0 ? (
+                <Text
+                  style={{
+                    fontFamily: 'ub-reg',
+                    fontSize: 14,
+                    marginLeft: 25,
+                    color: '#4E4D4D',
+                  }}
+                >
+                  Kurse:{' '}
+                  <Text style={{ fontFamily: 'ub-bold', color: '#FF741F' }}>
+                    {dataCourses.length}
+                  </Text>
                 </Text>
-              </Text>
+              ) : (
+                <View></View>
+              )}
               {dataCourses.map((userData) => (
                 <View
                   key={userData.id}
@@ -134,7 +140,8 @@ export const SearchModal = ({ props, navigation }) => {
                     flexDirection: 'row',
                     marginTop: 20,
                     justifyContent: 'flex-start',
-                    marginHorizontal: 20,
+                    marginLeft: 20,
+                    marginRight: 40,
                     alignItems: 'center',
                   }}
                 >
@@ -149,27 +156,127 @@ export const SearchModal = ({ props, navigation }) => {
                       uri: `https://fe20295.online-server.cloud/storage/${userData.image_сourses}`,
                     }}
                   />
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate('Course', {
-                        screen: 'draweModules',
-                        params: {
-                          itemId: userData.id,
-                        },
-                      })
+                  {userData.tags.map((tags) => (
+                    <View key={tags.id}>
+                      {tags.id !== 2 ? (
+                        <TouchableOpacity
+                          onPress={() =>
+                            navigation.navigate('Course', {
+                              screen: 'draweModules',
+                              params: {
+                                itemId: userData.id,
+                              },
+                            })
+                          }
+                        >
+                          <Text
+                            style={{
+                              fontSize: 17,
+                              // width: '85%',
+                              fontFamily: 'ub-reg',
+                              color: '#FF741F',
+                              marginLeft: 10,
+                              // marginTop: 25,
+                            }}
+                          >
+                            {userData.title}
+                          </Text>
+                        </TouchableOpacity>
+                      ) : (
+                        <TouchableOpacity
+                          onPress={() =>
+                            Alert.alert(
+                              `Hallo ${userProfile.display_name}`,
+                              'Sie haben diesen Kurs noch nicht gekauft, daher ist der Zugang begrenzt.',
+                              [
+                                {
+                                  text: 'Später',
+                                  onPress: () =>
+                                    console.log('Ask me later pressed'),
+                                },
+                                {
+                                  text: 'Kaufen',
+                                  onPress: () => console.log('Cancel Pressed'),
+                                },
+                              ]
+                            )
+                          }
+                        >
+                          <Text
+                            style={{
+                              fontSize: 17,
+                              // width: '85%',
+                              fontFamily: 'ub-reg',
+                              color: '#FF741F',
+                              marginLeft: 10,
+                              // marginTop: 25,
+                            }}
+                          >
+                            {userData.title}
+                          </Text>
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                  ))}
+                </View>
+              ))}
+              {dataLessons.length != 0 ? (
+                <Text
+                  style={{
+                    fontFamily: 'ub-reg',
+                    fontSize: 14,
+                    marginLeft: 25,
+                    marginTop: 15,
+                    color: '#4E4D4D',
+                  }}
+                >
+                  Lektionen:{' '}
+                  <Text style={{ fontFamily: 'ub-bold', color: '#FF741F' }}>
+                    {dataLessons.length}
+                  </Text>
+                </Text>
+              ) : (
+                <View></View>
+              )}
+              {dataLessons.map((userDataLesson) => (
+                <View
+                  key={userDataLesson.id}
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: 20,
+                    justifyContent: 'flex-start',
+                    marginLeft: 20,
+                    marginRight: 40,
+                    alignItems: 'center',
+                  }}
+                >
+                  <Image
+                    style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 25,
+                    }}
+                    resizeMode="cover"
+                    source={
+                      userDataLesson.image != null
+                        ? {
+                            uri: `https://fe20295.online-server.cloud/storage/${userDataLesson.image}`,
+                          }
+                        : require('../../../assets/img/grey-logo.jpg')
                     }
-                  >
+                  />
+                  <TouchableOpacity onPress={() => {}}>
                     <Text
                       style={{
                         fontSize: 17,
-                        width: '80%',
+                        // width: '85%',
                         fontFamily: 'ub-reg',
                         color: '#FF741F',
                         marginLeft: 10,
                         // marginTop: 25,
                       }}
                     >
-                      {userData.title}
+                      {userDataLesson.title}
                     </Text>
                   </TouchableOpacity>
                 </View>

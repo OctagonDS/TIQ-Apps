@@ -23,7 +23,7 @@ const wait = (timeout) => {
 }
 
 const image = require('../../../../assets/img/grey-geo.png')
-const url = 'https://fe20295.online-server.cloud/api/v1/courses'
+const url = 'https://fe20295.online-server.cloud/api/v1/courses_free'
 const progressPercent = '80'
 
 // Основная функция
@@ -117,20 +117,6 @@ export function CourseSlideOne({ navigation }) {
                     <IcoFireTop />
                   </TouchableOpacity>
                 </ImageBackground>
-                <View
-                  style={{
-                    position: 'absolute',
-                    backgroundColor: 'rgba(62,62,62,0.4)',
-                    borderRadius: 5,
-                    width: 165,
-                    height: 165,
-                    zIndex: 3,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <IcoLock />
-                </View>
               </TouchableOpacity>
               <View style={{ width: 165, height: 60 }}>
                 <View style={styles.progress}>

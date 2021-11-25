@@ -185,24 +185,13 @@ export const Notifications = (props) => {
                     source={
                       item.image != null
                         ? { uri: item.image }
-                        : require('../../assets/img/black-geo.png')
+                        : require('../../assets/img/grey-logo.jpg')
                     }
                   />
                 </View>
                 <View>
                   <TouchableOpacity
-                    onPress={() =>
-                      Alert.alert('Проверка', 'Кнопки', [
-                        {
-                          text: 'Позже',
-                          onPress: () => console.log('Ask me later pressed'),
-                        },
-                        {
-                          text: 'Купить',
-                          onPress: () => console.log('Cancel Pressed'),
-                        },
-                      ])
-                    }
+                    onPress={() => {}}
                     style={{
                       width: '82%',
                       paddingLeft: 5,
@@ -261,24 +250,13 @@ export const Notifications = (props) => {
                 source={
                   item.image != null
                     ? { uri: item.image }
-                    : require('../../assets/img/black-geo.png')
+                    : require('../../assets/img/grey-logo.jpg')
                 }
               />
             </View>
             <View>
               <TouchableOpacity
-                onPress={() =>
-                  Alert.alert('Проверка', 'Кнопки', [
-                    {
-                      text: 'Позже',
-                      onPress: () => console.log('Ask me later pressed'),
-                    },
-                    {
-                      text: 'Купить',
-                      onPress: () => console.log('Cancel Pressed'),
-                    },
-                  ])
-                }
+                onPress={() => {}}
                 style={{
                   width: '82%',
                   paddingLeft: 5,

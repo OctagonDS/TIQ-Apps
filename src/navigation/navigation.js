@@ -41,6 +41,7 @@ import { SearchModal } from '../components/page/menu/search'
 import { FavoritPage } from '../components/page/menu/favorites'
 import { FaqPage } from '../components/page/menu/faq'
 import { Modules } from '../components/page/child/courses/module'
+import { FeedbackForm } from '../components/page/child/feedbackForm'
 
 import { loginUrl } from '../store/const/const'
 import { resetUrl } from '../store/const/constReset'
@@ -186,6 +187,13 @@ function StackNav() {
             title: 'Suche',
           }}
         />
+        <Stack.Screen
+          name="FeedbackForm"
+          component={FeedbackForm}
+          options={{
+            title: 'Suche',
+          }}
+        />
       </Stack.Group>
     </Stack.Navigator>
   )
@@ -274,6 +282,7 @@ function Navigations() {
   const [errorUp, setErrorUp] = useState(null)
   const [successReset, setSuccessReset] = useState(null)
   const [successUp, setSuccessUp] = useState(null)
+  const [successEmail, setSuccessEmail] = useState(null)
 
   useEffect(() => {
     AsyncStorage.getItem('userProfile').then((value) => {
@@ -324,7 +333,6 @@ function Navigations() {
         body: formData,
       })
       let json = await response.json()
-
       // let responseShow = await fetch(
       //   `https://fe20295.online-server.cloud/api/v1/userapp/show/${email}`,
       //   {
@@ -333,14 +341,14 @@ function Navigations() {
       //   }
       // )
       // let jsonShow = await responseShow.json()
-      // let responseShowAdmin = await fetch(
-      //   `https://fe20295.online-server.cloud/api/v1/userapp/show_admin/${email}`,
-      //   {
-      //     method: 'GET',
-      //     headers: showHeaders,
-      //   }
-      // )
-      // let jsonShowAdmin = await responseShowAdmin.json()
+      let responseShowAdmin = await fetch(
+        `https://fe20295.online-server.cloud/api/v1/userapp/show_admin/${json.email}`,
+        {
+          method: 'GET',
+          headers: showHeaders,
+        }
+      )
+      let jsonShowAdmin = await responseShowAdmin.json()
       // console.log(jsonShow)
       // console.log(jsonShowAdmin)
       // console.log(json)
@@ -516,7 +524,7 @@ function Navigations() {
       'Cookie',
       'SSESSe8c55d4a74dd4da51d62b6d4207298c0=fa38bd2d825f2bacefadaee2fbbad2fc; ncore_session=BhctmLUbtpnfm9L8JoMEXbdCWkU4cd; ppwp_wp_session=672e48f1877d6cb2531df292d22fbf23%7C%7C1637223544%7C%7C1637223184'
     )
-    console.log(userProfile)
+    // console.log(userProfile)
     var raw = JSON.stringify({
       name: !displayName.trim() ? userProfile.display_name : displayName,
       email: !emailAuth.trim() ? userProfile.email : emailAuth,
@@ -532,9 +540,9 @@ function Navigations() {
     )
     let json = await response.json()
 
-    console.log(json.data)
+    // console.log(json.data)
     if (json.data != undefined) {
-      Alert.alert('Заголовок', 'Почта уже существует')
+      Alert.alert('Ooops!', 'E-Mail existiert bereits')
       return
     } else {
       await AsyncStorage.getItem('userProfile')
@@ -568,6 +576,7 @@ function Navigations() {
           })
         })
         .done()
+      setSuccessEmail('Account was updated successfully.')
     }
   }
 
@@ -580,6 +589,8 @@ function Navigations() {
     errorReset: errorReset,
     successUp: successUp,
     errorUp: errorUp,
+    successEmail: successEmail,
+    setSuccessEmail: setSuccessEmail,
     doSome: () => {
       doSome()
     },

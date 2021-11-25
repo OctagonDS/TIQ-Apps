@@ -19,9 +19,9 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 const image = require('../../../assets/img/grey-geo.png')
-const url = 'https://fe20295.online-server.cloud/api/v1/courses'
+const url = 'https://fe20295.online-server.cloud/api/v1/courses_free'
 
-export function SuccessScale(props) {
+export function SuccessScale({ props, navigation }) {
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
   const [refreshing, setRefreshing] = React.useState(false)

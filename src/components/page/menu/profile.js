@@ -62,9 +62,9 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 
-export const ProfilePage = (props) => {
-  const { userProfile, loggingIn, doUpdate } = useContext(mainContext)
-  const [success, setSuccess] = useState(null)
+export const ProfilePage = ({ props, navigation }) => {
+  const { userProfile, loggingIn, doUpdate, successEmail, setSuccessEmail } =
+    useContext(mainContext)
   const [successUpdate, setSuccessUpdate] = useState(null)
   const [password, setPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
@@ -78,11 +78,10 @@ export const ProfilePage = (props) => {
   // Проверка на пустой инпут
   function InputEmpty() {
     if (!displayName.trim() || !emailAuth.trim()) {
-      Alert.alert('Заголовок', 'Пустые поля')
+      Alert.alert('Ooops!', 'Sie haben leere Felder')
       return
     } else {
       doUpdate(displayName, emailAuth)
-      setSuccess('Account was updated successfully.')
     }
   }
 
@@ -132,31 +131,41 @@ export const ProfilePage = (props) => {
             }
           )
           let jsonPass = await passwordUp.json()
-          setSuccessUpdate('Пароль успешно обновлен')
+          setSuccessUpdate('Passwort erfolgreich aktualisiert')
           setPassword('')
           setNewPassword('')
           setConfirm('')
         } else {
-          Alert.alert('Заголовок', 'Неверные данные')
+          Alert.alert('Ooops!', 'Falschen Daten')
           return
         }
       } catch {
         console.log('Error storing data on device')
       }
     } else {
-      Alert.alert('Заголовок', 'Неверные данные')
+      Alert.alert('Ooops!', 'Falschen Daten')
       return
     }
   }
 
   // Убрать сообщение
   function Remove() {
-    return setSuccess(null)
+    return setSuccessEmail(null)
   }
 
   function RemoveUpdate() {
     return setSuccessUpdate(null)
   }
+
+  React.useEffect(
+    () =>
+      navigation.addListener(
+        'blur',
+        () => setSuccessEmail(null),
+        setSuccessUpdate(null)
+      ),
+    []
+  )
 
   return (
     <View style={gStyle.main}>
@@ -164,7 +173,20 @@ export const ProfilePage = (props) => {
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{}}>
-              <View style={styles.imageAvatarBack}>
+              <LinearGradient
+                colors={['#FF741F', '#E86312']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  position: 'relative',
+                  width: 94,
+                  height: 94,
+                  borderRadius: 47,
+                }}
+              >
                 <View style={styles.imageAvatar}>
                   <Image
                     style={{ width: 90, height: 90 }}
@@ -194,17 +216,17 @@ export const ProfilePage = (props) => {
                 >
                   <IconUploadAv />
                 </TouchableOpacity>
-              </View>
+              </LinearGradient>
             </View>
             <Text style={styles.userName}>
               Hallo {userProfile && userProfile.display_name}, willkommen in
               Deinem Profil!
             </Text>
           </View>
-          {success && (
+          {successEmail && (
             <FadeInView>
               <View style={styles.success}>
-                <Text style={styles.successtext}>{success}</Text>
+                <Text style={styles.successtext}>{successEmail}</Text>
                 <TouchableOpacity
                   style={styles.closeBtn}
                   onPress={() => {
@@ -221,9 +243,7 @@ export const ProfilePage = (props) => {
           <View style={{ marginTop: 10 }}>
             <View style={{ marginTop: '8%' }}>
               <View style={{}}>
-                <Text style={{ color: '#FF741F', marginLeft: 5 }}>
-                  E-Mail: {userProfile.email}
-                </Text>
+                <Text style={{ color: '#FF741F', marginLeft: 5 }}>E-Mail</Text>
               </View>
               <TextInput
                 style={{
@@ -245,7 +265,7 @@ export const ProfilePage = (props) => {
             <View style={{ marginTop: 10 }}>
               <View style={{}}>
                 <Text style={{ color: '#FF741F', marginLeft: 5 }}>
-                  Anzeigename: {userProfile.display_name}
+                  Anzeigename
                 </Text>
               </View>
               <TextInput

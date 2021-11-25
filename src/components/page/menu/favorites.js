@@ -16,7 +16,7 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 
-const url = 'https://fe20295.online-server.cloud/api/v1/courses'
+const url = 'https://fe20295.online-server.cloud/api/v1/courses_free'
 
 export function FavoritPage(props) {
   const [isLoading, setLoading] = useState(true)

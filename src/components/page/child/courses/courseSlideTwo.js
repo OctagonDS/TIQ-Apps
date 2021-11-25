@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import {
   View,
   Text,
-  ScrollView,
   ImageBackground,
   ActivityIndicator,
   FlatList,
@@ -12,9 +11,12 @@ import {
   Animated,
   TouchableOpacity,
   Platform,
+  Alert,
 } from 'react-native'
 import { gStyle } from '../../../../styles/style'
 import { IcoFireTop } from '../../../atoms/iconFireTop'
+import { IcoLock } from '../../../atoms/iconLock'
+import mainContext from '../../../../store/context/context'
 
 // Переменные
 const wait = (timeout) => {
@@ -22,8 +24,8 @@ const wait = (timeout) => {
 }
 
 const image = require('../../../../assets/img/grey-geo.png')
-const url = 'https://fe20295.online-server.cloud/api/v1/courses'
-const progressPercent = '20'
+const url = 'https://fe20295.online-server.cloud/api/v1/courses_paid'
+const progressPercent = '0'
 
 // Основная функция
 
@@ -32,6 +34,9 @@ export function CourseSlideTwo({ navigation }) {
   const [data, setData] = useState([])
 
   const [refreshing, setRefreshing] = React.useState(false)
+
+  const [displayName, setDisplayName] = useState(null)
+  const { userProfile } = useContext(mainContext)
 
   const getCourses = async () => {
     try {
@@ -81,19 +86,27 @@ export function CourseSlideTwo({ navigation }) {
           }
           contentContainerStyle={{
             paddingTop: '2%',
-            paddingBottom: Platform.OS === 'android' ? 72 : 110,
+            paddingBottom: Platform.OS === 'android' ? 110 : 110,
           }}
-          keyExtractor={({ id }, index) => id}
+          keyExtractor={({ id }, index) => id.toString()}
           renderItem={({ item }) => (
             <View style={styles.courses}>
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate('Course', {
-                    screen: 'draweModules',
-                    params: {
-                      itemId: item.id,
-                    },
-                  })
+                  Alert.alert(
+                    `Hallo ${userProfile.display_name}`,
+                    'Sie haben diesen Kurs noch nicht gekauft, daher ist der Zugang begrenzt.',
+                    [
+                      {
+                        text: 'Später',
+                        onPress: () => console.log('Ask me later pressed'),
+                      },
+                      {
+                        text: 'Kaufen',
+                        onPress: () => console.log('Cancel Pressed'),
+                      },
+                    ]
+                  )
                 }
                 style={{ position: 'relative', width: 165, height: 165 }}
               >
@@ -113,6 +126,20 @@ export function CourseSlideTwo({ navigation }) {
                     <IcoFireTop />
                   </TouchableOpacity>
                 </ImageBackground>
+                <View
+                  style={{
+                    position: 'absolute',
+                    backgroundColor: 'rgba(62,62,62,0.4)',
+                    borderRadius: 5,
+                    width: 165,
+                    height: 165,
+                    zIndex: 3,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <IcoLock />
+                </View>
               </TouchableOpacity>
               <View style={{ width: 165, height: 60 }}>
                 <View style={styles.progress}>
@@ -133,12 +160,20 @@ export function CourseSlideTwo({ navigation }) {
                 <View>
                   <TouchableOpacity
                     onPress={() =>
-                      navigation.navigate('Course', {
-                        screen: 'draweModules',
-                        params: {
-                          itemId: item.id,
-                        },
-                      })
+                      Alert.alert(
+                        `Hallo ${userProfile.display_name}`,
+                        'Sie haben diesen Kurs noch nicht gekauft, daher ist der Zugang begrenzt.',
+                        [
+                          {
+                            text: 'Später',
+                            onPress: () => console.log('Ask me later pressed'),
+                          },
+                          {
+                            text: 'Kaufen',
+                            onPress: () => console.log('Cancel Pressed'),
+                          },
+                        ]
+                      )
                     }
                   >
                     <Text style={styles.title}>{item.title}</Text>

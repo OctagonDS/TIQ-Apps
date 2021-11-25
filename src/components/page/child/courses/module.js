@@ -116,6 +116,7 @@ export function Modules({ props, route }) {
           ListHeaderComponent={
             <View
               style={{
+                flex: 1,
                 // width: '100%',
                 justifyContent: 'center',
                 // alignSelf: 'center',
@@ -174,7 +175,7 @@ export function Modules({ props, route }) {
           }
           contentContainerStyle={{
             paddingTop: '2%',
-            paddingBottom: Platform.OS === 'android' ? 72 : 110,
+            paddingBottom: Platform.OS === 'android' ? 90 : 110,
           }}
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (
@@ -182,7 +183,7 @@ export function Modules({ props, route }) {
               style={{
                 alignItems: 'center',
                 width: '50%',
-                marginTop: 20,
+                marginTop: 70,
                 // marginBottom: 20,
                 position: 'relative',
               }}

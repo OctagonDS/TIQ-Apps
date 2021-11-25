@@ -99,7 +99,7 @@ export const FeedbackForm = ({ props, navigation }) => {
           >
             <TextInput
               style={{
-                borderWidth: 2,
+                borderWidth: 1.5,
                 borderColor: '#FF741F',
                 width: '80%',
                 textAlignVertical: 'top',
@@ -109,6 +109,7 @@ export const FeedbackForm = ({ props, navigation }) => {
                 paddingTop: 15,
                 fontFamily: 'ub-reg',
                 color: '#333',
+                height: 180,
               }}
               placeholder="Wie können wir Ihnen helfen?"
               multiline={true}
@@ -138,7 +139,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   input: {
-    borderWidth: 2,
+    borderWidth: 1.5,
     borderColor: '#FF741F',
     width: '80%',
     // marginLeft: '5%',

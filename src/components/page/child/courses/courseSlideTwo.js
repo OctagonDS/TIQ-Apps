@@ -86,7 +86,7 @@ export function CourseSlideTwo({ navigation }) {
           }
           contentContainerStyle={{
             paddingTop: '2%',
-            paddingBottom: Platform.OS === 'android' ? 110 : 110,
+            paddingBottom: Platform.OS === 'android' ? 95 : 110,
           }}
           keyExtractor={({ id }, index) => id.toString()}
           renderItem={({ item }) => (

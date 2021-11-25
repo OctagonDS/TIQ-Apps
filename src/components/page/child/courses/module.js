@@ -68,6 +68,7 @@ export function Modules({ props, route }) {
   const contentWidth = useWindowDimensions().width
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
+  const progressPercent = '80'
 
   const [refreshing, setRefreshing] = React.useState(false)
 
@@ -117,22 +118,23 @@ export function Modules({ props, route }) {
             <View
               style={{
                 flex: 1,
-                // width: '100%',
                 justifyContent: 'center',
-                // alignSelf: 'center',
                 alignItems: 'center',
               }}
             >
               <ImageBackground
                 source={image}
                 resizeMode="cover"
-                style={{
-                  // flex: 1,
-                  width: 350,
-                  height: '100%',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
+                style={[
+                  {
+                    flex: 1,
+                    width: '95%',
+                    height: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  },
+                  {},
+                ]}
                 imageStyle={{ borderRadius: 5 }}
               >
                 <View
@@ -167,6 +169,42 @@ export function Modules({ props, route }) {
                   />
                 </View>
               </ImageBackground>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginTop: 20,
+                  justifyContent: 'space-around',
+                }}
+              >
+                <View>
+                  <Text
+                    style={{
+                      fontFamily: 'ub-medium',
+                      fontSize: 14,
+                      // textAlign: 'center',
+                      paddingHorizontal: 20,
+                    }}
+                  >
+                    Fortschritt
+                  </Text>
+                </View>
+                <View style={styles.progress}>
+                  <View style={styles.progressBar}>
+                    <Animated.View
+                      style={
+                        ([styles.progressBarLevel],
+                        {
+                          backgroundColor: '#FF741F',
+                          width: `${progressPercent}%`,
+                          borderRadius: 5,
+                        })
+                      }
+                    />
+                  </View>
+                  <Text style={styles.percent}>{progressPercent}%</Text>
+                </View>
+              </View>
             </View>
           }
           numColumns={2}
@@ -215,5 +253,31 @@ export const styles = StyleSheet.create({
     borderRadius: 7,
     fontSize: 18,
     paddingLeft: 10,
+  },
+  progress: {
+    flexDirection: 'row',
+    width: 190,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // marginTop: 15,
+  },
+  progressBar: {
+    height: 10,
+    width: '70%',
+    backgroundColor: '#EEEEEE',
+    borderRadius: 8,
+    flexDirection: 'row',
+  },
+  percent: {
+    paddingRight: 10,
+    fontFamily: 'ub-light',
+    fontSize: 12,
+  },
+  progressBarLevel: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
 })

@@ -150,6 +150,8 @@ export function Modules({ props, route }) {
                       textAlign: 'center',
                       fontFamily: 'ub-medium',
                       fontSize: 20,
+                      padding: 0,
+                      margin: 0,
                     }}
                   >
                     {data.title.replace(/^"(.+(?="$))"$/, '$1')}
@@ -182,8 +184,8 @@ export function Modules({ props, route }) {
                     style={{
                       fontFamily: 'ub-medium',
                       fontSize: 14,
-                      // textAlign: 'center',
-                      paddingHorizontal: 20,
+                      paddingLeft: '5%',
+                      paddingRight: 20,
                     }}
                   >
                     Fortschritt
@@ -256,22 +258,22 @@ export const styles = StyleSheet.create({
   },
   progress: {
     flexDirection: 'row',
-    width: 190,
+    width: 200,
     justifyContent: 'space-between',
     alignItems: 'center',
     // marginTop: 15,
   },
   progressBar: {
-    height: 10,
+    height: 13,
     width: '70%',
     backgroundColor: '#EEEEEE',
     borderRadius: 8,
     flexDirection: 'row',
   },
   percent: {
-    paddingRight: 10,
-    fontFamily: 'ub-light',
-    fontSize: 12,
+    paddingRight: '5%',
+    fontFamily: 'ub-reg',
+    fontSize: 14,
   },
   progressBarLevel: {
     position: 'absolute',

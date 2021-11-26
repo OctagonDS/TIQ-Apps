@@ -20,6 +20,7 @@ import { IconRef } from '../components/atoms/iconRef'
 
 import { Courses } from '../components/page/courses'
 import { Modules } from '../components/page/child/courses/module'
+import { Lessons } from '../components/page/child/courses/lessons'
 
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
@@ -103,7 +104,23 @@ export function DraweCourses({ navigation: { goBack } }) {
               </TouchableOpacity>
             )
           },
-          title: 'Анлегер клуб',
+          title: 'Модули',
+        }}
+      />
+      <Drawer.Screen
+        name="Lessons"
+        component={Lessons}
+        options={{
+          unmountOnBlur: true,
+          headerLeft: () => {
+            const navigation = useNavigation()
+            return (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <ArrowLeftScreen style={{ marginLeft: 10 }} />
+              </TouchableOpacity>
+            )
+          },
+          title: 'Уроки',
         }}
       />
     </Drawer.Navigator>

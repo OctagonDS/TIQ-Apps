@@ -114,7 +114,7 @@ export function CourseSlideOne({ navigation }) {
                     }}
                   />
                   <TouchableOpacity style={styles.fireTop}>
-                    <IcoFireTop />
+                    <IcoFireTop fill={'#fff'} />
                   </TouchableOpacity>
                 </ImageBackground>
               </TouchableOpacity>

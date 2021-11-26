@@ -123,7 +123,7 @@ export function CourseSlideTwo({ navigation }) {
                     }}
                   />
                   <TouchableOpacity style={styles.fireTop}>
-                    <IcoFireTop />
+                    <IcoFireTop fill={'#9C0000'} />
                   </TouchableOpacity>
                 </ImageBackground>
                 <View

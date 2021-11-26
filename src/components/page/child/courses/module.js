@@ -58,7 +58,7 @@ const tagsStyles = {
 
 // Основная функция
 
-export function Modules({ props, route }) {
+export function Modules({ props, route, navigation }) {
   const { itemId } = route.params
 
   const url = `https://fe20295.online-server.cloud/api/v1/course/${JSON.stringify(
@@ -223,13 +223,52 @@ export function Modules({ props, route }) {
               style={{
                 alignItems: 'center',
                 width: '50%',
-                marginTop: 70,
-                // marginBottom: 20,
+                marginTop: 25,
                 position: 'relative',
               }}
             >
-              <Text>{item.id}</Text>
-              <Text>{item.title}</Text>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: '#4E4D4D',
+                  fontFamily: 'ub-reg',
+                }}
+              >
+                {item.preview_title}
+              </Text>
+              <TouchableOpacity
+                style={{
+                  alignItems: 'center',
+                  width: '100%',
+                  marginTop: 10,
+                  // marginBottom: 20,
+                  position: 'relative',
+                }}
+                onPress={() =>
+                  navigation.navigate('Course', {
+                    screen: 'Lessons',
+                    params: {
+                      itemId: data.id,
+                      moduleId: item.id,
+                    },
+                  })
+                }
+              >
+                <Image
+                  style={styles.imageProduct}
+                  source={
+                    item.image_module !== null
+                      ? {
+                          uri: `https://fe20295.online-server.cloud/storage/${item.image_module}`,
+                        }
+                      : {
+                          uri: `https://fe20295.online-server.cloud/storage/${data.image_сourses}`,
+                        }
+                  }
+                />
+
+                <Text style={styles.title}>{item.title}</Text>
+              </TouchableOpacity>
             </View>
           )}
         />
@@ -239,12 +278,6 @@ export function Modules({ props, route }) {
 }
 
 export const styles = StyleSheet.create({
-  title: {
-    fontFamily: 'ub-reg',
-    fontSize: 40,
-    color: '#545A60',
-    alignSelf: 'center',
-  },
   input: {
     borderWidth: 2,
     borderColor: '#FF741F',
@@ -281,5 +314,20 @@ export const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
+  },
+  imageProduct: {
+    width: '95%',
+    height: 153,
+    resizeMode: 'contain',
+    alignSelf: 'center',
+  },
+  title: {
+    fontFamily: 'ub-reg',
+    marginTop: 5,
+    fontSize: 16,
+    textAlign: 'left',
+    lineHeight: 18.38,
+    color: '#4E4D4D',
+    width: '95%',
   },
 })

@@ -153,7 +153,7 @@ export const SearchModal = ({ props, navigation }) => {
                     }}
                     resizeMode="cover"
                     source={{
-                      uri: `https://fe20295.online-server.cloud/storage/${userData.image_сourses}`,
+                      uri: userData.image_сourses,
                     }}
                   />
                   {userData.tags.map((tags) => (
@@ -186,7 +186,9 @@ export const SearchModal = ({ props, navigation }) => {
                         <TouchableOpacity
                           onPress={() =>
                             Alert.alert(
-                              `Hallo ${userProfile.display_name}`,
+                              `Hallo ${
+                                userProfile && userProfile.display_name
+                              }`,
                               'Sie haben diesen Kurs noch nicht gekauft, daher ist der Zugang begrenzt.',
                               [
                                 {
@@ -260,7 +262,7 @@ export const SearchModal = ({ props, navigation }) => {
                     source={
                       userDataLesson.image != null
                         ? {
-                            uri: `https://fe20295.online-server.cloud/storage/${userDataLesson.image}`,
+                            uri: userDataLesson.image,
                           }
                         : require('../../../assets/img/grey-logo.jpg')
                     }

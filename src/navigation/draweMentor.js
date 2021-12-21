@@ -1,25 +1,25 @@
-import React from "react"
+import React from 'react'
 import {
   View,
   Text,
   StyleSheet,
   Platform,
   TouchableOpacity,
-} from "react-native"
+} from 'react-native'
 import {
   DrawerActions,
   useNavigation,
   useFocusEffect,
-} from "@react-navigation/native"
-import { CustomDrawer } from "../components/organisms/customDrawer"
+} from '@react-navigation/native'
+import { CustomDrawer } from '../components/organisms/customDrawer'
 
-import { IconBurger } from "../components/atoms/iconBurger"
-import { IconSearch } from "../components/atoms/iconSearch"
-import { IconRef } from "../components/atoms/iconRef"
-import { ArrowLeftScreen } from "../components/atoms/arrowLeftScreen"
+import { IconBurger } from '../components/atoms/iconBurger'
+import { IconSearch } from '../components/atoms/iconSearch'
+import { IconRef } from '../components/atoms/iconRef'
+import { ArrowLeftScreen } from '../components/atoms/arrowLeftScreen'
 
-import { Mentor } from "../components/page/mentor"
-import { createDrawerNavigator } from "@react-navigation/drawer"
+import { Mentor } from '../components/page/mentor'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Drawer = createDrawerNavigator()
 
@@ -41,21 +41,21 @@ export function DraweMentor({ navigation }) {
       // defaultStatus="open"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
-        drawerPosition: "right",
-        drawerType: "slide",
+        drawerPosition: 'right',
+        drawerType: 'slide',
         drawerStyle: {
-          backgroundImg: "#c6cbef",
-          width: "80%",
+          backgroundImg: '#c6cbef',
+          width: '80%',
         },
         headerStyle: { elevation: 0, shadowOpacity: 0 },
-        headerTitleAlign: "center",
+        headerTitleAlign: 'center',
         // headerShown: false,
         headerLeft: false,
         headerTitle: () => {
           const navigation = useNavigation()
 
           return (
-            <TouchableOpacity onPress={() => navigation.navigate("Search")}>
+            <TouchableOpacity onPress={() => navigation.navigate('Search')}>
               <IconSearch />
             </TouchableOpacity>
           )
@@ -64,7 +64,7 @@ export function DraweMentor({ navigation }) {
           const navigation = useNavigation()
 
           return (
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity
               // onPress={() => alert("Ты поделись ссылкой своей!")}
               >
@@ -86,7 +86,7 @@ export function DraweMentor({ navigation }) {
         name="MentorDrawer"
         component={Mentor}
         options={{
-          title: "Ментор",
+          title: 'Ментор',
         }}
       />
     </Drawer.Navigator>

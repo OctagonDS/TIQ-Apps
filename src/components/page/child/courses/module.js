@@ -96,9 +96,6 @@ export function Modules({ props, route, navigation }) {
 
   useEffect(() => {
     getModules()
-    return () => {
-      setData([])
-    }
   }, [])
 
   return (
@@ -250,6 +247,10 @@ export function Modules({ props, route, navigation }) {
                     params: {
                       itemId: data.id,
                       moduleId: item.id,
+                      lessonId:
+                        item.lessons[0] != undefined
+                          ? item.lessons[0].id
+                          : null,
                     },
                   })
                 }
@@ -259,10 +260,10 @@ export function Modules({ props, route, navigation }) {
                   source={
                     item.image_module !== null
                       ? {
-                          uri: `https://fe20295.online-server.cloud/storage/${item.image_module}`,
+                          uri: item.image_module,
                         }
                       : {
-                          uri: `https://fe20295.online-server.cloud/storage/${data.image_сourses}`,
+                          uri: data.image_сourses,
                         }
                   }
                 />
@@ -328,6 +329,6 @@ export const styles = StyleSheet.create({
     textAlign: 'left',
     lineHeight: 18.38,
     color: '#4E4D4D',
-    width: '95%',
+    width: '65%',
   },
 })

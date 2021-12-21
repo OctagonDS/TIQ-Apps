@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  ActivityIndicator,
-  FlatList,
-  Image,
-  RefreshControl,
-} from 'react-native'
+import { StyleSheet } from 'react-native'
 import { gStyle } from '../../styles/style'
 import { NavigationContainer } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'

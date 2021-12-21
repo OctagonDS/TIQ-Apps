@@ -12,7 +12,6 @@ import {
 import { gStyle } from '../../../../../styles/style'
 import { NavigationContainer } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import { Startseite } from '../startseite'
 import { StartseiteDepotPage } from './startseiteDepotPage'
 import { AktieDesMonats } from './aktieDesMonats'
 import { RealDepot } from './realDepot'

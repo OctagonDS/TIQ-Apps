@@ -62,9 +62,6 @@ export function CourseSlideTwo({ navigation }) {
 
   useEffect(() => {
     getCourses()
-    return () => {
-      setData({})
-    }
   }, [])
 
   return (
@@ -94,7 +91,7 @@ export function CourseSlideTwo({ navigation }) {
               <TouchableOpacity
                 onPress={() =>
                   Alert.alert(
-                    `Hallo ${userProfile.display_name}`,
+                    `Hallo ${userProfile && userProfile.display_name}`,
                     'Sie haben diesen Kurs noch nicht gekauft, daher ist der Zugang begrenzt.',
                     [
                       {
@@ -119,7 +116,7 @@ export function CourseSlideTwo({ navigation }) {
                   <Image
                     style={styles.imageProduct}
                     source={{
-                      uri: `https://fe20295.online-server.cloud/storage/${item.image_сourses}`,
+                      uri: item.image_сourses,
                     }}
                   />
                   <TouchableOpacity style={styles.fireTop}>
@@ -161,7 +158,7 @@ export function CourseSlideTwo({ navigation }) {
                   <TouchableOpacity
                     onPress={() =>
                       Alert.alert(
-                        `Hallo ${userProfile.display_name}`,
+                        `Hallo ${userProfile && userProfile.display_name}`,
                         'Sie haben diesen Kurs noch nicht gekauft, daher ist der Zugang begrenzt.',
                         [
                           {

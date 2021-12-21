@@ -51,7 +51,7 @@ export const FeedbackForm = ({ props, navigation }) => {
               placeholder="Name*"
               autoCapitalize="none"
               autoCompleteType="off"
-              defaultValue={userProfile.name}
+              defaultValue={userProfile && userProfile.name}
               autoCorrect={false}
             />
           </View>
@@ -69,7 +69,7 @@ export const FeedbackForm = ({ props, navigation }) => {
               autoCapitalize="none"
               keyboardType="email-address"
               autoCompleteType="off"
-              defaultValue={userProfile.email}
+              defaultValue={userProfile && userProfile.email}
               autoCorrect={false}
             />
           </View>

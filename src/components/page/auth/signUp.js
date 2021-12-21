@@ -12,7 +12,7 @@ import {
   Animated,
 } from 'react-native'
 import { gStyle } from '../../../styles/style'
-import ArrowLeft from '../../atoms/arrowLeft'
+import ArrowLeft from '../../atoms/topBar/arrowLeft'
 import { LinearGradient } from 'expo-linear-gradient'
 import mainContext from '../../../store/context/context'
 

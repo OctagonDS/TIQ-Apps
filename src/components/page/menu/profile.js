@@ -254,7 +254,7 @@ export const ProfilePage = ({ props, navigation }) => {
                   marginTop: 5,
                 }}
                 onChangeText={(emailAuth) => setEmailAuth(emailAuth)}
-                defaultValue={userProfile.email.toString()}
+                defaultValue={userProfile && userProfile.email.toString()}
                 autoCapitalize="none"
                 autoCompleteType="off"
                 autoCorrect={false}
@@ -277,7 +277,9 @@ export const ProfilePage = ({ props, navigation }) => {
                   marginTop: 5,
                 }}
                 onChangeText={(displayName) => setDisplayName(displayName)}
-                defaultValue={userProfile.display_name.toString()}
+                defaultValue={
+                  userProfile && userProfile.display_name.toString()
+                }
                 autoCapitalize="none"
                 autoCompleteType="off"
                 autoCorrect={false}

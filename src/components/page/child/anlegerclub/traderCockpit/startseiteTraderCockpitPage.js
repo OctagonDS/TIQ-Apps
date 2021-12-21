@@ -83,7 +83,7 @@ export const StartseiteTraderCockpitPage = (props) => {
             color: '#333',
           }}
         >
-          Herzlich Willkommen, {userProfile.display_name}!
+          Herzlich Willkommen, {userProfile && userProfile.display_name}!
         </Text>
         <View style={{ marginHorizontal: 10 }}>
           <Text

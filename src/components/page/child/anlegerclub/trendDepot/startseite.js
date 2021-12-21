@@ -12,7 +12,6 @@ import {
 import { gStyle } from '../../../../../styles/style'
 import { NavigationContainer } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import { Startseite } from '../startseite'
 import { RealTrendDepot } from './realDepot'
 import { DepotWatchlist } from './watchlist'
 import { SignaleTrendDepot } from './signale'

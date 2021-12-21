@@ -86,7 +86,7 @@ export function Anleger({ navigation }) {
 
   const a = false
   // userProfile.id === 8395
-  const Access = async () => {
+  const Access = async (a) => {
     if (a === true) {
       return setModalVisible(true)
     }
@@ -117,8 +117,8 @@ export function Anleger({ navigation }) {
   }
 
   useEffect(() => {
-    Access()
-  }, [])
+    Access(a)
+  }, [a])
 
   return (
     <View style={gStyle.main}>
@@ -247,7 +247,8 @@ export function Anleger({ navigation }) {
             paddingHorizontal: 20,
           }}
         >
-          Herzlich Willkommen im Mitgliederbereich, {userProfile.display_name}!
+          Herzlich Willkommen im Mitgliederbereich,{' '}
+          {userProfile && userProfile.display_name}!
         </Text>
         <View style={{ marginHorizontal: 10 }}>
           <Text

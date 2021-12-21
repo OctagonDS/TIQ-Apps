@@ -23,20 +23,20 @@ export const Notifications = (props) => {
         image:
           'https://fe20295.online-server.cloud/storage/images/XQqDqA8bCinXZXYpfvzlGVc8KTOf01IByfN7v6Tj.jpg',
         title: 'Пользователь Name ответил на ваш комментарий',
-        time: '1 день назад',
+        time: 'Vor 1 Tag',
       },
       {
         id: 2,
         image: null,
         title: 'Скоро появится новый курс!',
-        time: '2 дня назад',
+        time: 'Vor 2 Tagen',
       },
       {
         id: 3,
         image:
           'https://fe20295.online-server.cloud/storage/images/xQWnGjld0hQQixmedrYi5AucwqHbsYjbDxh9fJIV.png',
         title: 'Добавлен новый курс!',
-        time: '5 дней назад',
+        time: 'vor 5 Tagen',
       },
       {
         id: 4,
@@ -44,34 +44,34 @@ export const Notifications = (props) => {
           'https://fe20295.online-server.cloud/storage/images/XQqDqA8bCinXZXYpfvzlGVc8KTOf01IByfN7v6Tj.jpg',
         title:
           'Пользователь Name ответил на ваш комментарий. Пользователь Name ответил на ваш комментарий',
-        time: 'Давно',
+        time: 'Vor langer Zeit',
       },
       {
         id: 5,
         image: null,
         title: 'Скоро появится новый курс!',
-        time: 'Давно',
+        time: 'Vor langer Zeit',
       },
       {
         id: 6,
         image:
           'https://fe20295.online-server.cloud/storage/images/xQWnGjld0hQQixmedrYi5AucwqHbsYjbDxh9fJIV.png',
         title: 'Добавлен новый курс!',
-        time: 'Давно',
+        time: 'Vor langer Zeit',
       },
       {
         id: 7,
         image:
           'https://fe20295.online-server.cloud/storage/images/XQqDqA8bCinXZXYpfvzlGVc8KTOf01IByfN7v6Tj.jpg',
         title: 'Пользователь Name ответил на ваш комментарий. ',
-        time: 'Давно',
+        time: 'Vor langer Zeit',
       },
       {
         id: 8,
         image:
           'https://fe20295.online-server.cloud/storage/images/xQWnGjld0hQQixmedrYi5AucwqHbsYjbDxh9fJIV.png',
         title: 'Добавлен новый курс!',
-        time: 'Давно',
+        time: 'Vor langer Zeit',
       },
       {
         id: 9,
@@ -79,7 +79,7 @@ export const Notifications = (props) => {
           'https://fe20295.online-server.cloud/storage/images/XQqDqA8bCinXZXYpfvzlGVc8KTOf01IByfN7v6Tj.jpg',
         title:
           'Пользователь Name ответил на ваш комментарий. Пользователь Name ответил на ваш комментарий',
-        time: 'Давно',
+        time: 'Vor langer Zeit',
       },
     ])
   }
@@ -91,20 +91,20 @@ export const Notifications = (props) => {
         image:
           'https://fe20295.online-server.cloud/storage/images/XQqDqA8bCinXZXYpfvzlGVc8KTOf01IByfN7v6Tj.jpg',
         title: 'Пользователь Name ответил на ваш комментарий',
-        time: '1 минуту назад',
+        time: 'Vor 1 Minute',
       },
       {
         id: 2,
         image: null,
         title: 'Скоро появится новый курс!',
-        time: '3 минуты назад',
+        time: 'vor 3 Minuten',
       },
       {
         id: 3,
         image:
           'https://fe20295.online-server.cloud/storage/images/xQWnGjld0hQQixmedrYi5AucwqHbsYjbDxh9fJIV.png',
         title: 'Добавлен новый курс!',
-        time: '5 минут назад',
+        time: 'vor 5 Minuten',
       },
       {
         id: 4,
@@ -112,7 +112,7 @@ export const Notifications = (props) => {
           'https://fe20295.online-server.cloud/storage/images/XQqDqA8bCinXZXYpfvzlGVc8KTOf01IByfN7v6Tj.jpg',
         title:
           'Пользователь Name ответил на ваш комментарий. Пользователь Name ответил на ваш комментарий',
-        time: '10 минут назад',
+        time: 'vor 10 Minuten',
       },
     ])
   }

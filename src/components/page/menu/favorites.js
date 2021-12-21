@@ -47,9 +47,6 @@ export function FavoritPage(props) {
 
   useEffect(() => {
     getCourses()
-    return () => {
-      setData({})
-    }
   }, [])
 
   return (

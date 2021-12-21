@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useMemo } from 'react'
 import {
   View,
   Text,
@@ -61,9 +61,6 @@ export function CourseSlideOne({ navigation }) {
 
   useEffect(() => {
     getCourses()
-    return () => {
-      setData({})
-    }
   }, [])
 
   return (
@@ -110,7 +107,7 @@ export function CourseSlideOne({ navigation }) {
                   <Image
                     style={styles.imageProduct}
                     source={{
-                      uri: `https://fe20295.online-server.cloud/storage/${item.image_сourses}`,
+                      uri: item.image_сourses,
                     }}
                   />
                   <TouchableOpacity style={styles.fireTop}>

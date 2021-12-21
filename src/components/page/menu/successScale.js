@@ -51,9 +51,6 @@ export function SuccessScale({ props, navigation }) {
 
   useEffect(() => {
     getCourses()
-    return () => {
-      setData({})
-    }
   }, [])
 
   return (

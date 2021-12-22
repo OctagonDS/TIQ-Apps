@@ -16,27 +16,18 @@ import {
 } from 'react-native'
 import { gStyle } from '../../../../styles/style'
 import HTML from 'react-native-render-html'
-import { LinearGradient } from 'expo-linear-gradient'
 import * as FileSystem from 'expo-file-system'
 import * as Notifications from 'expo-notifications'
 import * as MediaLibrary from 'expo-media-library'
+import * as Sharing from 'expo-sharing'
 import * as WebBrowser from 'expo-web-browser'
+import { IconDownload } from '../../../atoms/iconDownload'
+import { IconShareFile } from '../../../atoms/iconShareFile'
 
 // Переменне
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
-
-const GradientBtn = ({ name }) => (
-  <LinearGradient
-    colors={['#FF741F', '#E86312']}
-    start={{ x: 0, y: 0 }}
-    end={{ x: 1, y: 0 }}
-    style={{ flex: 1, borderRadius: 5, justifyContent: 'center' }}
-  >
-    <Text style={styles.submitTextLog}>{name}</Text>
-  </LinearGradient>
-)
 
 const image = require('../../../../assets/img/black-geo.png')
 const tagsStyles = {
@@ -164,7 +155,7 @@ export function Modules({ props, route, navigation }) {
                   style={{
                     flex: 1,
                     width: '90%',
-                    marginTop: 20,
+                    marginTop: 10,
                   }}
                 >
                   <Text
@@ -234,23 +225,40 @@ export function Modules({ props, route, navigation }) {
           }
           ListFooterComponent={
             <View style={{ flex: 1, paddingTop: 30 }}>
-              <View>
-                {data.custom_field1 != null ? (
-                  <View>
+              {data.custom_field1 != null || data.custom_field3 != null ? (
+                <View>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      fontFamily: 'ub-medium',
+                      color: '#4E4D4D',
+                      fontSize: 16,
+                    }}
+                  >
+                    Downloads
+                  </Text>
+                </View>
+              ) : (
+                <View></View>
+              )}
+              {data.custom_field1 != null ? (
+                <View style={{ marginTop: 10 }}>
+                  <View style={styles.flexDownfile}>
                     <Text
                       style={{
-                        textAlign: 'center',
-                        fontFamily: 'ub-medium',
+                        // textAlign: 'center',
+                        fontFamily: 'ub-light',
                         color: '#4E4D4D',
                         fontSize: 16,
                       }}
                     >
                       {data.custom_field1}
                     </Text>
-                    {/* <Text>{data.custom_field2}</Text> */}
-                    <View style={styles.block}>
+                    <View
+                      style={{ flexDirection: 'row', alignItems: 'center' }}
+                    >
                       <TouchableOpacity
-                        style={styles.wrapper}
+                        style={{ paddingHorizontal: 25 }}
                         onPress={
                           () => WebBrowser.openBrowserAsync(data.custom_field2)
                           // MediaLibrary.requestPermissionsAsync().then(
@@ -301,40 +309,86 @@ export function Modules({ props, route, navigation }) {
                           // )
                         }
                       >
-                        <GradientBtn name={data.custom_field1} />
+                        <IconDownload />
                       </TouchableOpacity>
-                    </View>
-                  </View>
-                ) : (
-                  <View></View>
-                )}
-              </View>
-              <View>
-                {data.custom_field3 != null ? (
-                  <View>
-                    <Text>{data.custom_field3}</Text>
-                    {/* <Text>{data.custom_field4}</Text> */}
-                    <View style={styles.block}>
                       <TouchableOpacity
-                        style={styles.wrapper}
+                        style={{ paddingTop: 1 }}
                         onPress={() =>
-                          WebBrowser.openBrowserAsync(item.link)
-                            .then(({ uri }) => {
+                          FileSystem.downloadAsync(
+                            data.custom_field2,
+                            FileSystem.documentDirectory +
+                              data.custom_field2.substr(
+                                data.custom_field2.lastIndexOf('/') + 1
+                              )
+                          )
+                            .then(async ({ uri }) => {
                               console.log('Finished downloading to ', uri)
+                              Sharing.shareAsync(uri)
                             })
                             .catch((error) => {
                               console.error(error)
                             })
                         }
                       >
-                        <GradientBtn name="Auswählen" />
+                        <IconShareFile />
                       </TouchableOpacity>
                     </View>
                   </View>
-                ) : (
-                  <View></View>
-                )}
-              </View>
+                </View>
+              ) : (
+                <View></View>
+              )}
+              {data.custom_field3 != null ? (
+                <View style={{ marginTop: 20 }}>
+                  <View style={styles.flexDownfile}>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        fontFamily: 'ub-light',
+                        color: '#4E4D4D',
+                        fontSize: 16,
+                      }}
+                    >
+                      {data.custom_field3}
+                    </Text>
+                    <View
+                      style={{ flexDirection: 'row', alignItems: 'center' }}
+                    >
+                      <TouchableOpacity
+                        style={{ paddingHorizontal: 25 }}
+                        onPress={() =>
+                          WebBrowser.openBrowserAsync(data.custom_field4)
+                        }
+                      >
+                        <IconDownload />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{ paddingTop: 1 }}
+                        onPress={() =>
+                          FileSystem.downloadAsync(
+                            data.custom_field4,
+                            FileSystem.documentDirectory +
+                              data.custom_field4.substr(
+                                data.custom_field4.lastIndexOf('/') + 1
+                              )
+                          )
+                            .then(async ({ uri }) => {
+                              console.log('Finished downloading to ', uri)
+                              Sharing.shareAsync(uri)
+                            })
+                            .catch((error) => {
+                              console.error(error)
+                            })
+                        }
+                      >
+                        <IconShareFile />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              ) : (
+                <View></View>
+              )}
             </View>
           }
           numColumns={2}
@@ -462,18 +516,10 @@ export const styles = StyleSheet.create({
     color: '#4E4D4D',
     width: '65%',
   },
-  submitTextLog: {
-    color: '#fff',
-    textAlign: 'center',
-    fontFamily: 'ub-medium',
-    fontSize: 18,
-  },
-  block: {
+  flexDownfile: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 10,
-  },
-  wrapper: {
-    width: '80%',
-    height: 50,
+    justifyContent: 'space-between',
+    paddingHorizontal: 30,
   },
 })

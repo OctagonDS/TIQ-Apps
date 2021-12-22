@@ -3,7 +3,8 @@
     "name": "TIQ-Apps",
     "slug": "TIQ-Apps",
     "version": "1.0.0",
-    "assetBundlePatterns": ["**/*"]
+    "assetBundlePatterns": ["**/*"],
+    "notification": { "icon": "./src/assets/img/not-icon.png" }
   },
   "name": "TIQ-Apps"
 }

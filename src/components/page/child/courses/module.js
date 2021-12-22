@@ -16,11 +16,27 @@ import {
 } from 'react-native'
 import { gStyle } from '../../../../styles/style'
 import HTML from 'react-native-render-html'
+import { LinearGradient } from 'expo-linear-gradient'
+import * as FileSystem from 'expo-file-system'
+import * as Notifications from 'expo-notifications'
+import * as MediaLibrary from 'expo-media-library'
 
 // Переменне
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
+
+const GradientBtn = ({ name }) => (
+  <LinearGradient
+    colors={['#FF741F', '#E86312']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={{ flex: 1, borderRadius: 5, justifyContent: 'center' }}
+  >
+    <Text style={styles.submitTextLog}>{name}</Text>
+  </LinearGradient>
+)
+
 const image = require('../../../../assets/img/black-geo.png')
 const tagsStyles = {
   p: {
@@ -89,6 +105,15 @@ export function Modules({ props, route, navigation }) {
       setLoading(false)
     }
   }
+
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+  })
+
   const onRefresh = React.useCallback(() => {
     getModules(true)
     wait(2000).then(() => getModules(false))
@@ -97,7 +122,7 @@ export function Modules({ props, route, navigation }) {
   useEffect(() => {
     getModules()
   }, [])
-
+  // console.log(dataCourse)
   return (
     <View
       style={{
@@ -203,6 +228,110 @@ export function Modules({ props, route, navigation }) {
                   </View>
                   <Text style={styles.percent}>{progressPercent}%</Text>
                 </View>
+              </View>
+            </View>
+          }
+          ListFooterComponent={
+            <View style={{ flex: 1, paddingTop: 30 }}>
+              <View>
+                {data.custom_field1 != null ? (
+                  <View>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        fontFamily: 'ub-medium',
+                        color: '#4E4D4D',
+                        fontSize: 16,
+                      }}
+                    >
+                      {data.custom_field1}
+                    </Text>
+                    {/* <Text>{data.custom_field2}</Text> */}
+                    <View style={styles.block}>
+                      <TouchableOpacity
+                        style={styles.wrapper}
+                        onPress={() =>
+                          MediaLibrary.requestPermissionsAsync().then(
+                            ({ granted }) => {
+                              if (granted) {
+                                FileSystem.downloadAsync(
+                                  data.custom_field2,
+                                  FileSystem.documentDirectory +
+                                    data.custom_field2.substr(
+                                      data.custom_field2.lastIndexOf('/') + 1
+                                    )
+                                )
+                                  .then(async ({ uri }) => {
+                                    console.log('Finished downloading to ', uri)
+                                    const asset =
+                                      await MediaLibrary.createAssetAsync(uri)
+
+                                    console.log('asset', asset)
+                                    await MediaLibrary.createAlbumAsync(
+                                      'Download',
+                                      asset,
+                                      false
+                                    )
+                                      .then(async () => {
+                                        await Notifications.scheduleNotificationAsync(
+                                          {
+                                            content: {
+                                              title: data.custom_field2.substr(
+                                                data.custom_field2.lastIndexOf(
+                                                  '/'
+                                                ) + 1
+                                              ),
+                                              body: 'Файл загружен!',
+                                            },
+                                            trigger: null,
+                                          }
+                                        )
+                                      })
+                                      .catch((error) => {
+                                        console.error(error)
+                                      })
+                                  })
+                                  .catch((error) => {
+                                    console.error(error)
+                                  })
+                              }
+                            }
+                          )
+                        }
+                      >
+                        <GradientBtn name={data.custom_field1} />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                ) : (
+                  <View></View>
+                )}
+              </View>
+              <View>
+                {data.custom_field3 != null ? (
+                  <View>
+                    <Text>{data.custom_field3}</Text>
+                    {/* <Text>{data.custom_field4}</Text> */}
+                    <View style={styles.block}>
+                      <TouchableOpacity
+                        style={styles.wrapper}
+                        onPress={() =>
+                          WebBrowser.openBrowserAsync(item.link)
+                            .then(({ uri }) => {
+                              console.log('Finished downloading to ', uri)
+                            })
+                            .catch((error) => {
+                              console.error(error)
+                            })
+                        }
+                      >
+                        <GradientBtn name="Auswählen" />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                ) : (
+                  <View></View>
+                )}
               </View>
             </View>
           }
@@ -330,5 +459,19 @@ export const styles = StyleSheet.create({
     lineHeight: 18.38,
     color: '#4E4D4D',
     width: '65%',
+  },
+  submitTextLog: {
+    color: '#fff',
+    textAlign: 'center',
+    fontFamily: 'ub-medium',
+    fontSize: 18,
+  },
+  block: {
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  wrapper: {
+    width: '80%',
+    height: 50,
   },
 })

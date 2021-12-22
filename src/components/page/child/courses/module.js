@@ -20,6 +20,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import * as FileSystem from 'expo-file-system'
 import * as Notifications from 'expo-notifications'
 import * as MediaLibrary from 'expo-media-library'
+import * as WebBrowser from 'expo-web-browser'
 
 // Переменне
 const wait = (timeout) => {
@@ -250,53 +251,54 @@ export function Modules({ props, route, navigation }) {
                     <View style={styles.block}>
                       <TouchableOpacity
                         style={styles.wrapper}
-                        onPress={() =>
-                          MediaLibrary.requestPermissionsAsync().then(
-                            ({ granted }) => {
-                              if (granted) {
-                                FileSystem.downloadAsync(
-                                  data.custom_field2,
-                                  FileSystem.documentDirectory +
-                                    data.custom_field2.substr(
-                                      data.custom_field2.lastIndexOf('/') + 1
-                                    )
-                                )
-                                  .then(async ({ uri }) => {
-                                    console.log('Finished downloading to ', uri)
-                                    const asset =
-                                      await MediaLibrary.createAssetAsync(uri)
+                        onPress={
+                          () => WebBrowser.openBrowserAsync(data.custom_field2)
+                          // MediaLibrary.requestPermissionsAsync().then(
+                          //   ({ granted }) => {
+                          //     if (granted) {
+                          //       FileSystem.downloadAsync(
+                          //         data.custom_field2,
+                          //         FileSystem.documentDirectory +
+                          //           data.custom_field2.substr(
+                          //             data.custom_field2.lastIndexOf('/') + 1
+                          //           )
+                          //       )
+                          //         .then(async ({ uri }) => {
+                          //           console.log('Finished downloading to ', uri)
+                          //           const asset =
+                          //             await MediaLibrary.createAssetAsync(uri)
 
-                                    console.log('asset', asset)
-                                    await MediaLibrary.createAlbumAsync(
-                                      'Download',
-                                      asset,
-                                      false
-                                    )
-                                      .then(async () => {
-                                        await Notifications.scheduleNotificationAsync(
-                                          {
-                                            content: {
-                                              title: data.custom_field2.substr(
-                                                data.custom_field2.lastIndexOf(
-                                                  '/'
-                                                ) + 1
-                                              ),
-                                              body: 'Файл загружен!',
-                                            },
-                                            trigger: null,
-                                          }
-                                        )
-                                      })
-                                      .catch((error) => {
-                                        console.error(error)
-                                      })
-                                  })
-                                  .catch((error) => {
-                                    console.error(error)
-                                  })
-                              }
-                            }
-                          )
+                          //           console.log('asset', asset)
+                          //           await MediaLibrary.createAlbumAsync(
+                          //             'Download',
+                          //             asset,
+                          //             false
+                          //           )
+                          //             .then(async () => {
+                          //               await Notifications.scheduleNotificationAsync(
+                          //                 {
+                          //                   content: {
+                          //                     title: data.custom_field2.substr(
+                          //                       data.custom_field2.lastIndexOf(
+                          //                         '/'
+                          //                       ) + 1
+                          //                     ),
+                          //                     body: 'Файл загружен!',
+                          //                   },
+                          //                   trigger: null,
+                          //                 }
+                          //               )
+                          //             })
+                          //             .catch((error) => {
+                          //               console.error(error)
+                          //             })
+                          //         })
+                          //         .catch((error) => {
+                          //           console.error(error)
+                          //         })
+                          //     }
+                          //   }
+                          // )
                         }
                       >
                         <GradientBtn name={data.custom_field1} />

@@ -1,11 +1,5 @@
-import React from 'react'
-import {
-  View,
-  Text,
-  StyleSheet,
-  Platform,
-  TouchableOpacity,
-} from 'react-native'
+import React, { useContext } from 'react'
+import { View, Share, TouchableOpacity } from 'react-native'
 import {
   DrawerActions,
   useNavigation,
@@ -13,6 +7,7 @@ import {
 } from '@react-navigation/native'
 import { CustomDrawer } from '../components/organisms/customDrawer'
 import { ArrowLeftScreen } from '../components/atoms/arrowLeftScreen'
+import mainContext from '../store/context/context'
 
 import { IconBurger } from '../components/atoms/iconBurger'
 import { IconSearch } from '../components/atoms/iconSearch'
@@ -38,6 +33,41 @@ function CustomDrawerContent({ navigation }) {
 }
 
 export function DraweCourses({ navigation: { goBack } }) {
+  const { userProfile } = useContext(mainContext)
+
+  let urlRef = [
+    `https://kurse.traderiq.net/optionen-kompass?affiliate=${
+      userProfile && userProfile.name
+    }`,
+    `https://kurse.traderiq.net/pdf?affiliate=${
+      userProfile && userProfile.name
+    }`,
+    `https://kurse.traderiq.net/geheimnisse-der-stillhalter-live?affiliate=${
+      userProfile && userProfile.name
+    }`,
+  ]
+
+  let randomNumber = Math.floor(Math.random() * urlRef.length)
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: urlRef[randomNumber],
+      })
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+
   return (
     <Drawer.Navigator
       // defaultStatus="open"
@@ -67,9 +97,7 @@ export function DraweCourses({ navigation: { goBack } }) {
 
           return (
             <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity
-              // onPress={() => alert("Ты поделись ссылкой своей!")}
-              >
+              <TouchableOpacity onPress={onShare}>
                 <IconRef style={{ marginRight: 10 }} />
               </TouchableOpacity>
               <TouchableOpacity

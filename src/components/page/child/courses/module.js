@@ -113,6 +113,9 @@ export function Modules({ props, route, navigation }) {
 
   useEffect(() => {
     getModules()
+    return () => {
+      setData([])
+    }
   }, [])
   // console.log(dataCourse)
   return (
@@ -322,7 +325,7 @@ export function Modules({ props, route, navigation }) {
                               )
                           )
                             .then(async ({ uri }) => {
-                              console.log('Finished downloading to ', uri)
+                              // console.log('Finished downloading to ', uri)
                               Sharing.shareAsync(uri)
                             })
                             .catch((error) => {
@@ -343,7 +346,7 @@ export function Modules({ props, route, navigation }) {
                   <View style={styles.flexDownfile}>
                     <Text
                       style={{
-                        textAlign: 'center',
+                        // textAlign: 'center',
                         fontFamily: 'ub-light',
                         color: '#4E4D4D',
                         fontSize: 16,
@@ -373,7 +376,7 @@ export function Modules({ props, route, navigation }) {
                               )
                           )
                             .then(async ({ uri }) => {
-                              console.log('Finished downloading to ', uri)
+                              // console.log('Finished downloading to ', uri)
                               Sharing.shareAsync(uri)
                             })
                             .catch((error) => {
@@ -397,7 +400,7 @@ export function Modules({ props, route, navigation }) {
           }
           contentContainerStyle={{
             paddingTop: '2%',
-            paddingBottom: Platform.OS === 'android' ? 90 : 110,
+            paddingBottom: Platform.OS === 'android' ? 90 : 130,
           }}
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (

@@ -21,6 +21,11 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { IconPlay } from '../../../atoms/iconPlay'
 import { AntDesign } from '@expo/vector-icons'
 import { IconRefLess } from '../../../atoms/iconRefLess'
+import * as FileSystem from 'expo-file-system'
+import * as Sharing from 'expo-sharing'
+import * as WebBrowser from 'expo-web-browser'
+import { IconDownload } from '../../../atoms/iconDownload'
+import { IconShareFile } from '../../../atoms/iconShareFile'
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
@@ -53,6 +58,17 @@ const GradientBtn = ({ name }) => (
     style={{ flex: 1, borderRadius: 5, justifyContent: 'center' }}
   >
     <Text style={styles.submitTextLog}>{name}</Text>
+  </LinearGradient>
+)
+
+const GradientBtnCache = ({ name }) => (
+  <LinearGradient
+    colors={['#FF741F', '#E86312']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={{ flex: 1, borderRadius: 3, justifyContent: 'center' }}
+  >
+    <Text style={styles.submitTextCache}>{name}</Text>
   </LinearGradient>
 )
 
@@ -98,7 +114,10 @@ export function Lessons({ props, route, navigation }) {
     itemId
   )}`
 
+  const [videoUrl, setVideoUrl] = useState([])
   const [accordion, setAccordion] = useState(false)
+  const [progressPercent, setProgressPercent] = useState(0)
+  const [totalSize, setTotalSize] = useState(0)
 
   const video = React.useRef(null)
   const [status, setStatus] = React.useState({})
@@ -111,6 +130,25 @@ export function Lessons({ props, route, navigation }) {
   const inActive = '#ACB3BF'
 
   const [refreshing, setRefreshing] = React.useState(false)
+
+  async function arrayVideo() {
+    let arrVideo = await FileSystem.readDirectoryAsync(
+      FileSystem.cacheDirectory
+    )
+    return setVideoUrl(arrVideo)
+  }
+
+  function formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) return '0 bytes'
+
+    const k = 1024
+    const dm = decimals < 0 ? 0 : decimals
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
+  }
 
   const getModules = async () => {
     try {
@@ -139,6 +177,11 @@ export function Lessons({ props, route, navigation }) {
 
   useEffect(() => {
     getModules()
+    arrayVideo()
+    return () => {
+      setProgressPercent(0)
+      setData([])
+    }
   }, [])
 
   return (
@@ -318,9 +361,35 @@ export function Lessons({ props, route, navigation }) {
                             borderWidth: 1,
                             borderColor: '#C4C4C4',
                           }}
-                          source={{
-                            uri: `${itemLesson.video_lesson}`,
-                          }}
+                          source={
+                            !videoUrl.includes(
+                              decodeURI(
+                                itemLesson.video_lesson.substr(
+                                  itemLesson.video_lesson.lastIndexOf('/') + 1
+                                )
+                              )
+                            )
+                              ? { uri: `${itemLesson.video_lesson}` }
+                              : videoUrl.includes(
+                                  decodeURI(
+                                    itemLesson.video_lesson.substr(
+                                      itemLesson.video_lesson.lastIndexOf('/') +
+                                        1
+                                    )
+                                  )
+                                )
+                              ? {
+                                  uri:
+                                    FileSystem.cacheDirectory +
+                                    itemLesson.video_lesson.substr(
+                                      itemLesson.video_lesson.lastIndexOf('/') +
+                                        1
+                                    ),
+                                }
+                              : {
+                                  uri: `${itemLesson.video_lesson}`,
+                                }
+                          }
                           useNativeControls
                           resizeMode="contain"
                           isLooping
@@ -360,6 +429,133 @@ export function Lessons({ props, route, navigation }) {
                       </View>
                       <View
                         style={{
+                          flexDirection: 'row',
+                          marginTop: 10,
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <View>
+                          <View style={{ width: '100%' }}>
+                            <TouchableOpacity
+                              style={{
+                                width: '80%',
+                                height: 30,
+                                alignSelf: 'center',
+                                alignSelf: 'flex-start',
+                                width: '100%',
+                              }}
+                              onPress={async () => {
+                                const callback = (downloadProgress) => {
+                                  setTotalSize(
+                                    formatBytes(
+                                      downloadProgress.totalBytesExpectedToWrite
+                                    )
+                                  )
+                                  let progress =
+                                    downloadProgress.totalBytesWritten /
+                                    downloadProgress.totalBytesExpectedToWrite
+                                  progress = progress.toFixed(2) * 100
+                                  setProgressPercent(progress.toFixed(0))
+                                }
+                                const downloadResumable =
+                                  FileSystem.createDownloadResumable(
+                                    itemLesson.video_lesson,
+                                    FileSystem.cacheDirectory +
+                                      itemLesson.video_lesson.substr(
+                                        itemLesson.video_lesson.lastIndexOf(
+                                          '/'
+                                        ) + 1
+                                      ),
+                                    {},
+                                    callback
+                                  )
+
+                                try {
+                                  const { uri } =
+                                    await downloadResumable.downloadAsync()
+                                  console.log('Finished downloading to ', uri)
+                                  await arrayVideo()
+                                } catch (e) {
+                                  console.error(e)
+                                }
+                              }}
+                            >
+                              <GradientBtnCache name="Zwischenspeicher" />
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                        <View>
+                          <View>
+                            {videoUrl.includes(
+                              decodeURI(
+                                itemLesson.video_lesson.substr(
+                                  itemLesson.video_lesson.lastIndexOf('/') + 1
+                                )
+                              )
+                            ) ? (
+                              <Text
+                                style={{
+                                  fontFamily: 'ub-reg',
+                                  color: '#FB1818',
+                                  fontSize: 12,
+                                }}
+                              >
+                                Zwischengespeichert!
+                              </Text>
+                            ) : !videoUrl.includes(
+                                decodeURI(
+                                  itemLesson.video_lesson.substr(
+                                    itemLesson.video_lesson.lastIndexOf('/') + 1
+                                  )
+                                )
+                              ) &&
+                              progressPercent > 0 &&
+                              progressPercent < 100 ? (
+                              <View>
+                                <Text
+                                  style={{
+                                    fontFamily: 'ub-reg',
+                                    color: '#333',
+                                    fontSize: 12,
+                                  }}
+                                >
+                                  Größe: {totalSize}
+                                </Text>
+                                <View style={styles.progress}>
+                                  <View style={styles.progressBar}>
+                                    <Animated.View
+                                      style={
+                                        ([styles.progressBarLevel],
+                                        {
+                                          backgroundColor: '#FF741F',
+                                          width: `${progressPercent}%`,
+                                          borderRadius: 5,
+                                        })
+                                      }
+                                    />
+                                  </View>
+                                  <Text style={styles.percent}>
+                                    {progressPercent}%
+                                  </Text>
+                                </View>
+                              </View>
+                            ) : (
+                              <Text
+                                style={{
+                                  fontFamily: 'ub-reg',
+                                  color: '#00b9eb',
+                                  fontSize: 12,
+                                }}
+                              >
+                                Nicht zwischengespeichert
+                              </Text>
+                            )}
+                          </View>
+                        </View>
+                      </View>
+                      <View
+                        style={{
                           alignItems: 'center',
                           marginTop: 10,
                           fontFamily: 'ub-reg',
@@ -380,28 +576,149 @@ export function Lessons({ props, route, navigation }) {
                           <GradientBtn name="Als abgeschlossen markieren" />
                         </TouchableOpacity>
                       </View>
-                      <View
-                        style={{
-                          marginTop: 30,
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          justifyContent: 'flex-start',
-                        }}
-                      >
-                        <Text
+                      {itemLesson.custom_field1 != null ||
+                      itemLesson.custom_field3 != null ? (
+                        <View
                           style={{
-                            fontFamily: 'ub-reg',
-                            fontSize: 18,
-                            color: '#454A4F',
-                            marginRight: 25,
+                            marginTop: 30,
                           }}
                         >
-                          Einladen:
-                        </Text>
-                        <TouchableOpacity>
-                          <IconRefLess />
-                        </TouchableOpacity>
-                      </View>
+                          <Text
+                            style={{
+                              fontFamily: 'ub-reg',
+                              fontSize: 18,
+                              color: '#454A4F',
+                              marginRight: 25,
+                            }}
+                          >
+                            Downloads:
+                          </Text>
+                          {itemLesson.custom_field1 != null ? (
+                            <View style={{ marginTop: 10 }}>
+                              <View style={styles.flexDownfile}>
+                                <Text
+                                  style={{
+                                    // textAlign: 'center',
+                                    fontFamily: 'ub-light',
+                                    color: '#4E4D4D',
+                                    fontSize: 16,
+                                  }}
+                                >
+                                  {itemLesson.custom_field1}
+                                </Text>
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                  }}
+                                >
+                                  <TouchableOpacity
+                                    style={{ paddingHorizontal: 25 }}
+                                    onPress={() =>
+                                      WebBrowser.openBrowserAsync(
+                                        itemLesson.custom_field2
+                                      )
+                                    }
+                                  >
+                                    <IconDownload />
+                                  </TouchableOpacity>
+                                  <TouchableOpacity
+                                    style={{ paddingTop: 1 }}
+                                    onPress={() =>
+                                      FileSystem.downloadAsync(
+                                        itemLesson.custom_field2,
+                                        FileSystem.documentDirectory +
+                                          itemLesson.custom_field2.substr(
+                                            itemLesson.custom_field2.lastIndexOf(
+                                              '/'
+                                            ) + 1
+                                          )
+                                      )
+                                        .then(async ({ uri }) => {
+                                          // console.log(
+                                          //   'Finished downloading to ',
+                                          //   uri
+                                          // )
+                                          Sharing.shareAsync(uri)
+                                        })
+                                        .catch((error) => {
+                                          console.error(error)
+                                        })
+                                    }
+                                  >
+                                    <IconShareFile />
+                                  </TouchableOpacity>
+                                </View>
+                              </View>
+                            </View>
+                          ) : (
+                            <View></View>
+                          )}
+                          {itemLesson.custom_field3 != null ? (
+                            <View style={{ marginTop: 20 }}>
+                              <View style={styles.flexDownfile}>
+                                <Text
+                                  style={{
+                                    // textAlign: 'center',
+                                    fontFamily: 'ub-light',
+                                    color: '#4E4D4D',
+                                    fontSize: 16,
+                                  }}
+                                >
+                                  {itemLesson.custom_field3}
+                                </Text>
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                  }}
+                                >
+                                  <TouchableOpacity
+                                    style={{ paddingHorizontal: 25 }}
+                                    onPress={() =>
+                                      WebBrowser.openBrowserAsync(
+                                        itemLesson.custom_field4
+                                      )
+                                    }
+                                  >
+                                    <IconDownload />
+                                  </TouchableOpacity>
+                                  <TouchableOpacity
+                                    style={{ paddingTop: 1 }}
+                                    onPress={() =>
+                                      FileSystem.downloadAsync(
+                                        itemLesson.custom_field4,
+                                        FileSystem.documentDirectory +
+                                          itemLesson.custom_field4.substr(
+                                            itemLesson.custom_field4.lastIndexOf(
+                                              '/'
+                                            ) + 1
+                                          )
+                                      )
+                                        .then(async ({ uri }) => {
+                                          // console.log(
+                                          //   'Finished downloading to ',
+                                          //   uri
+                                          // )
+                                          Sharing.shareAsync(uri)
+                                        })
+                                        .catch((error) => {
+                                          console.error(error)
+                                        })
+                                    }
+                                  >
+                                    <IconShareFile />
+                                  </TouchableOpacity>
+                                </View>
+                              </View>
+                            </View>
+                          ) : (
+                            <View></View>
+                          )}
+                        </View>
+                      ) : (
+                        <View></View>
+                      )}
                       <View style={{ marginTop: 20 }}>
                         <Text
                           style={{
@@ -484,10 +801,50 @@ const styles = StyleSheet.create({
     fontFamily: 'ub-reg',
     fontSize: 17,
   },
+  submitTextCache: {
+    color: '#fff',
+    textAlign: 'center',
+    fontFamily: 'ub-reg',
+    fontSize: 14,
+    paddingHorizontal: 10,
+  },
   accordionBack: {
     backgroundColor: 'rgba(126,134,158,0.15)',
     paddingVertical: 10,
     borderBottomRightRadius: 3,
     borderBottomLeftRadius: 3,
+  },
+  flexDownfile: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+  },
+  progress: {
+    flexDirection: 'row',
+    width: 165,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 5,
+  },
+  progressBar: {
+    height: 10,
+    width: '70%',
+    backgroundColor: '#EEEEEE',
+    borderRadius: 8,
+    flexDirection: 'row',
+  },
+  percent: {
+    paddingRight: 10,
+    fontFamily: 'ub-light',
+    fontSize: 12,
+    letterSpacing: -0.33,
+  },
+  progressBarLevel: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
 })

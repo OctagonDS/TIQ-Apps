@@ -1,26 +1,20 @@
-import React from "react"
-import {
-  View,
-  Text,
-  StyleSheet,
-  Platform,
-  ImageBackground,
-  TouchableOpacity,
-} from "react-native"
+import React, { useContext } from 'react'
+import { View, TouchableOpacity, Share } from 'react-native'
 import {
   DrawerActions,
   useNavigation,
   useFocusEffect,
-} from "@react-navigation/native"
-import { CustomDrawer } from "../components/organisms/customDrawer"
+} from '@react-navigation/native'
+import { CustomDrawer } from '../components/organisms/customDrawer'
+import mainContext from '../store/context/context'
 
-import { IconBurger } from "../components/atoms/iconBurger"
-import { IconSearch } from "../components/atoms/iconSearch"
-import { IconRef } from "../components/atoms/iconRef"
-import { ArrowLeftScreen } from "../components/atoms/arrowLeftScreen"
+import { IconBurger } from '../components/atoms/iconBurger'
+import { IconSearch } from '../components/atoms/iconSearch'
+import { IconRef } from '../components/atoms/iconRef'
+import { ArrowLeftScreen } from '../components/atoms/arrowLeftScreen'
 
-import { Notifications } from "../components/page/notifications"
-import { createDrawerNavigator } from "@react-navigation/drawer"
+import { Notifications } from '../components/page/notifications'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Drawer = createDrawerNavigator()
 
@@ -36,26 +30,61 @@ function CustomDrawerContent({ navigation }) {
 }
 
 export function DraweNotifications({ navigation }) {
+  const { userProfile } = useContext(mainContext)
+
+  let urlRef = [
+    `https://kurse.traderiq.net/optionen-kompass?affiliate=${
+      userProfile && userProfile.name
+    }`,
+    `https://kurse.traderiq.net/pdf?affiliate=${
+      userProfile && userProfile.name
+    }`,
+    `https://kurse.traderiq.net/geheimnisse-der-stillhalter-live?affiliate=${
+      userProfile && userProfile.name
+    }`,
+  ]
+
+  let randomNumber = Math.floor(Math.random() * urlRef.length)
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: urlRef[randomNumber],
+      })
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+
   return (
     <Drawer.Navigator
       // defaultStatus="open"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
-        drawerPosition: "right",
-        drawerType: "slide",
+        drawerPosition: 'right',
+        drawerType: 'slide',
         drawerStyle: {
-          backgroundImg: "#c6cbef",
-          width: "80%",
+          backgroundImg: '#c6cbef',
+          width: '80%',
         },
         headerStyle: { elevation: 0, shadowOpacity: 0 },
-        headerTitleAlign: "center",
+        headerTitleAlign: 'center',
         // headerShown: false,
         headerLeft: false,
         headerTitle: () => {
           const navigation = useNavigation()
 
           return (
-            <TouchableOpacity onPress={() => navigation.navigate("Search")}>
+            <TouchableOpacity onPress={() => navigation.navigate('Search')}>
               <IconSearch />
             </TouchableOpacity>
           )
@@ -64,10 +93,8 @@ export function DraweNotifications({ navigation }) {
           const navigation = useNavigation()
 
           return (
-            <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity
-              // onPress={() => alert("Ты поделись ссылкой своей!")}
-              >
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity onPress={onShare}>
                 <IconRef style={{ marginRight: 10 }} />
               </TouchableOpacity>
               <TouchableOpacity
@@ -86,7 +113,7 @@ export function DraweNotifications({ navigation }) {
         name="NotificationsDrawer"
         component={Notifications}
         options={{
-          title: "Уведомления",
+          title: 'Уведомления',
         }}
       />
     </Drawer.Navigator>

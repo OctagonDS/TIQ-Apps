@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ImageBackground,
   Button,
+  Share,
   Image,
   TouchableOpacity,
 } from 'react-native'
@@ -30,6 +31,39 @@ export function CustomDrawer() {
   const navigation = useNavigation()
 
   const { userProfile, loggingIn, doLogout } = useContext(mainContext)
+
+  let urlRef = [
+    `https://kurse.traderiq.net/optionen-kompass?affiliate=${
+      userProfile && userProfile.name
+    }`,
+    `https://kurse.traderiq.net/pdf?affiliate=${
+      userProfile && userProfile.name
+    }`,
+    `https://kurse.traderiq.net/geheimnisse-der-stillhalter-live?affiliate=${
+      userProfile && userProfile.name
+    }`,
+  ]
+
+  let randomNumber = Math.floor(Math.random() * urlRef.length)
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: urlRef[randomNumber],
+      })
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message)
+    }
+  }
 
   return (
     <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
@@ -136,7 +170,7 @@ export function CustomDrawer() {
           }}
         >
           <TouchableOpacity
-            // onPress={() => navigation.navigate("Profile")}
+            onPress={onShare}
             style={{
               flexDirection: 'row',
               marginTop: '12%',

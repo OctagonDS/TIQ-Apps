@@ -21,8 +21,8 @@ import { IconCloseModal } from '../../atoms/iconCloseM'
 
 const image = require('../../../assets/img/grey-geo.png')
 const logoTIQ = require('../../../assets/img/logo-tiq.png')
-const topD = require('../../../assets/img/TOP-D2021.png')
-const topE = require('../../../assets/img/TOP-E2021.png')
+const topD = require('../../../assets/img/TOP-D2021.jpg')
+const topE = require('../../../assets/img/TOP-E2021.jpg')
 
 const win = Dimensions.get('window')
 const ratio = win.width / 541
@@ -361,11 +361,11 @@ export const Greeting = ({ navigation }) => {
           >
             <Image
               source={topD}
-              style={{ width: 122, height: 64, marginRight: '3%' }}
+              style={{ width: 132, height: 90, marginRight: '3%' }}
             />
             <Image
               source={topE}
-              style={{ width: 122, height: 64, marginLeft: '3%' }}
+              style={{ width: 132, height: 90, marginLeft: '3%' }}
             />
           </View>
         </View>

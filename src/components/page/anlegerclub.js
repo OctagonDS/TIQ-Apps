@@ -55,6 +55,17 @@ const GradientBtn = ({ name }) => (
   </LinearGradient>
 )
 
+const GradientBtnMenu = ({ name }) => (
+  <LinearGradient
+    colors={['rgba(247, 137, 3, 1)', 'rgba(247, 137, 3, 0.9)']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={{ flex: 1, borderRadius: 3, justifyContent: 'center' }}
+  >
+    <Text style={styles.menuTitleTop}>{name}</Text>
+  </LinearGradient>
+)
+
 const GradientBtnClose = ({ name }) => (
   <LinearGradient
     colors={['#FF741F', '#E86312']}
@@ -184,11 +195,51 @@ export function Anleger({ navigation }) {
             </Text>
           </View>
         </View>
+        {!a ? (
+          <View>
+            <View style={styles.row}>
+              <TouchableOpacity
+                style={styles.buttonTopMenu}
+                onPress={() => {
+                  navigation.navigate('StarterDepot')
+                }}
+              >
+                <GradientBtnMenu name="Starter Depot" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.buttonTopMenu}
+                onPress={() => {
+                  navigation.navigate('TraderCockpit')
+                }}
+              >
+                <GradientBtnMenu name="Trader Cockpit" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.buttonTopMenu}
+                onPress={() => {
+                  navigation.navigate('TrendDepot')
+                }}
+              >
+                <GradientBtnMenu name="Trend Depot" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.buttonTopMenu}
+                onPress={() => {
+                  navigation.navigate('StillhalterDepot')
+                }}
+              >
+                <GradientBtnMenu name="Stillhalter Depot" />
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : (
+          <View></View>
+        )}
         <View
           style={{
             justifyContent: 'center',
             position: 'relative',
-            marginTop: 15,
+            marginTop: 10,
           }}
         >
           <Video
@@ -1096,5 +1147,27 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignSelf: 'center',
     borderRadius: 3,
+  },
+  menuTitleTop: {
+    fontSize: 16,
+    fontFamily: 'ub-medium',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    textAlign: 'center',
+    color: '#fff',
+  },
+  row: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  buttonTopMenu: {
+    paddingHorizontal: 8,
+    paddingVertical: 10,
+    borderRadius: 4,
+    // alignSelf: 'flex-start',
+    marginHorizontal: '1%',
+    // marginBottom: 6,
+    minWidth: '48%',
+    textAlign: 'center',
   },
 })

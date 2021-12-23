@@ -239,7 +239,7 @@ export function Anleger({ navigation }) {
           style={{
             justifyContent: 'center',
             position: 'relative',
-            marginTop: 10,
+            marginTop: 13,
           }}
         >
           <Video
@@ -1159,10 +1159,11 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    marginTop: 8,
   },
   buttonTopMenu: {
     paddingHorizontal: 8,
-    paddingVertical: 10,
+    paddingVertical: 6,
     borderRadius: 4,
     // alignSelf: 'flex-start',
     marginHorizontal: '1%',

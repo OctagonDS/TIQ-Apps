@@ -196,7 +196,7 @@ export function Anleger({ navigation }) {
           </View>
         </View>
         {!a ? (
-          <View>
+          <View style={{ padding: 10, flex: 1 }}>
             <View style={styles.row}>
               <TouchableOpacity
                 style={styles.buttonTopMenu}

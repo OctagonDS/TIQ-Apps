@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import {
   View,
   Text,
@@ -26,6 +26,8 @@ import * as Sharing from 'expo-sharing'
 import * as WebBrowser from 'expo-web-browser'
 import { IconDownload } from '../../../atoms/iconDownload'
 import { IconShareFile } from '../../../atoms/iconShareFile'
+import { IconCloseSuccess } from '../../../atoms/iconCloseS'
+import mainContext from '../../../../store/context/context'
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
@@ -61,6 +63,17 @@ const GradientBtn = ({ name }) => (
   </LinearGradient>
 )
 
+const GradientBtnComment = ({ name }) => (
+  <LinearGradient
+    colors={['#FF741F', '#E86312']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={{ flex: 1, borderRadius: 3, justifyContent: 'center' }}
+  >
+    <Text style={styles.submitTextLog}>{name}</Text>
+  </LinearGradient>
+)
+
 const GradientBtnCache = ({ name }) => (
   <LinearGradient
     colors={['#FF741F', '#E86312']}
@@ -71,6 +84,31 @@ const GradientBtnCache = ({ name }) => (
     <Text style={styles.submitTextCache}>{name}</Text>
   </LinearGradient>
 )
+
+// Анимация
+
+const FadeInView = (props) => {
+  const fadeAnim = useRef(new Animated.Value(0)).current // Initial value for opacity: 0
+
+  React.useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 400,
+      useNativeDriver: true,
+    }).start()
+  }, [fadeAnim])
+
+  return (
+    <Animated.View // Special animatable View
+      style={{
+        ...props.style,
+        opacity: fadeAnim, // Bind opacity to animated value
+      }}
+    >
+      {props.children}
+    </Animated.View>
+  )
+}
 
 const tagsStyles = {
   p: {
@@ -113,7 +151,9 @@ export function Lessons({ props, route, navigation }) {
   const url = `https://fe20295.online-server.cloud/api/v1/course/${JSON.stringify(
     itemId
   )}`
-
+  const urlMessage =
+    'https://fe20295.online-server.cloud/api/v1/comments/create'
+  const { userProfile } = useContext(mainContext)
   const [videoUrl, setVideoUrl] = useState([])
   const [accordion, setAccordion] = useState(false)
   const [progressPercent, setProgressPercent] = useState(0)
@@ -125,6 +165,10 @@ export function Lessons({ props, route, navigation }) {
   const contentWidth = useWindowDimensions().width
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
+  const [messageComment, setMessageComment] = useState('')
+  const [commentSuccess, setCommentSuccess] = useState(null)
+  const [replyComment, setReplyComment] = useState(null)
+  const [replyCommentId, setReplyCommentId] = useState(null)
 
   const active = '#FFFFFF'
   const inActive = '#ACB3BF'
@@ -136,6 +180,44 @@ export function Lessons({ props, route, navigation }) {
       FileSystem.cacheDirectory
     )
     return setVideoUrl(arrVideo)
+  }
+
+  async function postMessage(messageComment, idLesson, replyCommentId) {
+    setCommentSuccess(null)
+    var myHeaders = new Headers()
+    myHeaders.append('Accept', 'application/json')
+    myHeaders.append('Content-Type', 'application/json')
+
+    var raw = JSON.stringify({
+      parent_id: replyCommentId,
+      message: messageComment,
+      status: 0,
+      user_id: userProfile && userProfile.idAdmin,
+      lessons_id: idLesson,
+    })
+
+    try {
+      const responseMessage = await fetch(urlMessage, {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+      })
+      const jsonMessage = await responseMessage.json()
+      // console.log(jsonMessage.data)
+      // console.log(jsonMessage.errors)
+      setMessageComment('')
+      setReplyComment(null)
+      setReplyCommentId(null)
+      if (jsonMessage.errors) {
+        setCommentSuccess('Geben Sie Ihren Kommentartext ein')
+      } else {
+        setCommentSuccess('Ihr Kommentar wurde zur Moderation gesendet')
+      }
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   function formatBytes(bytes, decimals = 2) {
@@ -161,6 +243,7 @@ export function Lessons({ props, route, navigation }) {
       })
       const json = await response.json()
       setData(json.data.modules)
+      // console.log(json.data)
     } catch (error) {
       console.error(error)
     } finally {
@@ -175,12 +258,16 @@ export function Lessons({ props, route, navigation }) {
     wait(2000).then(() => getModules(false))
   }, [])
 
-  useEffect(() => {
+  useEffect((timer) => {
     getModules()
     arrayVideo()
+
     return () => {
       setProgressPercent(0)
       setData([])
+      setMessageComment('')
+      setCommentSuccess(null)
+      clearTimeout(timer)
     }
   }, [])
 
@@ -237,6 +324,9 @@ export function Lessons({ props, route, navigation }) {
             paddingBottom: Platform.OS === 'android' ? 90 : 125,
             paddingTop: 10,
           }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         >
           {data.map((itemAcc) => (
             <View key={itemAcc.id} style={{ paddingHorizontal: 25 }}>
@@ -594,7 +684,7 @@ export function Lessons({ props, route, navigation }) {
                             Downloads:
                           </Text>
                           {itemLesson.custom_field1 != null ? (
-                            <View style={{ marginTop: 10 }}>
+                            <View style={{ marginTop: 15 }}>
                               <View style={styles.flexDownfile}>
                                 <Text
                                   style={{
@@ -635,10 +725,6 @@ export function Lessons({ props, route, navigation }) {
                                           )
                                       )
                                         .then(async ({ uri }) => {
-                                          // console.log(
-                                          //   'Finished downloading to ',
-                                          //   uri
-                                          // )
                                           Sharing.shareAsync(uri)
                                         })
                                         .catch((error) => {
@@ -696,10 +782,6 @@ export function Lessons({ props, route, navigation }) {
                                           )
                                       )
                                         .then(async ({ uri }) => {
-                                          // console.log(
-                                          //   'Finished downloading to ',
-                                          //   uri
-                                          // )
                                           Sharing.shareAsync(uri)
                                         })
                                         .catch((error) => {
@@ -720,16 +802,239 @@ export function Lessons({ props, route, navigation }) {
                         <View></View>
                       )}
                       <View style={{ marginTop: 20 }}>
-                        <Text
-                          style={{
-                            fontFamily: 'ub-reg',
-                            fontSize: 24,
-                            color: '#454A4F',
-                          }}
-                        >
-                          Kommentare
-                        </Text>
+                        <View style={{ marginVertical: 15 }}>
+                          <Text
+                            style={{
+                              fontFamily: 'ub-reg',
+                              fontSize: 18,
+                              color: '#454A4F',
+                              marginBottom: 15,
+                            }}
+                          >
+                            Kommentare:
+                          </Text>
+                          {itemLesson.commentsL.map((itemComment) => (
+                            <View key={itemComment.id}>
+                              {itemComment.status === 2 &&
+                              itemComment.parent_id === null ? (
+                                <View>
+                                  <View
+                                    style={{
+                                      flexDirection: 'row',
+                                      justifyContent: 'flex-start',
+                                      alignItems: 'center',
+                                      marginVertical: 10,
+                                    }}
+                                  >
+                                    <View>
+                                      <View style={{}}>
+                                        <LinearGradient
+                                          colors={['#FF741F', '#E86312']}
+                                          start={{ x: 0, y: 0 }}
+                                          end={{ x: 1, y: 0 }}
+                                          style={styles.backAvatar}
+                                        >
+                                          <View>
+                                            <Image
+                                              style={{
+                                                width: 30,
+                                                height: 30,
+                                                borderRadius: 15,
+                                                marginHorizontal: 5,
+                                              }}
+                                              resizeMode="cover"
+                                              source={{
+                                                uri: `https://fe20295.online-server.cloud/storage/${itemComment.users.image_avatar}`,
+                                              }}
+                                            />
+                                          </View>
+                                        </LinearGradient>
+                                      </View>
+                                    </View>
+                                    <View style={{ paddingLeft: 15 }}>
+                                      <Text
+                                        style={{
+                                          // textAlign: 'center',
+                                          fontFamily: 'ub-light',
+                                          color: '#4E4D4D',
+                                          fontSize: 10,
+                                        }}
+                                      >
+                                        <Text
+                                          style={{ fontFamily: 'ub-medium' }}
+                                        >
+                                          {itemComment.users.name}
+                                        </Text>{' '}
+                                        {itemComment.created_at}
+                                      </Text>
+                                      <Text
+                                        style={{
+                                          // textAlign: 'center',
+                                          fontFamily: 'ub-reg',
+                                          color: '#4E4D4D',
+                                        }}
+                                      >
+                                        {itemComment.message}
+                                      </Text>
+                                      <TouchableOpacity
+                                        onPress={() => {
+                                          setReplyComment(
+                                            itemComment.users.name
+                                          )
+                                          setReplyCommentId(itemComment.id)
+                                        }}
+                                      >
+                                        <Text
+                                          style={{
+                                            // textAlign: 'center',
+                                            fontFamily: 'ub-reg',
+                                            color: '#4E4D4D',
+                                            fontSize: 12,
+                                            paddingTop: 5,
+                                          }}
+                                        >
+                                          Antworten
+                                        </Text>
+                                      </TouchableOpacity>
+                                    </View>
+                                  </View>
+                                  {itemComment.replies.map((itemReplies) => (
+                                    <View key={itemReplies.id}>
+                                      {itemReplies.status === 2 ? (
+                                        <View>
+                                          <View
+                                            style={{
+                                              flexDirection: 'row',
+                                              justifyContent: 'flex-start',
+                                              alignItems: 'center',
+                                              marginVertical: 10,
+                                              width: '90%',
+                                              marginLeft: 30,
+                                            }}
+                                          >
+                                            <View>
+                                              <View style={{}}>
+                                                <LinearGradient
+                                                  colors={[
+                                                    '#FF741F',
+                                                    '#E86312',
+                                                  ]}
+                                                  start={{ x: 0, y: 0 }}
+                                                  end={{ x: 1, y: 0 }}
+                                                  style={styles.backAvatar}
+                                                >
+                                                  <View>
+                                                    <Image
+                                                      style={{
+                                                        width: 30,
+                                                        height: 30,
+                                                        borderRadius: 15,
+                                                        marginHorizontal: 5,
+                                                      }}
+                                                      resizeMode="cover"
+                                                      source={{
+                                                        uri: `https://fe20295.online-server.cloud/storage/${itemReplies.users.image_avatar}`,
+                                                      }}
+                                                    />
+                                                  </View>
+                                                </LinearGradient>
+                                              </View>
+                                            </View>
+                                            <View style={{ paddingLeft: 15 }}>
+                                              <Text
+                                                style={{
+                                                  // textAlign: 'center',
+                                                  fontFamily: 'ub-light',
+                                                  color: '#4E4D4D',
+                                                  fontSize: 10,
+                                                }}
+                                              >
+                                                <Text
+                                                  style={{
+                                                    fontFamily: 'ub-medium',
+                                                  }}
+                                                >
+                                                  {itemReplies.users.name}
+                                                </Text>{' '}
+                                                {itemReplies.created_at}
+                                              </Text>
+                                              <Text
+                                                style={{
+                                                  // textAlign: 'center',
+                                                  fontFamily: 'ub-reg',
+                                                  color: '#4E4D4D',
+                                                }}
+                                              >
+                                                {itemReplies.message}
+                                              </Text>
+                                            </View>
+                                          </View>
+                                        </View>
+                                      ) : (
+                                        <View></View>
+                                      )}
+                                    </View>
+                                  ))}
+                                </View>
+                              ) : (
+                                <View></View>
+                              )}
+                            </View>
+                          ))}
+                        </View>
                       </View>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent: 'flex-start',
+                        }}
+                      >
+                        <View style={{ marginRight: 10 }}>
+                          <Text
+                            style={{
+                              fontFamily: 'ub-reg',
+                              fontSize: 16,
+                              color: '#454A4F',
+                            }}
+                          >
+                            Kommentar
+                          </Text>
+                        </View>
+                        {replyComment !== null ? (
+                          <View
+                            style={{
+                              backgroundColor: '#454A4F',
+                              borderRadius: 3,
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontFamily: 'ub-reg',
+                                fontSize: 12,
+                                color: '#fff',
+                                paddingVertical: 2,
+                                paddingHorizontal: 5,
+                              }}
+                            >
+                              {replyComment}
+                            </Text>
+                            <TouchableOpacity
+                              onPress={() => {
+                                setReplyComment(null)
+                                setReplyCommentId(null)
+                              }}
+                            >
+                              <IconCloseSuccess fill="#fff" />
+                            </TouchableOpacity>
+                          </View>
+                        ) : (
+                          <View></View>
+                        )}
+                      </View>
+
                       <View
                         style={{
                           flexDirection: 'row',
@@ -752,6 +1057,10 @@ export function Lessons({ props, route, navigation }) {
                             color: '#333',
                             height: 100,
                           }}
+                          onChangeText={(messageComment) =>
+                            setMessageComment(messageComment)
+                          }
+                          value={messageComment.toString()}
                           multiline={true}
                           numberOfLines={10}
                           autoCapitalize="none"
@@ -760,15 +1069,51 @@ export function Lessons({ props, route, navigation }) {
                           editable
                         />
                       </View>
-                      <View style={{ marginTop: 20, width: '100%' }}>
+                      {commentSuccess === null ? (
+                        <View></View>
+                      ) : (
+                        <FadeInView>
+                          <Text
+                            style={{
+                              fontFamily: 'ub-reg',
+                              color:
+                                commentSuccess ===
+                                'Geben Sie Ihren Kommentartext ein'
+                                  ? '#FE4141'
+                                  : '#00b9eb',
+                              fontSize: 12,
+                              paddingLeft: 3,
+                              paddingTop: 3,
+                            }}
+                          >
+                            {commentSuccess}
+                          </Text>
+                        </FadeInView>
+                      )}
+                      <View
+                        style={{
+                          marginTop: commentSuccess === null ? 20 : 10,
+                          width: '100%',
+                        }}
+                      >
                         <TouchableOpacity
                           style={[
-                            styles.wrapper,
-                            { alignSelf: 'flex-end', width: '65%' },
+                            styles.wrapperComment,
+                            { alignSelf: 'flex-end', width: '55%' },
                           ]}
-                          onPress={() => {}}
+                          onPress={async () => {
+                            let idLesson = itemLesson.id
+                            await postMessage(
+                              messageComment,
+                              idLesson,
+                              replyCommentId
+                            )
+                            let timer = setTimeout(() => {
+                              setCommentSuccess(null)
+                            }, 4000)
+                          }}
                         >
-                          <GradientBtn name="Kommentar abschicken" />
+                          <GradientBtnComment name="Kommentar abschicken" />
                         </TouchableOpacity>
                       </View>
                     </View>
@@ -795,11 +1140,16 @@ const styles = StyleSheet.create({
     height: 50,
     alignSelf: 'center',
   },
+  wrapperComment: {
+    width: '80%',
+    height: 35,
+    alignSelf: 'center',
+  },
   submitTextLog: {
     color: '#fff',
     textAlign: 'center',
     fontFamily: 'ub-reg',
-    fontSize: 17,
+    fontSize: 15,
   },
   submitTextCache: {
     color: '#fff',
@@ -846,5 +1196,14 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
+  },
+  backAvatar: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+    width: 32,
+    height: 32,
+    borderRadius: 16,
   },
 })

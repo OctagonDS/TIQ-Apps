@@ -4,7 +4,16 @@
     "slug": "TIQ-Apps",
     "version": "1.0.0",
     "assetBundlePatterns": ["**/*"],
-    "notification": { "icon": "./src/assets/img/not-icon.png" }
+    "notification": { "icon": "./src/assets/img/not-icon.png" },
+    "orientation": "portrait",
+    "ios": {
+      "bundleIdentifier": "com.traderiq.tiqapp",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.traderiq.tiqapp",
+      "versionCode": 1
+    }
   },
   "name": "TIQ-Apps"
 }

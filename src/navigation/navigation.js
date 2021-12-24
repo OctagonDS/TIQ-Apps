@@ -227,6 +227,7 @@ function MyTabs() {
         name="Course"
         component={DraweCourses}
         options={{
+          tabBarHideOnKeyboard: true,
           // unmountOnBlur: true,
           tabBarLabel: 'Курсы',
           tabBarIcon: ({ focused }) => <IconCourses focused={focused} />,
@@ -236,6 +237,7 @@ function MyTabs() {
         name="Mentor"
         component={DraweMentor}
         options={{
+          tabBarHideOnKeyboard: true,
           tabBarLabel: 'Ментор',
           tabBarIcon: ({ focused }) => <IconMentor focused={focused} />,
         }}
@@ -244,6 +246,7 @@ function MyTabs() {
         name="Feedback"
         component={DraweFeedback}
         options={{
+          tabBarHideOnKeyboard: true,
           tabBarLabel: 'Поддержка',
           tabBarIcon: ({ focused }) => <Iconfeedback focused={focused} />,
         }}
@@ -253,6 +256,7 @@ function MyTabs() {
         component={DraweAnleger}
         options={{
           // unmountOnBlur: true,
+          tabBarHideOnKeyboard: true,
           tabBarLabel: 'Анлегер клуб',
           tabBarIcon: ({ focused }) => <IconAnleger focused={focused} />,
         }}
@@ -261,6 +265,7 @@ function MyTabs() {
         name="Notifications"
         component={DraweNotifications}
         options={{
+          tabBarHideOnKeyboard: true,
           tabBarLabel: 'Уведомления',
           tabBarBadge: 4,
           tabBarBadgeStyle: { marginTop: 10 },
@@ -328,30 +333,24 @@ function Navigations() {
     formData.append('email', email)
     formData.append('password', password)
     try {
+      // Автризация через WP
       let response = await fetch(loginUrl, {
         method: 'POST',
         body: formData,
       })
       let json = await response.json()
-      // let responseShow = await fetch(
-      //   `https://fe20295.online-server.cloud/api/v1/userapp/show/${email}`,
-      //   {
-      //     method: 'GET',
-      //     headers: showHeaders,
-      //   }
-      // )
-      // let jsonShow = await responseShow.json()
-      let responseShowAdmin = await fetch(
-        `https://fe20295.online-server.cloud/api/v1/userapp/show_admin/${json.email}`,
+
+      // Проверка пользователя в Админке
+      let responseShow = await fetch(
+        `https://fe20295.online-server.cloud/api/v1/userapp/show/${json.email}`,
         {
           method: 'GET',
           headers: showHeaders,
         }
       )
-      let jsonShowAdmin = await responseShowAdmin.json()
-      // console.log(jsonShow)
-      // console.log(jsonShowAdmin)
-      // console.log(json)
+      let jsonShow = await responseShow.json()
+      console.log(jsonShow.data.id)
+      console.log(json)
       if (json.status != false) {
         setError(null)
         try {
@@ -365,6 +364,7 @@ function Navigations() {
               avatar: json.avatar,
               email: json.email,
               display_name: json.display_name,
+              idAdmin: jsonShow.data.id,
             })
           )
         } catch {
@@ -378,6 +378,7 @@ function Navigations() {
           avatar: json.avatar,
           email: json.email,
           display_name: json.display_name,
+          idAdmin: jsonShow.data.id,
         })
         setIsLogged(true)
         setUserProfile({
@@ -388,6 +389,7 @@ function Navigations() {
           avatar: json.avatar,
           email: json.email,
           display_name: json.display_name,
+          idAdmin: jsonShow.data.id,
         })
         setUserToken(json.token)
       } else {

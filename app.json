@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "TIQ-Apps",
+    "name": "Trader IQ",
     "slug": "TIQ-Apps",
     "version": "1.0.0",
     "assetBundlePatterns": ["**/*"],

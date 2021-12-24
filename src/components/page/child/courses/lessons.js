@@ -296,13 +296,15 @@ export function Lessons({ props, route, navigation }) {
                   borderBottomWidth: item.id == moduleId ? 2 : 0,
                   borderColor: item.id == moduleId ? '#FF741F' : '#454A4F',
                 }}
-                onPress={() =>
+                onPress={() => {
                   navigation.setParams({
                     moduleId: item.id,
                     lessonId:
                       item.lessons[0] != undefined ? item.lessons[0].id : null,
                   })
-                }
+                  setReplyComment(null)
+                  setReplyCommentId(null)
+                }}
               >
                 <Text
                   style={{
@@ -372,6 +374,8 @@ export function Lessons({ props, route, navigation }) {
                                     lessonId: itemLessonAcc.id,
                                   })
                                   Accordion()
+                                  setReplyComment(null)
+                                  setReplyCommentId(null)
                                 }}
                               >
                                 <View

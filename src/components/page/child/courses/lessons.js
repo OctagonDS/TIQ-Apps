@@ -272,7 +272,7 @@ export function Lessons({ props, route, navigation }) {
       })
       const json = await response.json()
       setData(json.data.modules)
-      console.log(json.data)
+      // console.log(json.data)
     } catch (error) {
       console.error(error)
     } finally {

@@ -5,15 +5,31 @@
     "version": "1.0.0",
     "assetBundlePatterns": ["**/*"],
     "icon": "./src/assets/img/iconapp.png",
+    "splash": {
+      "image": "./src/assets/img/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#FFFFFF"
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./src/assets/img/not-icon.png",
+          "color": "#ffffff"
+        }
+      ]
+    ],
     "notification": { "icon": "./src/assets/img/not-icon.png" },
     "orientation": "portrait",
     "ios": {
-      "bundleIdentifier": "com.octagonds.tiqapp",
-      "buildNumber": "1.0.0"
+      "bundleIdentifier": "octagonds.tiqapp",
+      "buildNumber": "1.0.0",
+      "icon": "./src/assets/img/iconapp.png"
     },
     "android": {
-      "package": "com.octagonds.tiqapp",
-      "versionCode": 1
+      "package": "octagonds.tiqapp",
+      "versionCode": 1,
+      "icon": "./src/assets/img/iconapp-android.png"
     }
   },
   "name": "TIQ-Apps"

@@ -295,11 +295,38 @@ function Navigations() {
         setUserProfile(JSON.parse(value)),
           setIsLoading(false),
           setIsLogged(true)
+        UniqueVisits(JSON.parse(value).idAdmin)
       } else {
         setIsLoading(false), setIsLogged(false)
       }
     })
   }, [])
+
+  // Подсчет уникальных визитов
+
+  const UniqueVisits = async (userid) => {
+    const urlVisit =
+      'https://fe20295.online-server.cloud/api/v1/visit/visit_user'
+    var myHeaders = new Headers()
+    myHeaders.append('Accept', 'application/json')
+    myHeaders.append('Content-Type', 'application/json')
+
+    var raw = JSON.stringify({
+      user_id: userid,
+    })
+
+    try {
+      const responseVisit = await fetch(urlVisit, {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+      })
+      const jsonVisit = await responseVisit.json()
+      // console.log(jsonVisit)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   // Выход
 
@@ -349,8 +376,8 @@ function Navigations() {
         }
       )
       let jsonShow = await responseShow.json()
-      console.log(jsonShow.data.id)
-      console.log(json)
+      // console.log(jsonShow.data.id)
+      // console.log(json)
       if (json.status != false) {
         setError(null)
         try {
@@ -392,6 +419,7 @@ function Navigations() {
           idAdmin: jsonShow.data.id,
         })
         setUserToken(json.token)
+        UniqueVisits(jsonShow.data.id)
       } else {
         setIsLogged(false)
         setError('Ungültige E-Mail oder Passwort')
@@ -423,6 +451,7 @@ function Navigations() {
       contact: {
         first_name: name,
         mail: email,
+        phone: phoneNumber,
         duplicate_check_method: 'email',
         duplicate_merge_method: 'update_add',
         terms: [280],

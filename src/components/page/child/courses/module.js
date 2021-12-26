@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {
   View,
   Text,
@@ -23,6 +23,7 @@ import * as Sharing from 'expo-sharing'
 import * as WebBrowser from 'expo-web-browser'
 import { IconDownload } from '../../../atoms/iconDownload'
 import { IconShareFile } from '../../../atoms/iconShareFile'
+import mainContext from '../../../../store/context/context'
 
 // Переменне
 const wait = (timeout) => {
@@ -76,7 +77,7 @@ export function Modules({ props, route, navigation }) {
   const contentWidth = useWindowDimensions().width
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
-  const progressPercent = '80'
+  const { userProfile } = useContext(mainContext)
 
   const [refreshing, setRefreshing] = React.useState(false)
 
@@ -113,11 +114,11 @@ export function Modules({ props, route, navigation }) {
 
   useEffect(() => {
     getModules()
-    return () => {
-      setData([])
-    }
-  }, [])
-  // console.log(dataCourse)
+    // return () => {
+    //   setData([])
+    // }
+  }, [itemId])
+  // console.log(data)
   return (
     <View
       style={{
@@ -171,7 +172,7 @@ export function Modules({ props, route, navigation }) {
                       margin: 0,
                     }}
                   >
-                    {data.title.replace(/^"(.+(?="$))"$/, '$1')}
+                    {data && data.title.replace(/^"(.+(?="$))"$/, '$1')}
                   </Text>
                   {/* <Text style={{ color: '#fff' }}>
                   {JSON.stringify(titleDescription)}
@@ -179,15 +180,27 @@ export function Modules({ props, route, navigation }) {
                   <HTML
                     tagsStyles={tagsStyles}
                     source={{
-                      html: `${data.description.replace(
-                        /^"(.+(?="$))"$/,
-                        '$1'
-                      )}`,
+                      html: `${
+                        data && data.description.replace(/^"(.+(?="$))"$/, '$1')
+                      }`,
                     }}
                     contentWidth={contentWidth}
                   />
                 </View>
               </ImageBackground>
+              <TouchableOpacity
+                onPress={async () =>
+                  await Notifications.scheduleNotificationAsync({
+                    content: {
+                      title: 'Юля',
+                      body: 'ЖОПА!',
+                    },
+                    trigger: null,
+                  })
+                }
+              >
+                <Text>Тест уведомления</Text>
+              </TouchableOpacity>
               <View
                 style={{
                   flexDirection: 'row',
@@ -215,13 +228,34 @@ export function Modules({ props, route, navigation }) {
                         ([styles.progressBarLevel],
                         {
                           backgroundColor: '#FF741F',
-                          width: `${progressPercent}%`,
+                          width: `${
+                            data.courseLessonsCount !== 0
+                              ? (data.courseLessonsProgress.filter(
+                                  (countProgress) =>
+                                    userProfile &&
+                                    userProfile.idAdmin === countProgress.id
+                                ).length /
+                                  data.courseLessonsCount) *
+                                100
+                              : data.courseLessonsCount
+                          }%`,
                           borderRadius: 5,
                         })
                       }
                     />
                   </View>
-                  <Text style={styles.percent}>{progressPercent}%</Text>
+                  <Text style={styles.percent}>
+                    {data.courseLessonsCount !== 0
+                      ? (data.courseLessonsProgress.filter(
+                          (countProgress) =>
+                            userProfile &&
+                            userProfile.idAdmin === countProgress.id
+                        ).length /
+                          data.courseLessonsCount) *
+                        100
+                      : data.courseLessonsCount}
+                    %
+                  </Text>
                 </View>
               </View>
             </View>

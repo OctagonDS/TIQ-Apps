@@ -14,18 +14,19 @@ import {
   Image,
 } from 'react-native'
 import { gStyle } from '../../../styles/style'
+import mainContext from '../../../store/context/context'
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 const image = require('../../../assets/img/grey-geo.png')
-const url = 'https://fe20295.online-server.cloud/api/v1/courses_free'
+const url = 'https://fe20295.online-server.cloud/api/v1/courses_progress'
 
 export function SuccessScale({ props, navigation }) {
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
   const [refreshing, setRefreshing] = React.useState(false)
-  const progressPercent = '80'
+  const { userProfile } = useContext(mainContext)
 
   const getCourses = async () => {
     try {
@@ -51,6 +52,9 @@ export function SuccessScale({ props, navigation }) {
 
   useEffect(() => {
     getCourses()
+    return () => {
+      setData([])
+    }
   }, [])
 
   return (
@@ -68,66 +72,94 @@ export function SuccessScale({ props, navigation }) {
             paddingTop: '2%',
           }}
           keyExtractor={({ id }, index) => id.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.courses}>
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('Course', {
-                    screen: 'draweModules',
-                    params: {
-                      itemId: item.id,
-                    },
-                  })
-                }
-                style={{ position: 'relative', width: 165, height: 165 }}
-              >
-                <ImageBackground
-                  source={image}
-                  resizeMode="cover"
-                  style={styles.imageBack}
-                  imageStyle={{ borderRadius: 5 }}
+          renderItem={({ item }) =>
+            item.courseLessonsProgress.filter(
+              (countProgress) =>
+                userProfile && userProfile.idAdmin === countProgress.id
+            ).length !== 0 ? (
+              <View style={styles.courses}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('Course', {
+                      screen: 'draweModules',
+                      params: {
+                        itemId: item.id,
+                      },
+                    })
+                  }
+                  style={{ position: 'relative', width: 165, height: 165 }}
                 >
-                  <Image
-                    style={styles.imageProduct}
-                    source={{
-                      uri: `https://fe20295.online-server.cloud/storage/${item.image_сourses}`,
-                    }}
-                  />
-                </ImageBackground>
-              </TouchableOpacity>
-              <View style={{ width: 165, height: 60 }}>
-                <View style={styles.progress}>
-                  <View style={styles.progressBar}>
-                    <Animated.View
-                      style={
-                        ([styles.progressBarLevel],
-                        {
-                          backgroundColor: '#FF741F',
-                          width: `${progressPercent}%`,
-                          borderRadius: 5,
+                  <ImageBackground
+                    source={image}
+                    resizeMode="cover"
+                    style={styles.imageBack}
+                    imageStyle={{ borderRadius: 5 }}
+                  >
+                    <Image
+                      style={styles.imageProduct}
+                      source={{
+                        uri: item.image_сourses,
+                      }}
+                    />
+                  </ImageBackground>
+                </TouchableOpacity>
+                <View style={{ width: 165, height: 60 }}>
+                  <View style={styles.progress}>
+                    <View style={styles.progressBar}>
+                      <Animated.View
+                        style={
+                          ([styles.progressBarLevel],
+                          {
+                            backgroundColor: '#FF741F',
+                            width: `${
+                              item.courseLessonsCount !== 0
+                                ? (item.courseLessonsProgress.filter(
+                                    (countProgress) =>
+                                      userProfile &&
+                                      userProfile.idAdmin === countProgress.id
+                                  ).length /
+                                    item.courseLessonsCount) *
+                                  100
+                                : item.courseLessonsCount
+                            }%`,
+                            borderRadius: 5,
+                          })
+                        }
+                      />
+                    </View>
+                    <Text style={styles.percent}>
+                      {item.courseLessonsCount !== 0
+                        ? (item.courseLessonsProgress.filter(
+                            (countProgress) =>
+                              userProfile &&
+                              userProfile.idAdmin === countProgress.id
+                          ).length /
+                            item.courseLessonsCount) *
+                          100
+                        : item.courseLessonsCount}
+                      %
+                    </Text>
+                  </View>
+                  <View>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate('Course', {
+                          screen: 'draweModules',
+                          params: {
+                            itemId: item.id,
+                          },
                         })
                       }
-                    />
+                    >
+                      <Text style={styles.title}>{item.title}</Text>
+                    </TouchableOpacity>
                   </View>
-                  <Text style={styles.percent}>{progressPercent}%</Text>
-                </View>
-                <View>
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate('Course', {
-                        screen: 'draweModules',
-                        params: {
-                          itemId: item.id,
-                        },
-                      })
-                    }
-                  >
-                    <Text style={styles.title}>{item.title}</Text>
-                  </TouchableOpacity>
                 </View>
               </View>
-            </View>
-          )}
+            ) : (
+              <View></View>
+            )
+          }
         />
       )}
     </View>

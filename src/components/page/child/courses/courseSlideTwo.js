@@ -25,7 +25,6 @@ const wait = (timeout) => {
 
 const image = require('../../../../assets/img/grey-geo.png')
 const url = 'https://fe20295.online-server.cloud/api/v1/courses_paid'
-const progressPercent = '0'
 
 // Основная функция
 
@@ -37,6 +36,8 @@ export function CourseSlideTwo({ navigation }) {
 
   const [displayName, setDisplayName] = useState(null)
   const { userProfile } = useContext(mainContext)
+  const urlCourseFavorite =
+    'https://fe20295.online-server.cloud/api/v1/favorite/toggle'
 
   const getCourses = async () => {
     try {
@@ -59,6 +60,30 @@ export function CourseSlideTwo({ navigation }) {
     getCourses(true)
     wait(2000).then(() => getCourses(false))
   }, [])
+
+  async function CourseFavorite(idCourse) {
+    var myHeaders = new Headers()
+    myHeaders.append('Accept', 'application/json')
+    myHeaders.append('Content-Type', 'application/json')
+
+    var raw = JSON.stringify({
+      course_id: idCourse,
+      user_id: userProfile && userProfile.idAdmin,
+    })
+
+    try {
+      const responseFavorite = await fetch(urlCourseFavorite, {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+      })
+      const jsonFavorite = await responseFavorite.json()
+      console.log(jsonFavorite)
+      getCourses()
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   useEffect(() => {
     getCourses()
@@ -122,8 +147,24 @@ export function CourseSlideTwo({ navigation }) {
                       uri: item.image_сourses,
                     }}
                   />
-                  <TouchableOpacity style={styles.fireTop}>
-                    <IcoFireTop fill={'#9C0000'} />
+                  <TouchableOpacity
+                    style={styles.fireTop}
+                    onPress={() => {
+                      let idCourse = item.id
+                      CourseFavorite(idCourse)
+                    }}
+                  >
+                    <IcoFireTop
+                      fill={
+                        item.favoriteUser.filter(
+                          (countFavorite) =>
+                            userProfile &&
+                            userProfile.idAdmin === countFavorite.id
+                        ).length !== 0
+                          ? '#9C0000'
+                          : '#fff'
+                      }
+                    />
                   </TouchableOpacity>
                 </ImageBackground>
                 <View
@@ -149,13 +190,34 @@ export function CourseSlideTwo({ navigation }) {
                         ([styles.progressBarLevel],
                         {
                           backgroundColor: '#FF741F',
-                          width: `${progressPercent}%`,
+                          width: `${
+                            item.courseLessonsCount !== 0
+                              ? (item.courseLessonsProgress.filter(
+                                  (countProgress) =>
+                                    userProfile &&
+                                    userProfile.idAdmin === countProgress.id
+                                ).length /
+                                  item.courseLessonsCount) *
+                                100
+                              : item.courseLessonsCount
+                          }%`,
                           borderRadius: 5,
                         })
                       }
                     />
                   </View>
-                  <Text style={styles.percent}>{progressPercent}%</Text>
+                  <Text style={styles.percent}>
+                    {item.courseLessonsCount !== 0
+                      ? (item.courseLessonsProgress.filter(
+                          (countProgress) =>
+                            userProfile &&
+                            userProfile.idAdmin === countProgress.id
+                        ).length /
+                          item.courseLessonsCount) *
+                        100
+                      : item.courseLessonsCount}
+                    %
+                  </Text>
                 </View>
                 <View>
                   <TouchableOpacity

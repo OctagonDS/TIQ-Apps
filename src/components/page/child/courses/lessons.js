@@ -28,6 +28,8 @@ import { IconDownload } from '../../../atoms/iconDownload'
 import { IconShareFile } from '../../../atoms/iconShareFile'
 import { IconCloseSuccess } from '../../../atoms/iconCloseS'
 import mainContext from '../../../../store/context/context'
+import { IconCompleted } from '../../../atoms/iconCompleted'
+import { IconReplyComment } from '../../../atoms/iconReplyComment'
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
@@ -153,11 +155,14 @@ export function Lessons({ props, route, navigation }) {
   )}`
   const urlMessage =
     'https://fe20295.online-server.cloud/api/v1/comments/create'
+  const urlPostProgress =
+    'https://fe20295.online-server.cloud/api/v1/progress/toggle'
   const { userProfile } = useContext(mainContext)
   const [videoUrl, setVideoUrl] = useState([])
   const [accordion, setAccordion] = useState(false)
   const [progressPercent, setProgressPercent] = useState(0)
   const [totalSize, setTotalSize] = useState(0)
+  const [progressSuccess, setProgressSuccess] = useState(false)
 
   const video = React.useRef(null)
   const [status, setStatus] = React.useState({})
@@ -217,6 +222,30 @@ export function Lessons({ props, route, navigation }) {
       console.error(error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  async function postProgress(idLesson) {
+    var myHeaders = new Headers()
+    myHeaders.append('Accept', 'application/json')
+    myHeaders.append('Content-Type', 'application/json')
+
+    var raw = JSON.stringify({
+      lesson_id: idLesson,
+      user_id: userProfile && userProfile.idAdmin,
+    })
+
+    try {
+      const responsePostProgress = await fetch(urlPostProgress, {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+      })
+      const jsonPostProgress = await responsePostProgress.json()
+      console.log(jsonPostProgress)
+      await getModules()
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -387,7 +416,15 @@ export function Lessons({ props, route, navigation }) {
                                 >
                                   <Text
                                     style={{
-                                      color: '#454A4F',
+                                      color:
+                                        itemLessonAcc.progressLesson.filter(
+                                          (countProgressMenu) =>
+                                            userProfile &&
+                                            userProfile.idAdmin ===
+                                              countProgressMenu.id
+                                        ).length === 0
+                                          ? '#454A4F'
+                                          : '#06a406',
                                       paddingLeft: 30,
                                       fontFamily: 'ub-light',
                                     }}
@@ -396,7 +433,15 @@ export function Lessons({ props, route, navigation }) {
                                   </Text>
                                   <Text
                                     style={{
-                                      color: '#454A4F',
+                                      color:
+                                        itemLessonAcc.progressLesson.filter(
+                                          (countProgressMenu) =>
+                                            userProfile &&
+                                            userProfile.idAdmin ===
+                                              countProgressMenu.id
+                                        ).length === 0
+                                          ? '#454A4F'
+                                          : '#06a406',
                                       paddingLeft: 30,
                                       fontFamily: 'ub-medium',
                                     }}
@@ -648,28 +693,58 @@ export function Lessons({ props, route, navigation }) {
                           </View>
                         </View>
                       </View>
-                      <View
-                        style={{
-                          alignItems: 'center',
-                          marginTop: 10,
-                          fontFamily: 'ub-reg',
-                        }}
-                      >
-                        <Text style={{ color: '#545A60' }}>
-                          Haben Sie diese Lektion abgeschlossen?
-                        </Text>
-                        <Text style={{ color: '#545A60' }}>
-                          Dann bitte als abgeschlossen markieren.
-                        </Text>
-                      </View>
-                      <View style={{ marginTop: 20, width: '100%' }}>
-                        <TouchableOpacity
-                          style={styles.wrapper}
-                          onPress={() => {}}
-                        >
-                          <GradientBtn name="Als abgeschlossen markieren" />
-                        </TouchableOpacity>
-                      </View>
+                      {itemLesson.progressLesson.filter(
+                        (countProgress) =>
+                          userProfile &&
+                          userProfile.idAdmin === countProgress.id
+                      ).length === 0 ? (
+                        <View>
+                          <View
+                            style={{
+                              alignItems: 'center',
+                              marginTop: 15,
+                              fontFamily: 'ub-reg',
+                            }}
+                          >
+                            <Text style={{ color: '#545A60' }}>
+                              Haben Sie diese Lektion abgeschlossen?
+                            </Text>
+                            <Text style={{ color: '#545A60' }}>
+                              Dann bitte als abgeschlossen markieren.
+                            </Text>
+                          </View>
+                          <View style={{ marginTop: 20, width: '100%' }}>
+                            <TouchableOpacity
+                              style={styles.wrapper}
+                              onPress={() => {
+                                let idLesson = itemLesson.id
+                                postProgress(idLesson)
+                              }}
+                            >
+                              <GradientBtn name="Als abgeschlossen markieren" />
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      ) : (
+                        <View>
+                          <View
+                            style={{
+                              alignItems: 'center',
+                              marginTop: 15,
+                              fontFamily: 'ub-reg',
+                              flexDirection: 'row',
+                              justifyContent: 'space-around',
+                              alignItems: 'center',
+                            }}
+                          >
+                            <IconCompleted />
+                            <Text style={{ color: '#545A60' }}>
+                              Sie haben diese Einheit nun abgeschlossen.
+                            </Text>
+                          </View>
+                        </View>
+                      )}
+
                       {itemLesson.custom_field1 != null ||
                       itemLesson.custom_field3 != null ? (
                         <View
@@ -888,17 +963,26 @@ export function Lessons({ props, route, navigation }) {
                                           setReplyCommentId(itemComment.id)
                                         }}
                                       >
-                                        <Text
+                                        <View
                                           style={{
-                                            // textAlign: 'center',
-                                            fontFamily: 'ub-reg',
-                                            color: '#4E4D4D',
-                                            fontSize: 12,
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
                                             paddingTop: 5,
                                           }}
                                         >
-                                          Antworten
-                                        </Text>
+                                          <IconReplyComment />
+                                          <Text
+                                            style={{
+                                              // textAlign: 'center',
+                                              fontFamily: 'ub-reg',
+                                              color: '#4E4D4D',
+                                              fontSize: 12,
+                                              paddingLeft: 2,
+                                            }}
+                                          >
+                                            Antworten
+                                          </Text>
+                                        </View>
                                       </TouchableOpacity>
                                     </View>
                                   </View>

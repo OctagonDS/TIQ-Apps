@@ -22,9 +22,9 @@ const wait = (timeout) => {
 }
 
 const image = require('../../../assets/img/grey-geo.png')
-const url = 'https://fe20295.online-server.cloud/api/v1/courses_free'
+const url = 'https://fe20295.online-server.cloud/api/v1/courses_progress'
 
-export function FavoritPage(props) {
+export function FavoritPage({ props, navigation }) {
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
   const [refreshing, setRefreshing] = React.useState(false)
@@ -83,6 +83,7 @@ export function FavoritPage(props) {
     getCourses()
     return () => {
       setData([])
+      setLoading(true)
     }
   }, [])
 

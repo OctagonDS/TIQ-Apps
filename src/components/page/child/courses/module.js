@@ -188,19 +188,6 @@ export function Modules({ props, route, navigation }) {
                   />
                 </View>
               </ImageBackground>
-              <TouchableOpacity
-                onPress={async () =>
-                  await Notifications.scheduleNotificationAsync({
-                    content: {
-                      title: 'Юля',
-                      body: 'ЖОПА!',
-                    },
-                    trigger: null,
-                  })
-                }
-              >
-                <Text>Тест уведомления</Text>
-              </TouchableOpacity>
               <View
                 style={{
                   flexDirection: 'row',

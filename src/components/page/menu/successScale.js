@@ -54,6 +54,7 @@ export function SuccessScale({ props, navigation }) {
     getCourses()
     return () => {
       setData([])
+      setLoading(true)
     }
   }, [])
 

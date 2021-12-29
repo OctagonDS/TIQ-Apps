@@ -64,103 +64,104 @@ export function SuccessScale({ props, navigation }) {
         <ActivityIndicator />
       ) : (
         <FlatList
-          data={data}
+          data={data.filter(
+            (item) =>
+              item &&
+              item.courseLessonsProgress.filter(
+                (countProgress) =>
+                  userProfile && userProfile.idAdmin === countProgress.id
+              ).length !== 0
+          )}
           numColumns={2}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           contentContainerStyle={{
             paddingTop: '2%',
+            paddingBottom: Platform.OS === 'android' ? 30 : 60,
           }}
           keyExtractor={({ id }, index) => id.toString()}
-          renderItem={({ item }) =>
-            item.courseLessonsProgress.filter(
-              (countProgress) =>
-                userProfile && userProfile.idAdmin === countProgress.id
-            ).length !== 0 ? (
-              <View style={styles.courses}>
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('Course', {
-                      screen: 'draweModules',
-                      params: {
-                        itemId: item.id,
-                      },
-                    })
-                  }
-                  style={{ position: 'relative', width: 165, height: 165 }}
+          renderItem={({ item }) => (
+            <View style={styles.courses}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('Course', {
+                    screen: 'draweModules',
+                    params: {
+                      itemId: item.id,
+                    },
+                  })
+                }
+                style={{ position: 'relative', width: 165, height: 165 }}
+              >
+                <ImageBackground
+                  source={image}
+                  resizeMode="cover"
+                  style={styles.imageBack}
+                  imageStyle={{ borderRadius: 5 }}
                 >
-                  <ImageBackground
-                    source={image}
-                    resizeMode="cover"
-                    style={styles.imageBack}
-                    imageStyle={{ borderRadius: 5 }}
-                  >
-                    <Image
-                      style={styles.imageProduct}
-                      source={{
-                        uri: item.image_сourses,
-                      }}
-                    />
-                  </ImageBackground>
-                </TouchableOpacity>
-                <View style={{ width: 165, height: 60 }}>
-                  <View style={styles.progress}>
-                    <View style={styles.progressBar}>
-                      <Animated.View
-                        style={
-                          ([styles.progressBarLevel],
-                          {
-                            backgroundColor: '#FF741F',
-                            width: `${
-                              item.courseLessonsCount !== 0
-                                ? (item.courseLessonsProgress.filter(
-                                    (countProgress) =>
-                                      userProfile &&
-                                      userProfile.idAdmin === countProgress.id
-                                  ).length /
-                                    item.courseLessonsCount) *
-                                  100
-                                : item.courseLessonsCount
-                            }%`,
-                            borderRadius: 5,
-                          })
-                        }
-                      />
-                    </View>
-                    <Text style={styles.percent}>
-                      {item.courseLessonsCount !== 0
-                        ? (item.courseLessonsProgress.filter(
-                            (countProgress) =>
-                              userProfile &&
-                              userProfile.idAdmin === countProgress.id
-                          ).length /
-                            item.courseLessonsCount) *
-                          100
-                        : item.courseLessonsCount}
-                      %
-                    </Text>
-                  </View>
-                  <View>
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate('Course', {
-                          screen: 'draweModules',
-                          params: {
-                            itemId: item.id,
-                          },
+                  <Image
+                    style={styles.imageProduct}
+                    source={{
+                      uri: item.image_сourses,
+                    }}
+                  />
+                </ImageBackground>
+              </TouchableOpacity>
+              <View style={{ width: 165, height: 60 }}>
+                <View style={styles.progress}>
+                  <View style={styles.progressBar}>
+                    <Animated.View
+                      style={
+                        ([styles.progressBarLevel],
+                        {
+                          backgroundColor: '#FF741F',
+                          width: `${
+                            item.courseLessonsCount !== 0
+                              ? (item.courseLessonsProgress.filter(
+                                  (countProgress) =>
+                                    userProfile &&
+                                    userProfile.idAdmin === countProgress.id
+                                ).length /
+                                  item.courseLessonsCount) *
+                                100
+                              : item.courseLessonsCount
+                          }%`,
+                          borderRadius: 5,
                         })
                       }
-                    >
-                      <Text style={styles.title}>{item.title}</Text>
-                    </TouchableOpacity>
+                    />
                   </View>
+                  <Text style={styles.percent}>
+                    {item.courseLessonsCount !== 0
+                      ? (item.courseLessonsProgress.filter(
+                          (countProgress) =>
+                            userProfile &&
+                            userProfile.idAdmin === countProgress.id
+                        ).length /
+                          item.courseLessonsCount) *
+                        100
+                      : item.courseLessonsCount}
+                    %
+                  </Text>
+                </View>
+                <View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('Course', {
+                        screen: 'draweModules',
+                        params: {
+                          itemId: item.id,
+                        },
+                      })
+                    }
+                  >
+                    <Text style={styles.title}>{item.title}</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
-            ) : (
-              <View></View>
-            )
-          }
+            </View>
+          )}
         />
       )}
     </View>

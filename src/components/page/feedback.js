@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useMemo } from 'react'
 import {
   View,
   Text,
@@ -10,8 +10,14 @@ import {
 } from 'react-native'
 import { gStyle } from '../../styles/style'
 import { IconFeedbackPlus } from '../atoms/iconCirclePlus'
+import mainContext from '../../store/context/context'
 
 export const Feedback = ({ navigation }) => {
+  const { userProfile } = useContext(mainContext)
+
+  useMemo(() => {
+    return () => {}
+  }, [])
   return (
     <View style={gStyle.main}>
       <View>

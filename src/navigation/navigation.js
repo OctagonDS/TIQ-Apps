@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext, useMemo } from 'react'
 import {
   Platform,
   TouchableOpacity,
@@ -200,6 +200,16 @@ function StackNav() {
 }
 
 function MyTabs() {
+  const { countUnread, doCountNot } = useContext(mainContext)
+
+  useMemo(() => {
+    doCountNot()
+    timer = setInterval(async () => await doCountNot(), 60000)
+    return () => {
+      clearInterval(timer)
+    }
+  }, [])
+
   return (
     <Tab.Navigator
       initialRouteName="Feed"
@@ -267,7 +277,10 @@ function MyTabs() {
         options={{
           tabBarHideOnKeyboard: true,
           tabBarLabel: 'Уведомления',
-          tabBarBadge: 4,
+          tabBarBadge:
+            countUnread && countUnread.countUnread === 0
+              ? undefined
+              : countUnread && countUnread.countUnread,
           tabBarBadgeStyle: { marginTop: 10 },
           tabBarIcon: ({ focused }) => <IconNot focused={focused} />,
         }}
@@ -281,6 +294,7 @@ function Navigations() {
   const [isLogged, setIsLogged] = useState(false)
   const [userToken, setUserToken] = useState(null)
   const [userProfile, setUserProfile] = useState(null)
+  const [countUnread, setCountUnread] = useState(null)
   const [loggingIn, setloggingIn] = useState(false)
   const [error, setError] = useState(null)
   const [errorReset, setErrorReset] = useState(null)
@@ -301,6 +315,44 @@ function Navigations() {
       }
     })
   }, [])
+
+  // Количество уведомлений
+  const doCountNot = async () => {
+    let showHeaders = new Headers()
+    showHeaders.append('Accept', 'application/json')
+    showHeaders.append('Content-Type', 'application/json')
+
+    let responseCountNot = await fetch(
+      `https://fe20295.online-server.cloud/api/v1/notifications/count/${
+        userProfile && userProfile.idAdmin
+      }`,
+      {
+        method: 'GET',
+        headers: showHeaders,
+      }
+    )
+    let jsonCountNot = await responseCountNot.json()
+    if (userProfile) {
+      await AsyncStorage.getItem('countUnread')
+        .then((data) => {
+          data = JSON.parse(data)
+
+          // Новые данные
+          data.countUnread = jsonCountNot && jsonCountNot.countUnread
+
+          AsyncStorage.setItem(
+            'countUnread',
+            JSON.stringify({
+              countUnread: data.countUnread,
+            })
+          )
+          setCountUnread({
+            countUnread: data.countUnread,
+          })
+        })
+        .done()
+    }
+  }
 
   // Подсчет уникальных визитов
 
@@ -333,6 +385,7 @@ function Navigations() {
   const doLogout = async () => {
     try {
       await AsyncStorage.removeItem('userProfile')
+      await AsyncStorage.removeItem('countUnread')
       setloggingIn(true)
       setUserProfile(null)
       setloggingIn(false)
@@ -376,6 +429,16 @@ function Navigations() {
         }
       )
       let jsonShow = await responseShow.json()
+
+      let responseCountNot = await fetch(
+        `https://fe20295.online-server.cloud/api/v1/notifications/count/${jsonShow.data.id}`,
+        {
+          method: 'GET',
+          headers: showHeaders,
+        }
+      )
+      let jsonCountNot = await responseCountNot.json()
+      // console.log(jsonCountNot)
       // console.log(jsonShow.data.id)
       // console.log(json)
       if (json.status != false) {
@@ -394,6 +457,12 @@ function Navigations() {
               idAdmin: jsonShow.data.id,
             })
           )
+          await AsyncStorage.setItem(
+            'countUnread',
+            JSON.stringify({
+              countUnread: jsonCountNot.countUnread,
+            })
+          )
         } catch {
           setError('Error storing data on device')
         }
@@ -407,6 +476,9 @@ function Navigations() {
           display_name: json.display_name,
           idAdmin: jsonShow.data.id,
         })
+        setCountUnread({
+          countUnread: jsonCountNot.countUnread,
+        })
         setIsLogged(true)
         setUserProfile({
           isLoggedIn: json.status,
@@ -417,6 +489,9 @@ function Navigations() {
           email: json.email,
           display_name: json.display_name,
           idAdmin: jsonShow.data.id,
+        })
+        setCountUnread({
+          countUnread: jsonCountNot.countUnread,
         })
         setUserToken(json.token)
         UniqueVisits(jsonShow.data.id)
@@ -622,6 +697,8 @@ function Navigations() {
     errorUp: errorUp,
     successEmail: successEmail,
     setSuccessEmail: setSuccessEmail,
+    countUnread: countUnread,
+    setCountUnread: setCountUnread,
     doSome: () => {
       doSome()
     },
@@ -633,6 +710,9 @@ function Navigations() {
     },
     doLogout: () => {
       doLogout()
+    },
+    doCountNot: () => {
+      doCountNot()
     },
     doReset: (email) => {
       doReset(email)

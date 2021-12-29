@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useMemo } from 'react'
 import {
   View,
   Text,
@@ -17,6 +17,7 @@ import { gStyle } from '../../../../styles/style'
 import { IcoFireTop } from '../../../atoms/iconFireTop'
 import { IcoLock } from '../../../atoms/iconLock'
 import mainContext from '../../../../store/context/context'
+import { useIsFocused } from '@react-navigation/native'
 
 // Переменные
 const wait = (timeout) => {
@@ -31,6 +32,7 @@ const url = 'https://fe20295.online-server.cloud/api/v1/courses_paid'
 export function CourseSlideTwo({ navigation }) {
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
+  const isFocused = useIsFocused()
 
   const [refreshing, setRefreshing] = React.useState(false)
 
@@ -85,12 +87,12 @@ export function CourseSlideTwo({ navigation }) {
     }
   }
 
-  useEffect(() => {
+  useMemo(() => {
     getCourses()
     return () => {
       setData([])
     }
-  }, [])
+  }, [isFocused])
 
   return (
     <View
@@ -101,7 +103,7 @@ export function CourseSlideTwo({ navigation }) {
       }}
     >
       {isLoading ? (
-        <ActivityIndicator />
+        <ActivityIndicator size="large" color="#FF741F" />
       ) : (
         <FlatList
           data={data}

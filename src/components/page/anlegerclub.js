@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext, useEffect } from 'react'
+import React, { useState, useRef, useContext, useMemo, useEffect } from 'react'
 import {
   View,
   Text,
@@ -20,6 +20,7 @@ import mainContext from '../../store/context/context'
 import { IconCloseModal } from '../atoms/iconCloseM'
 import { IconShieldUl } from '../atoms/iconShieldUl'
 import * as WebBrowser from 'expo-web-browser'
+import { useIsFocused } from '@react-navigation/native'
 
 const image = require('../../assets/img/black-geo.png')
 const imageGray = require('../../assets/img/grey-geo.png')
@@ -87,21 +88,16 @@ const GradientBtnClose = ({ name }) => (
 
 export function Anleger({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false)
+  const [tagAccess, setTagAccess] = useState(false)
   const { userProfile } = useContext(mainContext)
   const video = React.useRef(null)
+  const isFocused = useIsFocused()
   const [status, setStatus] = React.useState({})
   const [accordion, setAccordion] = useState(false)
   const [accordion2, setAccordion2] = useState(false)
   const [accordion3, setAccordion3] = useState(false)
   const [accordion4, setAccordion4] = useState(false)
 
-  const a = false
-  // userProfile.id === 8395
-  const Access = async (a) => {
-    if (a === true) {
-      return setModalVisible(true)
-    }
-  }
   const Accordion = async () => {
     setAccordion2(false)
     setAccordion3(false)
@@ -128,8 +124,17 @@ export function Anleger({ navigation }) {
   }
 
   useEffect(() => {
-    Access(a)
-  }, [a])
+    if (!tagAccess && isFocused) {
+      return setModalVisible(true)
+    }
+    return () => {
+      setAccordion(false)
+      setAccordion2(false)
+      setAccordion3(false)
+      setAccordion4(false)
+      setModalVisible(false)
+    }
+  }, [])
 
   return (
     <View style={gStyle.main}>
@@ -195,7 +200,7 @@ export function Anleger({ navigation }) {
             </Text>
           </View>
         </View>
-        {!a ? (
+        {tagAccess ? (
           <View style={{ padding: 10, flex: 1 }}>
             <View style={styles.row}>
               <TouchableOpacity
@@ -408,7 +413,7 @@ Dein Andrei Anissimov, Herausgeber.`}
                   </Text>
                 </View>
                 <View style={{ alignItems: 'center', marginTop: 24 }}>
-                  {a === true ? (
+                  {!tagAccess ? (
                     <TouchableOpacity
                       onPress={() => {
                         WebBrowser.openBrowserAsync(
@@ -540,7 +545,7 @@ Dein Andrei Anissimov, Herausgeber.`}
                   </Text>
                 </View>
                 <View style={{ alignItems: 'center', marginTop: 24 }}>
-                  {a === true ? (
+                  {!tagAccess ? (
                     <TouchableOpacity
                       onPress={() => {
                         WebBrowser.openBrowserAsync(
@@ -671,7 +676,7 @@ Dein Andrei Anissimov, Herausgeber.`}
                   <Text style={styles.accordionText}>Live Clubtreffen</Text>
                 </View>
                 <View style={{ alignItems: 'center', marginTop: 24 }}>
-                  {a === true ? (
+                  {!tagAccess ? (
                     <TouchableOpacity
                       onPress={() => {
                         WebBrowser.openBrowserAsync(
@@ -802,7 +807,7 @@ Dein Andrei Anissimov, Herausgeber.`}
                   <Text style={styles.accordionText}>Live Clubtreffen</Text>
                 </View>
                 <View style={{ alignItems: 'center', marginTop: 24 }}>
-                  {a === true ? (
+                  {!tagAccess ? (
                     <TouchableOpacity
                       onPress={() => {
                         WebBrowser.openBrowserAsync(

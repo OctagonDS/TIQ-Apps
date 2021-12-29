@@ -320,8 +320,9 @@ export const styles = StyleSheet.create({
     marginLeft: '10%',
     marginRight: '5%',
     fontFamily: 'ub-medium',
-    fontSize: 20,
+    fontSize: 16,
     color: '#FF741F',
+    width: '50%',
   },
   textItem: {
     color: '#fff',

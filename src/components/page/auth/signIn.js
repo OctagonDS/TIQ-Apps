@@ -96,8 +96,8 @@ export const SignIn = ({ navigation: { goBack }, navigation }) => {
               onChangeText={(email) => setEmail(email)}
               value={email}
               autoCapitalize="none"
-              autoCompleteType="off"
               autoCorrect={false}
+              autoComplete="email"
               keyboardType="email-address"
               disabled={loggingIn}
             />

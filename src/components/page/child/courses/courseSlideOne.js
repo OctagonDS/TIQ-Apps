@@ -37,7 +37,7 @@ export function CourseSlideOne({ navigation }) {
   const [refreshing, setRefreshing] = React.useState(false)
 
   const [displayName, setDisplayName] = useState(null)
-  const { userProfile } = useContext(mainContext)
+  const { userProfile, doCountNot } = useContext(mainContext)
   const urlCourseFavorite =
     'https://fe20295.online-server.cloud/api/v1/favorite/toggle'
 
@@ -110,7 +110,7 @@ export function CourseSlideOne({ navigation }) {
       }}
     >
       {isLoading ? (
-        <ActivityIndicator />
+        <ActivityIndicator size="large" color="#FF741F" />
       ) : (
         <FlatList
           data={data}

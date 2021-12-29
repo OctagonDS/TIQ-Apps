@@ -19,6 +19,7 @@ import HTML from 'react-native-render-html'
 import { IconEuro } from '../atoms/iconEuro'
 import { LinearGradient } from 'expo-linear-gradient'
 import * as WebBrowser from 'expo-web-browser'
+import NetInfo from '@react-native-community/netinfo'
 
 // Переменные
 const wait = (timeout) => {
@@ -75,6 +76,7 @@ const url = 'https://fe20295.online-server.cloud/api/v1/mentor'
 export const Mentor = (props) => {
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
+  const [notConnect, setNotConnect] = useState(false)
   const contentWidth = useWindowDimensions().width
 
   const [refreshing, setRefreshing] = React.useState(false)
@@ -97,14 +99,25 @@ export const Mentor = (props) => {
       setLoading(false)
     }
   }
+
   const onRefresh = React.useCallback(() => {
     getMentor(true)
     wait(2000).then(() => getMentor(false))
   }, [])
 
-  useEffect(() => {
-    getMentor()
-  }, [])
+  useMemo(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      if (state.isConnected) {
+        getMentor()
+      } else {
+        setLoading(true)
+      }
+    })
+    return () => {
+      setData([])
+      setLoading(true)
+    }
+  }, [isLoading])
 
   return (
     <View
@@ -115,7 +128,17 @@ export const Mentor = (props) => {
       }}
     >
       {isLoading ? (
-        <ActivityIndicator />
+        <View>
+          <ActivityIndicator size="large" color="#FF741F" />
+          <View>
+            <Text style={{ textAlign: 'center', paddingTop: 5 }}>
+              Überprüfung der Internetverbindung
+            </Text>
+            <Text style={{ textAlign: 'center', paddingTop: 5 }}>
+              Einige Inhalte sind ohne das Internet nicht verfügbar
+            </Text>
+          </View>
+        </View>
       ) : (
         <FlatList
           data={data}

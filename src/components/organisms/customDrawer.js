@@ -318,7 +318,7 @@ export const styles = StyleSheet.create({
   },
   userName: {
     marginLeft: '10%',
-    marginRight: '5%',
+    // marginRight: '5%',
     fontFamily: 'ub-medium',
     fontSize: 16,
     color: '#FF741F',

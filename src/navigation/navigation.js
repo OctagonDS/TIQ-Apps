@@ -100,6 +100,19 @@ function StackAuth() {
 }
 
 function StackNav() {
+  const { countUnread, doCountNot, userProfile } = useContext(mainContext)
+
+  useEffect(() => {
+    if (userProfile && userProfile !== null) {
+      timer = setInterval(async () => await doCountNot(), 60000)
+    } else {
+      clearInterval(timer)
+    }
+    return () => {
+      clearInterval(timer)
+    }
+  }, [userProfile])
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -202,13 +215,13 @@ function StackNav() {
 function MyTabs() {
   const { countUnread, doCountNot, userProfile } = useContext(mainContext)
 
-  useMemo(() => {
-    doCountNot()
-    timer = setInterval(async () => await doCountNot(), 60000)
-    return () => {
-      clearInterval(timer)
-    }
-  }, [])
+  // useMemo(() => {
+  //   doCountNot()
+  //   timer = setInterval(async () => await doCountNot(), 60000)
+  //   return () => {
+  //     clearInterval(timer)
+  //   }
+  // }, [])
 
   return (
     <Tab.Navigator
@@ -309,51 +322,50 @@ function Navigations() {
         setUserProfile(JSON.parse(value)),
           setIsLoading(false),
           setIsLogged(true)
+        doCountNot()
         UniqueVisits(JSON.parse(value).idAdmin)
       } else {
-        setIsLoading(false), setIsLogged(false)
+        setUserProfile(null), setIsLoading(false), setIsLogged(false)
       }
     })
   }, [])
 
   // Количество уведомлений
   const doCountNot = async () => {
-    if (userProfile !== null) {
-      let showHeaders = new Headers()
-      showHeaders.append('Accept', 'application/json')
-      showHeaders.append('Content-Type', 'application/json')
+    let showHeaders = new Headers()
+    showHeaders.append('Accept', 'application/json')
+    showHeaders.append('Content-Type', 'application/json')
 
-      let responseCountNot = await fetch(
-        `https://fe20295.online-server.cloud/api/v1/notifications/count/${
-          userProfile && userProfile.idAdmin
-        }`,
-        {
-          method: 'GET',
-          headers: showHeaders,
-        }
-      )
-      let jsonCountNot = await responseCountNot.json()
-      if (jsonCountNot !== null) {
-        await AsyncStorage.getItem('countUnread')
-          .then((data) => {
-            data = JSON.parse(data)
-
-            // Новые данные
-            data.countUnread = jsonCountNot.countUnread
-
-            AsyncStorage.setItem(
-              'countUnread',
-              JSON.stringify({
-                countUnread: data.countUnread,
-              })
-            )
-            setCountUnread({
-              countUnread: data.countUnread,
-            })
-          })
-          .done()
+    let responseCountNot = await fetch(
+      `https://fe20295.online-server.cloud/api/v1/notifications/count/${
+        userProfile && userProfile.idAdmin
+      }`,
+      {
+        method: 'GET',
+        headers: showHeaders,
       }
-    }
+    )
+    let jsonCountNot = await responseCountNot.json()
+    // console.log(jsonCountNot)
+    // console.log(userProfile)
+    await AsyncStorage.getItem('countUnread')
+      .then((data) => {
+        data = JSON.parse(data)
+
+        // Новые данные
+        data.countUnread = jsonCountNot && jsonCountNot.countUnread
+
+        AsyncStorage.setItem(
+          'countUnread',
+          JSON.stringify({
+            countUnread: data.countUnread,
+          })
+        )
+        setCountUnread({
+          countUnread: data.countUnread,
+        })
+      })
+      .done()
   }
 
   // Подсчет уникальных визитов

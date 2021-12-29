@@ -200,7 +200,7 @@ function StackNav() {
 }
 
 function MyTabs() {
-  const { countUnread, doCountNot } = useContext(mainContext)
+  const { countUnread, doCountNot, userProfile } = useContext(mainContext)
 
   useMemo(() => {
     doCountNot()
@@ -318,21 +318,21 @@ function Navigations() {
 
   // Количество уведомлений
   const doCountNot = async () => {
-    let showHeaders = new Headers()
-    showHeaders.append('Accept', 'application/json')
-    showHeaders.append('Content-Type', 'application/json')
+    if (userProfile !== null) {
+      let showHeaders = new Headers()
+      showHeaders.append('Accept', 'application/json')
+      showHeaders.append('Content-Type', 'application/json')
 
-    let responseCountNot = await fetch(
-      `https://fe20295.online-server.cloud/api/v1/notifications/count/${
-        userProfile && userProfile.idAdmin
-      }`,
-      {
-        method: 'GET',
-        headers: showHeaders,
-      }
-    )
-    let jsonCountNot = await responseCountNot.json()
-    if (userProfile) {
+      let responseCountNot = await fetch(
+        `https://fe20295.online-server.cloud/api/v1/notifications/count/${
+          userProfile && userProfile.idAdmin
+        }`,
+        {
+          method: 'GET',
+          headers: showHeaders,
+        }
+      )
+      let jsonCountNot = await responseCountNot.json()
       await AsyncStorage.getItem('countUnread')
         .then((data) => {
           data = JSON.parse(data)

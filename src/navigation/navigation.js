@@ -333,24 +333,26 @@ function Navigations() {
         }
       )
       let jsonCountNot = await responseCountNot.json()
-      await AsyncStorage.getItem('countUnread')
-        .then((data) => {
-          data = JSON.parse(data)
+      if (jsonCountNot !== null) {
+        await AsyncStorage.getItem('countUnread')
+          .then((data) => {
+            data = JSON.parse(data)
 
-          // Новые данные
-          data.countUnread = jsonCountNot && jsonCountNot.countUnread
+            // Новые данные
+            data.countUnread = jsonCountNot.countUnread
 
-          AsyncStorage.setItem(
-            'countUnread',
-            JSON.stringify({
+            AsyncStorage.setItem(
+              'countUnread',
+              JSON.stringify({
+                countUnread: data.countUnread,
+              })
+            )
+            setCountUnread({
               countUnread: data.countUnread,
             })
-          )
-          setCountUnread({
-            countUnread: data.countUnread,
           })
-        })
-        .done()
+          .done()
+      }
     }
   }
 

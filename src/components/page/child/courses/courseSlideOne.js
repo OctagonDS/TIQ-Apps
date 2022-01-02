@@ -144,9 +144,13 @@ export function CourseSlideOne({ navigation }) {
                 >
                   <Image
                     style={styles.imageProduct}
-                    source={{
-                      uri: item.image_сourses,
-                    }}
+                    source={
+                      item.image_сourses !== null
+                        ? {
+                            uri: item.image_сourses,
+                          }
+                        : require('../../../../assets/img/adaptive-icon.png')
+                    }
                   />
                   <TouchableOpacity
                     style={styles.fireTop}
@@ -195,13 +199,15 @@ export function CourseSlideOne({ navigation }) {
                   </View>
                   <Text style={styles.percent}>
                     {item.courseLessonsCount !== 0
-                      ? (item.courseLessonsProgress.filter(
-                          (countProgress) =>
-                            userProfile &&
-                            userProfile.idAdmin === countProgress.id
-                        ).length /
-                          item.courseLessonsCount) *
-                        100
+                      ? Math.round(
+                          (item.courseLessonsProgress.filter(
+                            (countProgress) =>
+                              userProfile &&
+                              userProfile.idAdmin === countProgress.id
+                          ).length /
+                            item.courseLessonsCount) *
+                            100
+                        )
                       : item.courseLessonsCount}
                     %
                   </Text>

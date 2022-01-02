@@ -68,22 +68,24 @@ export function CustomDrawer() {
   return (
     <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
       <View style={styles.header}>
-        <View style={styles.headerCenter}>
-          <View style={styles.imageAvatarBack}>
-            <View style={styles.imageAvatar}>
-              <Image
-                source={{
-                  uri: userProfile && userProfile.avatar,
-                }}
-                style={{ width: 65, height: 65 }}
-                resizeMode="cover"
-              />
-            </View>
+        {/* <View style={styles.headerCenter}> */}
+        <View style={styles.imageAvatarBack}>
+          <View style={styles.imageAvatar}>
+            <Image
+              source={{
+                uri: userProfile && userProfile.avatar,
+              }}
+              style={{ width: 65, height: 65 }}
+              resizeMode="cover"
+            />
           </View>
+        </View>
+        <View style={{ flex: 1 }}>
           <Text style={styles.userName}>
             {userProfile && userProfile.display_name}
           </Text>
         </View>
+        {/* </View> */}
       </View>
       <View style={{ borderBottomColor: '#DADADA', borderBottomWidth: 1 }}>
         <View
@@ -290,16 +292,19 @@ export function CustomDrawer() {
 
 export const styles = StyleSheet.create({
   header: {
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     height: '17%',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     borderBottomColor: '#DADADA',
     borderBottomWidth: 1,
+    flex: 1,
+    flexDirection: 'row',
+    paddingHorizontal: 25,
   },
   headerCenter: {
     alignItems: 'center',
-    flexDirection: 'row',
     marginBottom: 20,
+    flexDirection: 'row',
   },
   imageAvatarBack: {
     width: 66,
@@ -317,12 +322,12 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   userName: {
-    marginLeft: '10%',
+    paddingLeft: 25,
     // marginRight: '5%',
     fontFamily: 'ub-medium',
     fontSize: 16,
     color: '#FF741F',
-    width: '50%',
+    // width: '50%',
   },
   textItem: {
     color: '#fff',

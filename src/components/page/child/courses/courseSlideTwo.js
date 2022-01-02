@@ -145,9 +145,13 @@ export function CourseSlideTwo({ navigation }) {
                 >
                   <Image
                     style={styles.imageProduct}
-                    source={{
-                      uri: item.image_сourses,
-                    }}
+                    source={
+                      item.image_сourses !== null
+                        ? {
+                            uri: item.image_сourses,
+                          }
+                        : require('../../../../assets/img/adaptive-icon.png')
+                    }
                   />
                   <TouchableOpacity
                     style={styles.fireTop}

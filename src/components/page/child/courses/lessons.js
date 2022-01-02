@@ -153,8 +153,7 @@ export function Lessons({ props, route, navigation }) {
   const url = `https://fe20295.online-server.cloud/api/v1/course/${JSON.stringify(
     itemId
   )}`
-  const urlMessage =
-    'https://fe20295.online-server.cloud/api/v1/comments/create'
+  const urlMessage = 'https://kurse.traderiq.net/wp-json/wp/v2/comments/create'
   const urlPostProgress =
     'https://fe20295.online-server.cloud/api/v1/progress/toggle'
   const { userProfile } = useContext(mainContext)
@@ -164,6 +163,7 @@ export function Lessons({ props, route, navigation }) {
   const [totalSize, setTotalSize] = useState(0)
   const [progressSuccess, setProgressSuccess] = useState(false)
 
+  const InputRef = useRef(null)
   const video = React.useRef(null)
   const [status, setStatus] = React.useState({})
 
@@ -173,7 +173,7 @@ export function Lessons({ props, route, navigation }) {
   const [messageComment, setMessageComment] = useState('')
   const [commentSuccess, setCommentSuccess] = useState(null)
   const [replyComment, setReplyComment] = useState(null)
-  const [replyCommentId, setReplyCommentId] = useState(null)
+  const [replyCommentId, setReplyCommentId] = useState(0)
 
   const active = '#FFFFFF'
   const inActive = '#ACB3BF'
@@ -187,6 +187,9 @@ export function Lessons({ props, route, navigation }) {
     return setVideoUrl(arrVideo)
   }
 
+  const focusInput = () => {
+    InputRef.current.focus()
+  }
   async function postMessage(messageComment, idLesson, replyCommentId) {
     setCommentSuccess(null)
     var myHeaders = new Headers()
@@ -194,11 +197,12 @@ export function Lessons({ props, route, navigation }) {
     myHeaders.append('Content-Type', 'application/json')
 
     var raw = JSON.stringify({
-      parent_id: replyCommentId,
-      message: messageComment,
-      status: 0,
-      user_id: userProfile && userProfile.idAdmin,
-      lessons_id: idLesson,
+      author: userProfile && userProfile.wp_user,
+      content: {
+        raw: messageComment,
+      },
+      post: idLesson,
+      parent: replyCommentId,
     })
 
     try {
@@ -212,7 +216,7 @@ export function Lessons({ props, route, navigation }) {
       // console.log(jsonMessage.errors)
       setMessageComment('')
       setReplyComment(null)
-      setReplyCommentId(null)
+      setReplyCommentId(0)
       if (jsonMessage.errors) {
         setCommentSuccess('Geben Sie Ihren Kommentartext ein')
       } else {
@@ -224,6 +228,43 @@ export function Lessons({ props, route, navigation }) {
       setLoading(false)
     }
   }
+  // async function postMessage(messageComment, idLesson, replyCommentId) {
+  //   setCommentSuccess(null)
+  //   var myHeaders = new Headers()
+  //   myHeaders.append('Accept', 'application/json')
+  //   myHeaders.append('Content-Type', 'application/json')
+
+  //   var raw = JSON.stringify({
+  //     parent_id: replyCommentId,
+  //     message: messageComment,
+  //     status: 0,
+  //     user_id: userProfile && userProfile.idAdmin,
+  //     lessons_id: idLesson,
+  //   })
+
+  //   try {
+  //     const responseMessage = await fetch(urlMessage, {
+  //       method: 'POST',
+  //       headers: myHeaders,
+  //       body: raw,
+  //     })
+  //     const jsonMessage = await responseMessage.json()
+  //     // console.log(jsonMessage.data)
+  //     // console.log(jsonMessage.errors)
+  //     setMessageComment('')
+  //     setReplyComment(null)
+  //     setReplyCommentId(0)
+  //     if (jsonMessage.errors) {
+  //       setCommentSuccess('Geben Sie Ihren Kommentartext ein')
+  //     } else {
+  //       setCommentSuccess('Ihr Kommentar wurde zur Moderation gesendet')
+  //     }
+  //   } catch (error) {
+  //     console.error(error)
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
 
   async function postProgress(idLesson) {
     var myHeaders = new Headers()
@@ -296,6 +337,8 @@ export function Lessons({ props, route, navigation }) {
       setData([])
       setMessageComment('')
       setCommentSuccess(null)
+      setReplyCommentId(0)
+      setReplyComment(null)
       clearTimeout(timer)
     }
   }, [])
@@ -332,7 +375,8 @@ export function Lessons({ props, route, navigation }) {
                       item.lessons[0] != undefined ? item.lessons[0].id : null,
                   })
                   setReplyComment(null)
-                  setReplyCommentId(null)
+                  setReplyCommentId(0)
+                  setAccordion(false)
                 }}
               >
                 <Text
@@ -340,6 +384,7 @@ export function Lessons({ props, route, navigation }) {
                     paddingHorizontal: 10,
                     color: item.id == moduleId ? active : inActive,
                     paddingVertical: 12,
+                    textTransform: 'uppercase',
                   }}
                 >
                   {item.preview_title}
@@ -404,7 +449,7 @@ export function Lessons({ props, route, navigation }) {
                                   })
                                   Accordion()
                                   setReplyComment(null)
-                                  setReplyCommentId(null)
+                                  setReplyCommentId(0)
                                 }}
                               >
                                 <View
@@ -425,29 +470,32 @@ export function Lessons({ props, route, navigation }) {
                                         ).length === 0
                                           ? '#454A4F'
                                           : '#06a406',
-                                      paddingLeft: 30,
+                                      paddingLeft: 10,
                                       fontFamily: 'ub-light',
                                     }}
                                   >
                                     Einheit {index + 1}
                                   </Text>
-                                  <Text
-                                    style={{
-                                      color:
-                                        itemLessonAcc.progressLesson.filter(
-                                          (countProgressMenu) =>
-                                            userProfile &&
-                                            userProfile.idAdmin ===
-                                              countProgressMenu.id
-                                        ).length === 0
-                                          ? '#454A4F'
-                                          : '#06a406',
-                                      paddingLeft: 30,
-                                      fontFamily: 'ub-medium',
-                                    }}
-                                  >
-                                    {itemLessonAcc.title}
-                                  </Text>
+                                  <View style={{ flex: 1 }}>
+                                    <Text
+                                      style={{
+                                        color:
+                                          itemLessonAcc.progressLesson.filter(
+                                            (countProgressMenu) =>
+                                              userProfile &&
+                                              userProfile.idAdmin ===
+                                                countProgressMenu.id
+                                          ).length === 0
+                                            ? '#454A4F'
+                                            : '#06a406',
+                                        paddingLeft: 10,
+                                        paddingRight: 10,
+                                        fontFamily: 'ub-medium',
+                                      }}
+                                    >
+                                      {itemLessonAcc.title}
+                                    </Text>
+                                  </View>
                                 </View>
                               </TouchableOpacity>
                             </View>
@@ -484,32 +532,26 @@ export function Lessons({ props, route, navigation }) {
                       >
                         {itemLesson.title}
                       </Text>
-                      <View
-                        style={{
-                          justifyContent: 'center',
-                          position: 'relative',
-                          marginTop: 15,
-                        }}
-                      >
-                        <Video
-                          ref={video}
-                          style={{
-                            alignSelf: 'center',
-                            width: 320,
-                            height: 200,
-                            borderWidth: 1,
-                            borderColor: '#C4C4C4',
-                          }}
-                          source={
-                            !videoUrl.includes(
-                              decodeURI(
-                                itemLesson.video_lesson.substr(
-                                  itemLesson.video_lesson.lastIndexOf('/') + 1
-                                )
-                              )
-                            )
-                              ? { uri: `${itemLesson.video_lesson}` }
-                              : videoUrl.includes(
+                      {itemLesson.video_lesson !== null ? (
+                        <View>
+                          <View
+                            style={{
+                              justifyContent: 'center',
+                              position: 'relative',
+                              marginTop: 15,
+                            }}
+                          >
+                            <Video
+                              ref={video}
+                              style={{
+                                alignSelf: 'center',
+                                width: 320,
+                                height: 200,
+                                borderWidth: 1,
+                                borderColor: '#C4C4C4',
+                              }}
+                              source={
+                                !videoUrl.includes(
                                   decodeURI(
                                     itemLesson.video_lesson.substr(
                                       itemLesson.video_lesson.lastIndexOf('/') +
@@ -517,182 +559,203 @@ export function Lessons({ props, route, navigation }) {
                                     )
                                   )
                                 )
-                              ? {
-                                  uri:
-                                    FileSystem.cacheDirectory +
+                                  ? { uri: `${itemLesson.video_lesson}` }
+                                  : videoUrl.includes(
+                                      decodeURI(
+                                        itemLesson.video_lesson.substr(
+                                          itemLesson.video_lesson.lastIndexOf(
+                                            '/'
+                                          ) + 1
+                                        )
+                                      )
+                                    )
+                                  ? {
+                                      uri:
+                                        FileSystem.cacheDirectory +
+                                        itemLesson.video_lesson.substr(
+                                          itemLesson.video_lesson.lastIndexOf(
+                                            '/'
+                                          ) + 1
+                                        ),
+                                    }
+                                  : {
+                                      uri: `${itemLesson.video_lesson}`,
+                                    }
+                              }
+                              useNativeControls
+                              resizeMode="contain"
+                              isLooping
+                              onPlaybackStatusUpdate={(status) =>
+                                setStatus(() => status)
+                              }
+                              posterSource={{
+                                uri: 'https://api.spotlightr.com/video/image?id=1078726',
+                              }}
+                              usePoster
+                              posterStyle={{
+                                alignSelf: 'center',
+                                width: 320,
+                                height: 200,
+                                resizeMode: 'cover',
+                              }}
+                            />
+                            <View
+                              style={
+                                status.isPlaying || status.positionMillis > 0
+                                  ? { display: 'none' }
+                                  : {
+                                      flexDirection: 'row',
+                                      justifyContent: 'center',
+                                      position: 'absolute',
+                                      alignSelf: 'center',
+                                    }
+                              }
+                            >
+                              <TouchableOpacity
+                                style={{ width: 50, height: 50 }}
+                                onPress={() => video.current.playAsync()}
+                              >
+                                <GradientBtnPlay />
+                              </TouchableOpacity>
+                            </View>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              marginTop: 10,
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                            }}
+                          >
+                            <View>
+                              <View style={{ width: '100%' }}>
+                                <TouchableOpacity
+                                  style={{
+                                    width: '80%',
+                                    height: 30,
+                                    alignSelf: 'center',
+                                    alignSelf: 'flex-start',
+                                    width: '100%',
+                                  }}
+                                  onPress={async () => {
+                                    const callback = (downloadProgress) => {
+                                      setTotalSize(
+                                        formatBytes(
+                                          downloadProgress.totalBytesExpectedToWrite
+                                        )
+                                      )
+                                      let progress =
+                                        downloadProgress.totalBytesWritten /
+                                        downloadProgress.totalBytesExpectedToWrite
+                                      progress = progress.toFixed(2) * 100
+                                      setProgressPercent(progress.toFixed(0))
+                                    }
+                                    const downloadResumable =
+                                      FileSystem.createDownloadResumable(
+                                        itemLesson.video_lesson,
+                                        FileSystem.cacheDirectory +
+                                          itemLesson.video_lesson.substr(
+                                            itemLesson.video_lesson.lastIndexOf(
+                                              '/'
+                                            ) + 1
+                                          ),
+                                        {},
+                                        callback
+                                      )
+
+                                    try {
+                                      const { uri } =
+                                        await downloadResumable.downloadAsync()
+                                      console.log(
+                                        'Finished downloading to ',
+                                        uri
+                                      )
+                                      await arrayVideo()
+                                    } catch (e) {
+                                      console.error(e)
+                                    }
+                                  }}
+                                >
+                                  <GradientBtnCache name="Zwischenspeicher" />
+                                </TouchableOpacity>
+                              </View>
+                            </View>
+                            <View>
+                              <View>
+                                {videoUrl.includes(
+                                  decodeURI(
                                     itemLesson.video_lesson.substr(
                                       itemLesson.video_lesson.lastIndexOf('/') +
                                         1
-                                    ),
-                                }
-                              : {
-                                  uri: `${itemLesson.video_lesson}`,
-                                }
-                          }
-                          useNativeControls
-                          resizeMode="contain"
-                          isLooping
-                          onPlaybackStatusUpdate={(status) =>
-                            setStatus(() => status)
-                          }
-                          posterSource={{
-                            uri: 'https://api.spotlightr.com/video/image?id=1078726',
-                          }}
-                          usePoster
-                          posterStyle={{
-                            alignSelf: 'center',
-                            width: 320,
-                            height: 200,
-                            resizeMode: 'cover',
-                          }}
-                        />
-                        <View
-                          style={
-                            status.isPlaying || status.positionMillis > 0
-                              ? { display: 'none' }
-                              : {
-                                  flexDirection: 'row',
-                                  justifyContent: 'center',
-                                  position: 'absolute',
-                                  alignSelf: 'center',
-                                }
-                          }
-                        >
-                          <TouchableOpacity
-                            style={{ width: 50, height: 50 }}
-                            onPress={() => video.current.playAsync()}
-                          >
-                            <GradientBtnPlay />
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          marginTop: 10,
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                        }}
-                      >
-                        <View>
-                          <View style={{ width: '100%' }}>
-                            <TouchableOpacity
-                              style={{
-                                width: '80%',
-                                height: 30,
-                                alignSelf: 'center',
-                                alignSelf: 'flex-start',
-                                width: '100%',
-                              }}
-                              onPress={async () => {
-                                const callback = (downloadProgress) => {
-                                  setTotalSize(
-                                    formatBytes(
-                                      downloadProgress.totalBytesExpectedToWrite
                                     )
                                   )
-                                  let progress =
-                                    downloadProgress.totalBytesWritten /
-                                    downloadProgress.totalBytesExpectedToWrite
-                                  progress = progress.toFixed(2) * 100
-                                  setProgressPercent(progress.toFixed(0))
-                                }
-                                const downloadResumable =
-                                  FileSystem.createDownloadResumable(
-                                    itemLesson.video_lesson,
-                                    FileSystem.cacheDirectory +
+                                ) ? (
+                                  <Text
+                                    style={{
+                                      fontFamily: 'ub-reg',
+                                      color: '#FB1818',
+                                      fontSize: 12,
+                                    }}
+                                  >
+                                    Zwischengespeichert!
+                                  </Text>
+                                ) : !videoUrl.includes(
+                                    decodeURI(
                                       itemLesson.video_lesson.substr(
                                         itemLesson.video_lesson.lastIndexOf(
                                           '/'
                                         ) + 1
-                                      ),
-                                    {},
-                                    callback
-                                  )
-
-                                try {
-                                  const { uri } =
-                                    await downloadResumable.downloadAsync()
-                                  console.log('Finished downloading to ', uri)
-                                  await arrayVideo()
-                                } catch (e) {
-                                  console.error(e)
-                                }
-                              }}
-                            >
-                              <GradientBtnCache name="Zwischenspeicher" />
-                            </TouchableOpacity>
-                          </View>
-                        </View>
-                        <View>
-                          <View>
-                            {videoUrl.includes(
-                              decodeURI(
-                                itemLesson.video_lesson.substr(
-                                  itemLesson.video_lesson.lastIndexOf('/') + 1
-                                )
-                              )
-                            ) ? (
-                              <Text
-                                style={{
-                                  fontFamily: 'ub-reg',
-                                  color: '#FB1818',
-                                  fontSize: 12,
-                                }}
-                              >
-                                Zwischengespeichert!
-                              </Text>
-                            ) : !videoUrl.includes(
-                                decodeURI(
-                                  itemLesson.video_lesson.substr(
-                                    itemLesson.video_lesson.lastIndexOf('/') + 1
-                                  )
-                                )
-                              ) &&
-                              progressPercent > 0 &&
-                              progressPercent < 100 ? (
-                              <View>
-                                <Text
-                                  style={{
-                                    fontFamily: 'ub-reg',
-                                    color: '#333',
-                                    fontSize: 12,
-                                  }}
-                                >
-                                  Größe: {totalSize}
-                                </Text>
-                                <View style={styles.progress}>
-                                  <View style={styles.progressBar}>
-                                    <Animated.View
-                                      style={
-                                        ([styles.progressBarLevel],
-                                        {
-                                          backgroundColor: '#FF741F',
-                                          width: `${progressPercent}%`,
-                                          borderRadius: 5,
-                                        })
-                                      }
-                                    />
+                                      )
+                                    )
+                                  ) &&
+                                  progressPercent > 0 &&
+                                  progressPercent < 100 ? (
+                                  <View>
+                                    <Text
+                                      style={{
+                                        fontFamily: 'ub-reg',
+                                        color: '#333',
+                                        fontSize: 12,
+                                      }}
+                                    >
+                                      Größe: {totalSize}
+                                    </Text>
+                                    <View style={styles.progress}>
+                                      <View style={styles.progressBar}>
+                                        <Animated.View
+                                          style={
+                                            ([styles.progressBarLevel],
+                                            {
+                                              backgroundColor: '#FF741F',
+                                              width: `${progressPercent}%`,
+                                              borderRadius: 5,
+                                            })
+                                          }
+                                        />
+                                      </View>
+                                      <Text style={styles.percent}>
+                                        {progressPercent}%
+                                      </Text>
+                                    </View>
                                   </View>
-                                  <Text style={styles.percent}>
-                                    {progressPercent}%
+                                ) : (
+                                  <Text
+                                    style={{
+                                      fontFamily: 'ub-reg',
+                                      color: '#00b9eb',
+                                      fontSize: 12,
+                                    }}
+                                  >
+                                    Nicht zwischengespeichert
                                   </Text>
-                                </View>
+                                )}
                               </View>
-                            ) : (
-                              <Text
-                                style={{
-                                  fontFamily: 'ub-reg',
-                                  color: '#00b9eb',
-                                  fontSize: 12,
-                                }}
-                              >
-                                Nicht zwischengespeichert
-                              </Text>
-                            )}
+                            </View>
                           </View>
                         </View>
-                      </View>
+                      ) : (
+                        <View></View>
+                      )}
                       {itemLesson.progressLesson.filter(
                         (countProgress) =>
                           userProfile &&
@@ -744,7 +807,6 @@ export function Lessons({ props, route, navigation }) {
                           </View>
                         </View>
                       )}
-
                       {itemLesson.custom_field1 != null ||
                       itemLesson.custom_field3 != null ? (
                         <View
@@ -901,7 +963,7 @@ export function Lessons({ props, route, navigation }) {
                                     style={{
                                       flexDirection: 'row',
                                       justifyContent: 'flex-start',
-                                      alignItems: 'center',
+                                      alignItems: 'flex-start',
                                       marginVertical: 10,
                                     }}
                                   >
@@ -923,14 +985,15 @@ export function Lessons({ props, route, navigation }) {
                                               }}
                                               resizeMode="cover"
                                               source={{
-                                                uri: `https://fe20295.online-server.cloud/storage/${itemComment.users.image_avatar}`,
+                                                uri: itemComment.users
+                                                  .image_avatar,
                                               }}
                                             />
                                           </View>
                                         </LinearGradient>
                                       </View>
                                     </View>
-                                    <View style={{ paddingLeft: 15 }}>
+                                    <View style={{ paddingLeft: 15, flex: 1 }}>
                                       <Text
                                         style={{
                                           // textAlign: 'center',
@@ -946,21 +1009,24 @@ export function Lessons({ props, route, navigation }) {
                                         </Text>{' '}
                                         {itemComment.created_at}
                                       </Text>
-                                      <Text
-                                        style={{
-                                          // textAlign: 'center',
-                                          fontFamily: 'ub-reg',
-                                          color: '#4E4D4D',
-                                        }}
-                                      >
-                                        {itemComment.message}
-                                      </Text>
+                                      <View style={{ flex: 1 }}>
+                                        <Text
+                                          style={{
+                                            // textAlign: 'center',
+                                            fontFamily: 'ub-reg',
+                                            color: '#4E4D4D',
+                                          }}
+                                        >
+                                          {itemComment.message}
+                                        </Text>
+                                      </View>
                                       <TouchableOpacity
                                         onPress={() => {
                                           setReplyComment(
                                             itemComment.users.name
                                           )
                                           setReplyCommentId(itemComment.id)
+                                          focusInput()
                                         }}
                                       >
                                         <View
@@ -994,7 +1060,7 @@ export function Lessons({ props, route, navigation }) {
                                             style={{
                                               flexDirection: 'row',
                                               justifyContent: 'flex-start',
-                                              alignItems: 'center',
+                                              alignItems: 'flex-start',
                                               marginVertical: 10,
                                               width: '90%',
                                               marginLeft: 30,
@@ -1021,14 +1087,20 @@ export function Lessons({ props, route, navigation }) {
                                                       }}
                                                       resizeMode="cover"
                                                       source={{
-                                                        uri: `https://fe20295.online-server.cloud/storage/${itemReplies.users.image_avatar}`,
+                                                        uri: itemReplies.users
+                                                          .image_avatar,
                                                       }}
                                                     />
                                                   </View>
                                                 </LinearGradient>
                                               </View>
                                             </View>
-                                            <View style={{ paddingLeft: 15 }}>
+                                            <View
+                                              style={{
+                                                paddingLeft: 15,
+                                                flex: 1,
+                                              }}
+                                            >
                                               <Text
                                                 style={{
                                                   // textAlign: 'center',
@@ -1112,7 +1184,7 @@ export function Lessons({ props, route, navigation }) {
                             <TouchableOpacity
                               onPress={() => {
                                 setReplyComment(null)
-                                setReplyCommentId(null)
+                                setReplyCommentId(0)
                               }}
                             >
                               <IconCloseSuccess fill="#fff" />
@@ -1148,6 +1220,7 @@ export function Lessons({ props, route, navigation }) {
                           onChangeText={(messageComment) =>
                             setMessageComment(messageComment)
                           }
+                          ref={InputRef}
                           value={messageComment.toString()}
                           multiline={true}
                           numberOfLines={10}
@@ -1190,7 +1263,7 @@ export function Lessons({ props, route, navigation }) {
                             { alignSelf: 'flex-end', width: '55%' },
                           ]}
                           onPress={async () => {
-                            let idLesson = itemLesson.id
+                            let idLesson = itemLesson.wp_lesson
                             await postMessage(
                               messageComment,
                               idLesson,

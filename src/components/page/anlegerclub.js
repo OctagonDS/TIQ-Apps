@@ -200,9 +200,9 @@ export function Anleger({ navigation }) {
             </Text>
           </View>
         </View>
-        {tagAccess ? (
-          <View style={{ padding: 10, flex: 1 }}>
-            <View style={styles.row}>
+        <View style={{ padding: 10, flex: 1 }}>
+          <View style={styles.row}>
+            {tagAccess ? (
               <TouchableOpacity
                 style={styles.buttonTopMenu}
                 onPress={() => {
@@ -211,6 +211,10 @@ export function Anleger({ navigation }) {
               >
                 <GradientBtnMenu name="Starter Depot" />
               </TouchableOpacity>
+            ) : (
+              <View></View>
+            )}
+            {tagAccess ? (
               <TouchableOpacity
                 style={styles.buttonTopMenu}
                 onPress={() => {
@@ -219,6 +223,10 @@ export function Anleger({ navigation }) {
               >
                 <GradientBtnMenu name="Trader Cockpit" />
               </TouchableOpacity>
+            ) : (
+              <View></View>
+            )}
+            {tagAccess ? (
               <TouchableOpacity
                 style={styles.buttonTopMenu}
                 onPress={() => {
@@ -227,6 +235,10 @@ export function Anleger({ navigation }) {
               >
                 <GradientBtnMenu name="Trend Depot" />
               </TouchableOpacity>
+            ) : (
+              <View></View>
+            )}
+            {tagAccess ? (
               <TouchableOpacity
                 style={styles.buttonTopMenu}
                 onPress={() => {
@@ -235,11 +247,11 @@ export function Anleger({ navigation }) {
               >
                 <GradientBtnMenu name="Stillhalter Depot" />
               </TouchableOpacity>
-            </View>
+            ) : (
+              <View></View>
+            )}
           </View>
-        ) : (
-          <View></View>
-        )}
+        </View>
         <View
           style={{
             justifyContent: 'center',
@@ -292,7 +304,6 @@ export function Anleger({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-
         <Text
           style={{
             textAlign: 'center',
@@ -982,7 +993,6 @@ Sein Versprechen an die Mitglieder: „Unser Anlegerclub wir mehr Geld bringen a
 Angefangen bei Null hat er mittlerweile sein Depot mehrfach verdoppelt und ist selbst mit dem Börsenhandel finanziell unabhängig. Sein innigster Wunsch ist es, den Mitgliedern konkrete Empfehlungen an die Hand zu geben und dafür zu sogen, dass jeder hohe und stabile Renditen an der Börse erhält.`}
           </Text>
         </View>
-
         <View style={styles.line}></View>
         <View
           style={{

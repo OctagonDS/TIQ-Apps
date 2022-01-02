@@ -76,7 +76,7 @@ const url = 'https://fe20295.online-server.cloud/api/v1/mentor'
 export const Mentor = (props) => {
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
-  const [notConnect, setNotConnect] = useState(false)
+  const [connectNet, setConnectNet] = useState(true)
   const contentWidth = useWindowDimensions().width
 
   const [refreshing, setRefreshing] = React.useState(false)
@@ -105,19 +105,20 @@ export const Mentor = (props) => {
     wait(2000).then(() => getMentor(false))
   }, [])
 
-  useMemo(() => {
+  useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
-      if (state.isConnected) {
-        getMentor()
-      } else {
-        setLoading(true)
-      }
+      setConnectNet(state.isConnected)
     })
+
+    getMentor()
+
     return () => {
       setData([])
       setLoading(true)
+      unsubscribe()
+      setConnectNet(true)
     }
-  }, [isLoading])
+  }, [connectNet])
 
   return (
     <View
@@ -127,19 +128,39 @@ export const Mentor = (props) => {
         backgroundColor: '#fff',
       }}
     >
+      <Text>connectNet: {connectNet && connectNet.toString()}</Text>
       {isLoading ? (
         <View>
           <ActivityIndicator size="large" color="#FF741F" />
           <View>
             <Text style={{ textAlign: 'center', paddingTop: 5 }}>
-              Überprüfung der Internetverbindung
-            </Text>
-            <Text style={{ textAlign: 'center', paddingTop: 5 }}>
-              Einige Inhalte sind ohne das Internet nicht verfügbar
+              Überprüfung der Internetverbindung...
             </Text>
           </View>
         </View>
-      ) : (
+      ) : connectNet === null || connectNet === false ? (
+        <View>
+          <View>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+              <Image
+                style={{
+                  width: 147,
+                  height: 150,
+                  resizeMode: 'cover',
+                  alignSelf: 'center',
+                }}
+                source={require('../../assets/img/no-signal.png')}
+              />
+            </View>
+            <Text style={{ textAlign: 'center', paddingTop: 5 }}>
+              Ooops..! Keine Internetverbindung.
+            </Text>
+            <Text style={{ textAlign: 'center', paddingTop: 5 }}>
+              Einige Inhalte sind ohne das Internet nicht verfügbar.
+            </Text>
+          </View>
+        </View>
+      ) : connectNet && connectNet === true ? (
         <FlatList
           data={data}
           numColumns={1}
@@ -216,6 +237,8 @@ export const Mentor = (props) => {
             </View>
           )}
         />
+      ) : (
+        <View></View>
       )}
     </View>
   )

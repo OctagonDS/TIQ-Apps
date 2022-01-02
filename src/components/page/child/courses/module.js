@@ -24,6 +24,7 @@ import * as WebBrowser from 'expo-web-browser'
 import { IconDownload } from '../../../atoms/iconDownload'
 import { IconShareFile } from '../../../atoms/iconShareFile'
 import mainContext from '../../../../store/context/context'
+import { Video } from 'expo-av'
 
 // Переменне
 const wait = (timeout) => {
@@ -114,9 +115,10 @@ export function Modules({ props, route, navigation }) {
 
   useEffect(() => {
     getModules()
-    // return () => {
-    //   setData([])
-    // }
+    return () => {
+      setData([])
+      setLoading(true)
+    }
   }, [itemId])
   // console.log(data)
   return (
@@ -162,30 +164,40 @@ export function Modules({ props, route, navigation }) {
                     marginTop: 10,
                   }}
                 >
-                  <Text
-                    style={{
-                      color: '#fff',
-                      textAlign: 'center',
-                      fontFamily: 'ub-medium',
-                      fontSize: 20,
-                      padding: 0,
-                      margin: 0,
-                    }}
-                  >
-                    {data && data.title.replace(/^"(.+(?="$))"$/, '$1')}
-                  </Text>
+                  {data.length !== 0 ? (
+                    <Text
+                      style={{
+                        color: '#fff',
+                        textAlign: 'center',
+                        fontFamily: 'ub-medium',
+                        fontSize: 20,
+                        padding: 0,
+                        margin: 0,
+                      }}
+                    >
+                      {data && data.title.replace(/^"(.+(?="$))"$/, '$1')}
+                    </Text>
+                  ) : (
+                    <View></View>
+                  )}
+
                   {/* <Text style={{ color: '#fff' }}>
                   {JSON.stringify(titleDescription)}
                 </Text> */}
-                  <HTML
-                    tagsStyles={tagsStyles}
-                    source={{
-                      html: `${
-                        data && data.description.replace(/^"(.+(?="$))"$/, '$1')
-                      }`,
-                    }}
-                    contentWidth={contentWidth}
-                  />
+                  {data.length !== 0 ? (
+                    <HTML
+                      tagsStyles={tagsStyles}
+                      source={{
+                        html: `${
+                          data &&
+                          data.description.replace(/^"(.+(?="$))"$/, '$1')
+                        }`,
+                      }}
+                      contentWidth={contentWidth}
+                    />
+                  ) : (
+                    <View></View>
+                  )}
                 </View>
               </ImageBackground>
               <View
@@ -208,42 +220,48 @@ export function Modules({ props, route, navigation }) {
                     Fortschritt
                   </Text>
                 </View>
-                <View style={styles.progress}>
-                  <View style={styles.progressBar}>
-                    <Animated.View
-                      style={
-                        ([styles.progressBarLevel],
-                        {
-                          backgroundColor: '#FF741F',
-                          width: `${
-                            data.courseLessonsCount !== 0
-                              ? (data.courseLessonsProgress.filter(
-                                  (countProgress) =>
-                                    userProfile &&
-                                    userProfile.idAdmin === countProgress.id
-                                ).length /
-                                  data.courseLessonsCount) *
-                                100
-                              : data.courseLessonsCount
-                          }%`,
-                          borderRadius: 5,
-                        })
-                      }
-                    />
+                {data.length !== 0 ? (
+                  <View style={styles.progress}>
+                    <View style={styles.progressBar}>
+                      <Animated.View
+                        style={
+                          ([styles.progressBarLevel],
+                          {
+                            backgroundColor: '#FF741F',
+                            width: `${
+                              data.courseLessonsCount !== 0
+                                ? (data.courseLessonsProgress.filter(
+                                    (countProgress) =>
+                                      userProfile &&
+                                      userProfile.idAdmin === countProgress.id
+                                  ).length /
+                                    data.courseLessonsCount) *
+                                  100
+                                : data.courseLessonsCount
+                            }%`,
+                            borderRadius: 5,
+                          })
+                        }
+                      />
+                    </View>
+                    <Text style={styles.percent}>
+                      {data.courseLessonsCount !== 0
+                        ? Math.round(
+                            (data.courseLessonsProgress.filter(
+                              (countProgress) =>
+                                userProfile &&
+                                userProfile.idAdmin === countProgress.id
+                            ).length /
+                              data.courseLessonsCount) *
+                              100
+                          )
+                        : data.courseLessonsCount}
+                      %
+                    </Text>
                   </View>
-                  <Text style={styles.percent}>
-                    {data.courseLessonsCount !== 0
-                      ? (data.courseLessonsProgress.filter(
-                          (countProgress) =>
-                            userProfile &&
-                            userProfile.idAdmin === countProgress.id
-                        ).length /
-                          data.courseLessonsCount) *
-                        100
-                      : data.courseLessonsCount}
-                    %
-                  </Text>
-                </View>
+                ) : (
+                  <View></View>
+                )}
               </View>
             </View>
           }
@@ -438,6 +456,7 @@ export function Modules({ props, route, navigation }) {
                   textAlign: 'center',
                   color: '#4E4D4D',
                   fontFamily: 'ub-reg',
+                  textTransform: 'uppercase',
                 }}
               >
                 {item.preview_title}

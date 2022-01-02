@@ -172,7 +172,7 @@ export const ProfilePage = ({ props, navigation }) => {
       <ScrollView contentContainerStyle={{ paddingTop: 30, paddingBottom: 20 }}>
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{}}>
+            <View style={[{ height: 94 }, {}]}>
               <LinearGradient
                 colors={['#FF741F', '#E86312']}
                 start={{ x: 0, y: 0 }}

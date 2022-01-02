@@ -104,6 +104,7 @@ function StackNav() {
 
   useEffect(() => {
     if (userProfile && userProfile !== null) {
+      doCountNot()
       timer = setInterval(async () => await doCountNot(), 60000)
     } else {
       clearInterval(timer)
@@ -322,7 +323,6 @@ function Navigations() {
         setUserProfile(JSON.parse(value)),
           setIsLoading(false),
           setIsLogged(true)
-        doCountNot()
         UniqueVisits(JSON.parse(value).idAdmin)
       } else {
         setUserProfile(null), setIsLoading(false), setIsLogged(false)
@@ -452,6 +452,17 @@ function Navigations() {
         }
       )
       let jsonCountNot = await responseCountNot.json()
+
+      // Получение тегов
+      // let responseCountNot = await fetch(
+      //   `https://fe20295.online-server.cloud/api/v1/notifications/count/${jsonShow.data.id}`,
+      //   {
+      //     method: 'GET',
+      //     headers: showHeaders,
+      //   }
+      // )
+      // let jsonCountNot = await responseCountNot.json()
+
       // console.log(jsonCountNot)
       // console.log(jsonShow.data.id)
       // console.log(json)
@@ -469,6 +480,7 @@ function Navigations() {
               email: json.email,
               display_name: json.display_name,
               idAdmin: jsonShow.data.id,
+              wp_user: jsonShow.data.wp_user,
             })
           )
           await AsyncStorage.setItem(
@@ -489,6 +501,7 @@ function Navigations() {
           email: json.email,
           display_name: json.display_name,
           idAdmin: jsonShow.data.id,
+          wp_user: jsonShow.data.wp_user,
         })
         setCountUnread({
           countUnread: jsonCountNot.countUnread,
@@ -503,6 +516,7 @@ function Navigations() {
           email: json.email,
           display_name: json.display_name,
           idAdmin: jsonShow.data.id,
+          wp_user: jsonShow.data.wp_user,
         })
         setCountUnread({
           countUnread: jsonCountNot.countUnread,
@@ -683,6 +697,8 @@ function Navigations() {
               avatar: data.avatar,
               email: data.email,
               display_name: data.display_name,
+              idAdmin: data.idAdmin,
+              wp_user: data.wp_user,
             })
           )
           setUserProfile({
@@ -693,6 +709,8 @@ function Navigations() {
             avatar: data.avatar,
             email: data.email,
             display_name: data.display_name,
+            idAdmin: data.idAdmin,
+            wp_user: data.wp_user,
           })
         })
         .done()

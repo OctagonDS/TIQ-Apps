@@ -3,6 +3,7 @@ import { View } from 'react-native'
 import * as Font from 'expo-font'
 import AppLoading from 'expo-app-loading'
 import Navigations from './src/navigation/navigation'
+import { StatusBar } from 'expo-status-bar'
 
 const fonts = () =>
   Font.loadAsync({
@@ -24,7 +25,12 @@ export default function App() {
   const [font, setFont] = useState(false)
 
   if (font) {
-    return <Navigations />
+    return (
+      <View style={{ flex: 1 }}>
+        <Navigations />
+        <StatusBar style="dark" />
+      </View>
+    )
   } else {
     return (
       <AppLoading

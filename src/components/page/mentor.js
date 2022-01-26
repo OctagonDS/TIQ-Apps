@@ -128,7 +128,7 @@ export const Mentor = (props) => {
         backgroundColor: '#fff',
       }}
     >
-      <Text>connectNet: {connectNet && connectNet.toString()}</Text>
+      {/* <Text>connectNet: {connectNet && connectNet.toString()}</Text> */}
       {isLoading ? (
         <View>
           <ActivityIndicator size="large" color="#FF741F" />

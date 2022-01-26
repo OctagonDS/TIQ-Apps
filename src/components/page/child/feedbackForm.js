@@ -29,7 +29,7 @@ export const FeedbackForm = ({ props, navigation }) => {
   return (
     <View style={[gStyle.main, { alignContent: 'center' }]}>
       <ScrollView
-        contentContainerStyle={{ paddingTop: '5%', paddingBottom: 20 }}
+        contentContainerStyle={{ paddingTop: '2%', paddingBottom: 20 }}
       >
         <Text style={styles.title}>Nimm Kontakt zum</Text>
         <Text style={styles.title}>Trader IQ Team auf</Text>

@@ -28,7 +28,7 @@ export default function App() {
     return (
       <View style={{ flex: 1 }}>
         <Navigations />
-        <StatusBar style="dark" />
+        <StatusBar style="dark" animated={true} />
       </View>
     )
   } else {

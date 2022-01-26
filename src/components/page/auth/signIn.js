@@ -159,7 +159,7 @@ export const styles = StyleSheet.create({
   labelmail: {
     backgroundColor: '#fff',
     width: '34%',
-    height: 15,
+    height: 19,
     borderRadius: 4,
     position: 'absolute',
     zIndex: 1,

@@ -18,6 +18,7 @@ import { IcoFireTop } from '../../../atoms/iconFireTop'
 import { IcoLock } from '../../../atoms/iconLock'
 import mainContext from '../../../../store/context/context'
 import { useIsFocused } from '@react-navigation/native'
+import * as WebBrowser from 'expo-web-browser'
 
 // Переменные
 const wait = (timeout) => {
@@ -37,7 +38,7 @@ export function CourseSlideTwo({ navigation }) {
   const [refreshing, setRefreshing] = React.useState(false)
 
   const [displayName, setDisplayName] = useState(null)
-  const { userProfile } = useContext(mainContext)
+  const { userProfile, doUpdateTerms } = useContext(mainContext)
   const urlCourseFavorite =
     'https://fe20295.online-server.cloud/api/v1/favorite/toggle'
 
@@ -60,7 +61,11 @@ export function CourseSlideTwo({ navigation }) {
   }
   const onRefresh = React.useCallback(() => {
     getCourses(true)
-    wait(2000).then(() => getCourses(false))
+    doUpdateTerms(true)
+    wait(2000).then(() => {
+      getCourses(false)
+      doUpdateTerms(false)
+    })
   }, [])
 
   async function CourseFavorite(idCourse) {
@@ -87,6 +92,275 @@ export function CourseSlideTwo({ navigation }) {
     }
   }
 
+  function tagsCourse(item) {
+    let courseTagArray = []
+    let userTagArray = []
+
+    item &&
+      item.tags.forEach((element) => {
+        return courseTagArray.push(element.title)
+      })
+
+    userProfile &&
+      userProfile.user_term.forEach((element) => {
+        return userTagArray.push(element.name)
+      })
+    var isSame = userTagArray.some((v) => courseTagArray.indexOf(v) >= 0)
+    // console.log(courseTagArray)
+    // console.log(userTagArray)
+    // console.log(isSame)
+    if (isSame) {
+      return (
+        <View style={styles.courses}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Course', {
+                screen: 'draweModules',
+                params: {
+                  itemId: item.id,
+                },
+              })
+            }
+            style={{ position: 'relative', width: 165, height: 165 }}
+          >
+            <ImageBackground
+              source={image}
+              resizeMode="cover"
+              style={styles.imageBack}
+              imageStyle={{ borderRadius: 5 }}
+            >
+              <Image
+                style={styles.imageProduct}
+                source={
+                  item.image_сourses !== null
+                    ? {
+                        uri: item.image_сourses,
+                      }
+                    : require('../../../../assets/img/adaptive-icon.png')
+                }
+              />
+              <TouchableOpacity
+                style={styles.fireTop}
+                onPress={() => {
+                  let idCourse = item.id
+                  CourseFavorite(idCourse)
+                }}
+              >
+                <IcoFireTop
+                  fill={
+                    item.favoriteUser.filter(
+                      (countFavorite) =>
+                        userProfile && userProfile.idAdmin === countFavorite.id
+                    ).length !== 0
+                      ? '#9C0000'
+                      : '#fff'
+                  }
+                />
+              </TouchableOpacity>
+            </ImageBackground>
+          </TouchableOpacity>
+          <View style={{ width: 165, height: 60 }}>
+            <View style={styles.progress}>
+              <View style={styles.progressBar}>
+                <Animated.View
+                  style={
+                    ([styles.progressBarLevel],
+                    {
+                      backgroundColor: '#FF741F',
+                      width: `${
+                        item.courseLessonsCount !== 0
+                          ? (item.courseLessonsProgress.filter(
+                              (countProgress) =>
+                                userProfile &&
+                                userProfile.idAdmin === countProgress.id
+                            ).length /
+                              item.courseLessonsCount) *
+                            100
+                          : item.courseLessonsCount
+                      }%`,
+                      borderRadius: 5,
+                    })
+                  }
+                />
+              </View>
+              <Text style={styles.percent}>
+                {item.courseLessonsCount !== 0
+                  ? Math.round(
+                      (item.courseLessonsProgress.filter(
+                        (countProgress) =>
+                          userProfile &&
+                          userProfile.idAdmin === countProgress.id
+                      ).length /
+                        item.courseLessonsCount) *
+                        100
+                    )
+                  : item.courseLessonsCount}
+                %
+              </Text>
+            </View>
+            <View>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('Course', {
+                    screen: 'draweModules',
+                    params: {
+                      itemId: item.id,
+                    },
+                  })
+                }
+              >
+                <Text style={styles.title}>{item.title}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.courses}>
+          <TouchableOpacity
+            onPress={() =>
+              Alert.alert(
+                `Hallo ${userProfile && userProfile.display_name}`,
+                'Sie haben diesen Kurs noch nicht gekauft, daher ist der Zugang begrenzt.',
+                [
+                  {
+                    text: 'Später',
+                    onPress: () => console.log('Später'),
+                  },
+                  {
+                    text: 'Kaufen',
+                    onPress: () => {
+                      WebBrowser.openBrowserAsync(
+                        'https://traderiq.net/anlegerclub/'
+                      )
+                    },
+                  },
+                ]
+              )
+            }
+            style={{ position: 'relative', width: 165, height: 165 }}
+          >
+            <ImageBackground
+              source={image}
+              resizeMode="cover"
+              style={styles.imageBack}
+              imageStyle={{ borderRadius: 5 }}
+            >
+              <Image
+                style={styles.imageProduct}
+                source={
+                  item.image_сourses !== null
+                    ? {
+                        uri: item.image_сourses,
+                      }
+                    : require('../../../../assets/img/adaptive-icon.png')
+                }
+              />
+              <TouchableOpacity
+                style={styles.fireTop}
+                onPress={() => {
+                  let idCourse = item.id
+                  CourseFavorite(idCourse)
+                }}
+              >
+                <IcoFireTop
+                  fill={
+                    item.favoriteUser.filter(
+                      (countFavorite) =>
+                        userProfile && userProfile.idAdmin === countFavorite.id
+                    ).length !== 0
+                      ? '#9C0000'
+                      : '#fff'
+                  }
+                />
+              </TouchableOpacity>
+            </ImageBackground>
+            <View
+              style={{
+                position: 'absolute',
+                backgroundColor: 'rgba(62,62,62,0.4)',
+                borderRadius: 5,
+                width: 165,
+                height: 165,
+                zIndex: 3,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <IcoLock />
+            </View>
+          </TouchableOpacity>
+          <View style={{ width: 165, height: 60 }}>
+            <View style={styles.progress}>
+              <View style={styles.progressBar}>
+                <Animated.View
+                  style={
+                    ([styles.progressBarLevel],
+                    {
+                      backgroundColor: '#FF741F',
+                      width: `${
+                        item.courseLessonsCount !== 0
+                          ? (item.courseLessonsProgress.filter(
+                              (countProgress) =>
+                                userProfile &&
+                                userProfile.idAdmin === countProgress.id
+                            ).length /
+                              item.courseLessonsCount) *
+                            100
+                          : item.courseLessonsCount
+                      }%`,
+                      borderRadius: 5,
+                    })
+                  }
+                />
+              </View>
+              <Text style={styles.percent}>
+                {item.courseLessonsCount !== 0
+                  ? Math.round(
+                      (item.courseLessonsProgress.filter(
+                        (countProgress) =>
+                          userProfile &&
+                          userProfile.idAdmin === countProgress.id
+                      ).length /
+                        item.courseLessonsCount) *
+                        100
+                    )
+                  : item.courseLessonsCount}
+                %
+              </Text>
+            </View>
+            <View>
+              <TouchableOpacity
+                onPress={() =>
+                  Alert.alert(
+                    `Hallo ${userProfile && userProfile.display_name}`,
+                    'Sie haben diesen Kurs noch nicht gekauft, daher ist der Zugang begrenzt.',
+                    [
+                      {
+                        text: 'Später',
+                        onPress: () => console.log('Später'),
+                      },
+                      {
+                        text: 'Kaufen',
+                        onPress: () => {
+                          WebBrowser.openBrowserAsync(
+                            'https://traderiq.net/anlegerclub/'
+                          )
+                        },
+                      },
+                    ]
+                  )
+                }
+              >
+                <Text style={styles.title}>{item.title}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      )
+    }
+  }
   useMemo(() => {
     getCourses()
     return () => {
@@ -116,140 +390,7 @@ export function CourseSlideTwo({ navigation }) {
             paddingBottom: Platform.OS === 'android' ? 95 : 110,
           }}
           keyExtractor={({ id }, index) => id.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.courses}>
-              <TouchableOpacity
-                onPress={() =>
-                  Alert.alert(
-                    `Hallo ${userProfile && userProfile.display_name}`,
-                    'Sie haben diesen Kurs noch nicht gekauft, daher ist der Zugang begrenzt.',
-                    [
-                      {
-                        text: 'Später',
-                        onPress: () => console.log('Ask me later pressed'),
-                      },
-                      {
-                        text: 'Kaufen',
-                        onPress: () => console.log('Cancel Pressed'),
-                      },
-                    ]
-                  )
-                }
-                style={{ position: 'relative', width: 165, height: 165 }}
-              >
-                <ImageBackground
-                  source={image}
-                  resizeMode="cover"
-                  style={styles.imageBack}
-                  imageStyle={{ borderRadius: 5 }}
-                >
-                  <Image
-                    style={styles.imageProduct}
-                    source={
-                      item.image_сourses !== null
-                        ? {
-                            uri: item.image_сourses,
-                          }
-                        : require('../../../../assets/img/adaptive-icon.png')
-                    }
-                  />
-                  <TouchableOpacity
-                    style={styles.fireTop}
-                    onPress={() => {
-                      let idCourse = item.id
-                      CourseFavorite(idCourse)
-                    }}
-                  >
-                    <IcoFireTop
-                      fill={
-                        item.favoriteUser.filter(
-                          (countFavorite) =>
-                            userProfile &&
-                            userProfile.idAdmin === countFavorite.id
-                        ).length !== 0
-                          ? '#9C0000'
-                          : '#fff'
-                      }
-                    />
-                  </TouchableOpacity>
-                </ImageBackground>
-                <View
-                  style={{
-                    position: 'absolute',
-                    backgroundColor: 'rgba(62,62,62,0.4)',
-                    borderRadius: 5,
-                    width: 165,
-                    height: 165,
-                    zIndex: 3,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <IcoLock />
-                </View>
-              </TouchableOpacity>
-              <View style={{ width: 165, height: 60 }}>
-                <View style={styles.progress}>
-                  <View style={styles.progressBar}>
-                    <Animated.View
-                      style={
-                        ([styles.progressBarLevel],
-                        {
-                          backgroundColor: '#FF741F',
-                          width: `${
-                            item.courseLessonsCount !== 0
-                              ? (item.courseLessonsProgress.filter(
-                                  (countProgress) =>
-                                    userProfile &&
-                                    userProfile.idAdmin === countProgress.id
-                                ).length /
-                                  item.courseLessonsCount) *
-                                100
-                              : item.courseLessonsCount
-                          }%`,
-                          borderRadius: 5,
-                        })
-                      }
-                    />
-                  </View>
-                  <Text style={styles.percent}>
-                    {item.courseLessonsCount !== 0
-                      ? (item.courseLessonsProgress.filter(
-                          (countProgress) =>
-                            userProfile &&
-                            userProfile.idAdmin === countProgress.id
-                        ).length /
-                          item.courseLessonsCount) *
-                        100
-                      : item.courseLessonsCount}
-                    %
-                  </Text>
-                </View>
-                <View>
-                  <TouchableOpacity
-                    onPress={() =>
-                      Alert.alert(
-                        `Hallo ${userProfile && userProfile.display_name}`,
-                        'Sie haben diesen Kurs noch nicht gekauft, daher ist der Zugang begrenzt.',
-                        [
-                          {
-                            text: 'Später',
-                            onPress: () => console.log('Ask me later pressed'),
-                          },
-                          {
-                            text: 'Kaufen',
-                            onPress: () => console.log('Cancel Pressed'),
-                          },
-                        ]
-                      )
-                    }
-                  >
-                    <Text style={styles.title}>{item.title}</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          )}
+          renderItem={({ item }) => tagsCourse(item)}
         />
       )}
     </View>
@@ -277,6 +418,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEEEEE',
     borderRadius: 8,
     flexDirection: 'row',
+    overflow: 'hidden',
   },
   percent: {
     paddingRight: 10,

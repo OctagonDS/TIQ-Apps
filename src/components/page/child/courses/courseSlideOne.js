@@ -86,7 +86,6 @@ export function CourseSlideOne({ navigation }) {
       console.error(error)
     }
   }
-
   useMemo(() => {
     getCourses()
     return () => {
@@ -256,6 +255,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEEEEE',
     borderRadius: 8,
     flexDirection: 'row',
+    overflow: 'hidden',
   },
   percent: {
     paddingRight: 10,

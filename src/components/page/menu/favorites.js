@@ -182,13 +182,15 @@ export function FavoritPage({ props, navigation }) {
                   </View>
                   <Text style={styles.percent}>
                     {item.courseLessonsCount !== 0
-                      ? (item.courseLessonsProgress.filter(
-                          (countProgress) =>
-                            userProfile &&
-                            userProfile.idAdmin === countProgress.id
-                        ).length /
-                          item.courseLessonsCount) *
-                        100
+                      ? Math.round(
+                          (item.courseLessonsProgress.filter(
+                            (countProgress) =>
+                              userProfile &&
+                              userProfile.idAdmin === countProgress.id
+                          ).length /
+                            item.courseLessonsCount) *
+                            100
+                        )
                       : item.courseLessonsCount}
                     %
                   </Text>
@@ -237,6 +239,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEEEEE',
     borderRadius: 8,
     flexDirection: 'row',
+    overflow: 'hidden',
   },
   percent: {
     paddingRight: 10,

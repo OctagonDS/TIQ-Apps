@@ -324,6 +324,7 @@ function Navigations() {
           setIsLoading(false),
           setIsLogged(true)
         UniqueVisits(JSON.parse(value).idAdmin)
+        doUpdateTerms(JSON.parse(value).email)
       } else {
         setUserProfile(null), setIsLoading(false), setIsLogged(false)
       }
@@ -422,6 +423,14 @@ function Navigations() {
     showHeaders.append('Accept', 'application/json')
     showHeaders.append('Content-Type', 'application/json')
 
+    // Квентин
+    let qnHeaders = new Headers()
+    qnHeaders.append(
+      'Authorization',
+      'Bearer fcvJCBq0XY-JAj34UoyvR3QygbDF2LE8CfxR0gJQjuk'
+    )
+    qnHeaders.append('Content-Type', 'application/json')
+
     let formData = new FormData()
     formData.append('type', 'login')
     formData.append('email', email)
@@ -453,19 +462,24 @@ function Navigations() {
       )
       let jsonCountNot = await responseCountNot.json()
 
-      // Получение тегов
-      // let responseCountNot = await fetch(
-      //   `https://fe20295.online-server.cloud/api/v1/notifications/count/${jsonShow.data.id}`,
-      //   {
-      //     method: 'GET',
-      //     headers: showHeaders,
-      //   }
-      // )
-      // let jsonCountNot = await responseCountNot.json()
+      let responseQuentId = await fetch(
+        `https://q0ydly.eu-2.quentn.com/public/api/v1/contact/${email}`,
+        {
+          method: 'GET',
+          headers: qnHeaders,
+        }
+      )
+      let jsonQnId = await responseQuentId.json()
 
-      // console.log(jsonCountNot)
-      // console.log(jsonShow.data.id)
-      // console.log(json)
+      let responseQuentTerms = await fetch(
+        `https://q0ydly.eu-2.quentn.com/public/api/v1/contact/${jsonQnId[0].id}/terms`,
+        {
+          method: 'GET',
+          headers: qnHeaders,
+        }
+      )
+      let jsonQnTerms = await responseQuentTerms.json()
+
       if (json.status != false) {
         setError(null)
         try {
@@ -481,6 +495,7 @@ function Navigations() {
               display_name: json.display_name,
               idAdmin: jsonShow.data.id,
               wp_user: jsonShow.data.wp_user,
+              user_term: jsonQnTerms,
             })
           )
           await AsyncStorage.setItem(
@@ -502,6 +517,7 @@ function Navigations() {
           display_name: json.display_name,
           idAdmin: jsonShow.data.id,
           wp_user: jsonShow.data.wp_user,
+          user_term: jsonQnTerms,
         })
         setCountUnread({
           countUnread: jsonCountNot.countUnread,
@@ -517,6 +533,7 @@ function Navigations() {
           display_name: json.display_name,
           idAdmin: jsonShow.data.id,
           wp_user: jsonShow.data.wp_user,
+          user_term: jsonQnTerms,
         })
         setCountUnread({
           countUnread: jsonCountNot.countUnread,
@@ -699,6 +716,7 @@ function Navigations() {
               display_name: data.display_name,
               idAdmin: data.idAdmin,
               wp_user: data.wp_user,
+              user_term: data.user_term,
             })
           )
           setUserProfile({
@@ -711,10 +729,90 @@ function Navigations() {
             display_name: data.display_name,
             idAdmin: data.idAdmin,
             wp_user: data.wp_user,
+            user_term: data.user_term,
           })
         })
         .done()
       setSuccessEmail('Account was updated successfully.')
+    }
+  }
+
+  // Обновление тегов
+  const doUpdateTerms = async (mailUserData) => {
+    // Квентин
+    let qnHeaders = new Headers()
+    let mailUser
+    qnHeaders.append(
+      'Authorization',
+      'Bearer fcvJCBq0XY-JAj34UoyvR3QygbDF2LE8CfxR0gJQjuk'
+    )
+    qnHeaders.append('Content-Type', 'application/json')
+
+    if (userProfile && userProfile !== null) {
+      mailUser = userProfile && userProfile.email
+    } else {
+      mailUser = mailUserData && mailUserData
+    }
+    // console.log(mailUser)
+    let responseQuentId = await fetch(
+      `https://q0ydly.eu-2.quentn.com/public/api/v1/contact/${mailUser}`,
+      {
+        method: 'GET',
+        headers: qnHeaders,
+      }
+    )
+    let jsonQnId = await responseQuentId.json()
+    // console.log(userProfile)
+    let responseQuentTerms = await fetch(
+      `https://q0ydly.eu-2.quentn.com/public/api/v1/contact/${
+        jsonQnId && jsonQnId[0].id
+      }/terms`,
+      {
+        method: 'GET',
+        headers: qnHeaders,
+      }
+    )
+    let jsonQnTerms = await responseQuentTerms.json()
+
+    // console.log(jsonQnTerms)
+
+    try {
+      await AsyncStorage.getItem('userProfile')
+        .then((data) => {
+          data = JSON.parse(data)
+          // Новые данные
+          data.user_term = jsonQnTerms && jsonQnTerms
+          AsyncStorage.setItem(
+            'userProfile',
+            JSON.stringify({
+              isLoggedIn: data.isLoggedIn,
+              authToken: data.authToken,
+              id: data.id,
+              name: data.name,
+              avatar: data.avatar,
+              email: data.email,
+              display_name: data.display_name,
+              idAdmin: data.idAdmin,
+              wp_user: data.wp_user,
+              user_term: data.user_term,
+            })
+          )
+          setUserProfile({
+            isLoggedIn: data.isLoggedIn,
+            authToken: data.authToken,
+            id: data.id,
+            name: data.name,
+            avatar: data.avatar,
+            email: data.email,
+            display_name: data.display_name,
+            idAdmin: data.idAdmin,
+            wp_user: data.wp_user,
+            user_term: data.user_term,
+          })
+        })
+        .done()
+    } catch {
+      setError('Error storing data on device')
     }
   }
 
@@ -751,6 +849,9 @@ function Navigations() {
     },
     doUpdate: (displayName, emailAuth) => {
       doUpdate(displayName, emailAuth)
+    },
+    doUpdateTerms: () => {
+      doUpdateTerms()
     },
   }
 

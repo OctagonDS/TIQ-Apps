@@ -589,7 +589,8 @@ export function Lessons({ props, route, navigation }) {
                                 setStatus(() => status)
                               }
                               posterSource={{
-                                uri: 'https://api.spotlightr.com/video/image?id=1078726',
+                                uri:
+                                  itemLesson && itemLesson.video_poster_lesson,
                               }}
                               usePoster
                               posterStyle={{

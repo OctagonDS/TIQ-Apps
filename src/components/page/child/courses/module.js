@@ -531,6 +531,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#EEEEEE',
     borderRadius: 8,
     flexDirection: 'row',
+    overflow: 'hidden',
   },
   percent: {
     paddingRight: '5%',

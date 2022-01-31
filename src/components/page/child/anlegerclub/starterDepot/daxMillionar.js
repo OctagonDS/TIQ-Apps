@@ -189,7 +189,7 @@ So investierst Du besser als jeder Fond – mit gerade Mal 10 Minuten pro Monat.
               color: '#666',
             }}
           >
-            Импорт SCV ?
+            {/* Импорт SCV ? */}
           </Text>
         </View>
         <View>

@@ -119,7 +119,7 @@ Mit dem Aktienranking der Experten hast Du immer die Sicherheit in die besten Un
               color: '#666',
             }}
           >
-            Импорт API
+            {/* Импорт API */}
           </Text>
         </View>
       </ScrollView>

@@ -198,7 +198,7 @@ Lasse Dich von der Aktie des Monats überraschen!`}
               color: '#666',
             }}
           >
-            Видео из базы / Архив
+            {/* Видео из базы / Архив */}
           </Text>
         </View>
       </ScrollView>

@@ -19,6 +19,7 @@ import { IcoLock } from '../../../atoms/iconLock'
 import mainContext from '../../../../store/context/context'
 import { useIsFocused } from '@react-navigation/native'
 import * as WebBrowser from 'expo-web-browser'
+import NetInfo from '@react-native-community/netinfo'
 
 // Переменные
 const wait = (timeout) => {
@@ -33,12 +34,13 @@ const url = 'https://fe20295.online-server.cloud/api/v1/courses_paid'
 export function CourseSlideTwo({ navigation }) {
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
+  const [dataLocal, setDataLocal] = useState([])
   const isFocused = useIsFocused()
-
+  const [connectNet, setConnectNet] = useState(true)
   const [refreshing, setRefreshing] = React.useState(false)
 
   const [displayName, setDisplayName] = useState(null)
-  const { userProfile, doUpdateTerms } = useContext(mainContext)
+  const { userProfile, doUpdateTerms, courseLocal } = useContext(mainContext)
   const urlCourseFavorite =
     'https://fe20295.online-server.cloud/api/v1/favorite/toggle'
 
@@ -361,6 +363,191 @@ export function CourseSlideTwo({ navigation }) {
       )
     }
   }
+
+  function tagsCourseLocal(item) {
+    let courseTagArray = []
+    let userTagArray = []
+
+    item &&
+      item.tags.forEach((element) => {
+        return courseTagArray.push(element.title)
+      })
+
+    userProfile &&
+      userProfile.user_term.forEach((element) => {
+        return userTagArray.push(element.name)
+      })
+    var isSame = userTagArray.some((v) => courseTagArray.indexOf(v) >= 0)
+    // console.log(courseTagArray)
+    // console.log(userTagArray)
+    // console.log(isSame)
+    if (isSame) {
+      return (
+        <View style={styles.courses}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Course', {
+                screen: 'draweModules',
+                params: {
+                  itemId: item.id,
+                },
+              })
+            }
+            style={{ position: 'relative', width: 165, height: 165 }}
+          >
+            <ImageBackground
+              source={image}
+              resizeMode="cover"
+              style={styles.imageBack}
+              imageStyle={{ borderRadius: 5 }}
+            >
+              <Image
+                style={styles.imageProduct}
+                source={
+                  item.image_сourses !== null
+                    ? {
+                        uri: item.image_сourses,
+                      }
+                    : require('../../../../assets/img/adaptive-icon.png')
+                }
+              />
+              <TouchableOpacity
+                style={[styles.fireTop, { backgroundColor: '#ccc' }]}
+                onPress={() => {}}
+              >
+                <IcoFireTop fill={'#fff'} />
+              </TouchableOpacity>
+            </ImageBackground>
+          </TouchableOpacity>
+          <View style={{ width: 165, height: 60 }}>
+            <View style={styles.progress}>
+              <View style={styles.progressBar}>
+                <Animated.View
+                  style={
+                    ([styles.progressBarLevel],
+                    {
+                      backgroundColor: '#FF741F',
+                      width: `0%`,
+                      borderRadius: 5,
+                    })
+                  }
+                />
+              </View>
+              <Text style={styles.percent}>0%</Text>
+            </View>
+            <View>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('Course', {
+                    screen: 'draweModules',
+                    params: {
+                      itemId: item.id,
+                    },
+                  })
+                }
+              >
+                <Text style={styles.title}>{item.title}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.courses}>
+          <TouchableOpacity
+            onPress={() => {}}
+            style={{ position: 'relative', width: 165, height: 165 }}
+          >
+            <ImageBackground
+              source={image}
+              resizeMode="cover"
+              style={styles.imageBack}
+              imageStyle={{ borderRadius: 5 }}
+            >
+              <Image
+                style={styles.imageProduct}
+                source={
+                  item.image_сourses !== null
+                    ? {
+                        uri: item.image_сourses,
+                      }
+                    : require('../../../../assets/img/adaptive-icon.png')
+                }
+              />
+              <TouchableOpacity
+                style={[styles.fireTop, { backgroundColor: '#ccc' }]}
+                onPress={() => {}}
+              >
+                <IcoFireTop fill={'#fff'} />
+              </TouchableOpacity>
+            </ImageBackground>
+            <View
+              style={{
+                position: 'absolute',
+                backgroundColor: 'rgba(62,62,62,0.4)',
+                borderRadius: 5,
+                width: 165,
+                height: 165,
+                zIndex: 3,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <IcoLock />
+            </View>
+          </TouchableOpacity>
+          <View style={{ width: 165, height: 60 }}>
+            <View style={styles.progress}>
+              <View style={styles.progressBar}>
+                <Animated.View
+                  style={
+                    ([styles.progressBarLevel],
+                    {
+                      backgroundColor: '#FF741F',
+                      width: `0%`,
+                      borderRadius: 5,
+                    })
+                  }
+                />
+              </View>
+              <Text style={styles.percent}>0%</Text>
+            </View>
+            <View>
+              <TouchableOpacity onPress={() => {}}>
+                <Text style={styles.title}>{item.title}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      )
+    }
+  }
+
+  async function localCourse() {
+    setDataLocal([])
+    courseLocal &&
+      courseLocal.courseLocal.data.map((element) => {
+        element.tags.map((elementTag) => {
+          if (elementTag.title === 'Paid') {
+            return setDataLocal((prevState) => [...prevState, element])
+          }
+        })
+      })
+  }
+  // console.log(dataLocal)
+  useEffect(() => {
+    localCourse()
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setConnectNet(state.isConnected)
+    })
+    return () => {
+      setDataLocal([])
+      setConnectNet(true)
+      unsubscribe()
+    }
+  }, [courseLocal, connectNet])
+
   useMemo(() => {
     getCourses()
     return () => {
@@ -368,19 +555,17 @@ export function CourseSlideTwo({ navigation }) {
     }
   }, [isFocused])
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        backgroundColor: '#fff',
-      }}
-    >
-      {isLoading ? (
-        <ActivityIndicator size="large" color="#FF741F" />
-      ) : (
+  if (!connectNet) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          backgroundColor: '#fff',
+        }}
+      >
         <FlatList
-          data={data}
+          data={dataLocal}
           numColumns={2}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -390,11 +575,39 @@ export function CourseSlideTwo({ navigation }) {
             paddingBottom: Platform.OS === 'android' ? 95 : 110,
           }}
           keyExtractor={({ id }, index) => id.toString()}
-          renderItem={({ item }) => tagsCourse(item)}
+          renderItem={({ item }) => tagsCourseLocal(item)}
         />
-      )}
-    </View>
-  )
+      </View>
+    )
+  } else {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          backgroundColor: '#fff',
+        }}
+      >
+        {isLoading ? (
+          <ActivityIndicator size="large" color="#FF741F" />
+        ) : (
+          <FlatList
+            data={data}
+            numColumns={2}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            contentContainerStyle={{
+              paddingTop: '2%',
+              paddingBottom: Platform.OS === 'android' ? 95 : 110,
+            }}
+            keyExtractor={({ id }, index) => id.toString()}
+            renderItem={({ item }) => tagsCourse(item)}
+          />
+        )}
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({

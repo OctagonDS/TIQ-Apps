@@ -17,6 +17,7 @@ import { IcoFireTop } from '../../../atoms/iconFireTop'
 import { IcoLock } from '../../../atoms/iconLock'
 import mainContext from '../../../../store/context/context'
 import { useIsFocused } from '@react-navigation/native'
+import NetInfo from '@react-native-community/netinfo'
 
 // Переменные
 const wait = (timeout) => {
@@ -31,13 +32,15 @@ const url = 'https://fe20295.online-server.cloud/api/v1/courses_free'
 export function CourseSlideOne({ navigation }) {
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
+  const [dataLocal, setDataLocal] = useState([])
   const [totalLessons, setTotalLessons] = useState([])
+  const [connectNet, setConnectNet] = useState(true)
   const isFocused = useIsFocused()
 
   const [refreshing, setRefreshing] = React.useState(false)
 
   const [displayName, setDisplayName] = useState(null)
-  const { userProfile, doCountNot } = useContext(mainContext)
+  const { userProfile, doCountNot, courseLocal } = useContext(mainContext)
   const urlCourseFavorite =
     'https://fe20295.online-server.cloud/api/v1/favorite/toggle'
 
@@ -86,33 +89,50 @@ export function CourseSlideOne({ navigation }) {
       console.error(error)
     }
   }
+
+  async function localCourse() {
+    setDataLocal([])
+    courseLocal &&
+      courseLocal.courseLocal.data.map((element) => {
+        element.tags.map((elementTag) => {
+          if (elementTag.title === 'Free') {
+            return setDataLocal((prevState) => [...prevState, element])
+          }
+        })
+      })
+  }
+  // console.log(dataLocal)
+  useEffect(() => {
+    localCourse()
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setConnectNet(state.isConnected)
+    })
+    return () => {
+      setDataLocal([])
+      setConnectNet(true)
+      unsubscribe()
+    }
+  }, [courseLocal, connectNet])
+
   useMemo(() => {
     getCourses()
     return () => {
       setData([])
+      setConnectNet(true)
     }
   }, [isFocused])
 
-  // useEffect(() => {
-  //   getCourses()
-  //   return () => {
-  //     setData([])
-  //   }
-  // }, [])
-
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        backgroundColor: '#fff',
-      }}
-    >
-      {isLoading ? (
-        <ActivityIndicator size="large" color="#FF741F" />
-      ) : (
+  if (!connectNet) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          backgroundColor: '#fff',
+        }}
+      >
         <FlatList
-          data={data}
+          data={dataLocal}
           numColumns={2}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -152,23 +172,10 @@ export function CourseSlideOne({ navigation }) {
                     }
                   />
                   <TouchableOpacity
-                    style={styles.fireTop}
-                    onPress={() => {
-                      let idCourse = item.id
-                      CourseFavorite(idCourse)
-                    }}
+                    style={[styles.fireTop, { backgroundColor: '#ccc' }]}
+                    onPress={() => {}}
                   >
-                    <IcoFireTop
-                      fill={
-                        item.favoriteUser.filter(
-                          (countFavorite) =>
-                            userProfile &&
-                            userProfile.idAdmin === countFavorite.id
-                        ).length !== 0
-                          ? '#9C0000'
-                          : '#fff'
-                      }
-                    />
+                    <IcoFireTop fill={'#fff'} />
                   </TouchableOpacity>
                 </ImageBackground>
               </TouchableOpacity>
@@ -180,36 +187,13 @@ export function CourseSlideOne({ navigation }) {
                         ([styles.progressBarLevel],
                         {
                           backgroundColor: '#FF741F',
-                          width: `${
-                            item.courseLessonsCount !== 0
-                              ? (item.courseLessonsProgress.filter(
-                                  (countProgress) =>
-                                    userProfile &&
-                                    userProfile.idAdmin === countProgress.id
-                                ).length /
-                                  item.courseLessonsCount) *
-                                100
-                              : item.courseLessonsCount
-                          }%`,
+                          width: `0%`,
                           borderRadius: 5,
                         })
                       }
                     />
                   </View>
-                  <Text style={styles.percent}>
-                    {item.courseLessonsCount !== 0
-                      ? Math.round(
-                          (item.courseLessonsProgress.filter(
-                            (countProgress) =>
-                              userProfile &&
-                              userProfile.idAdmin === countProgress.id
-                          ).length /
-                            item.courseLessonsCount) *
-                            100
-                        )
-                      : item.courseLessonsCount}
-                    %
-                  </Text>
+                  <Text style={styles.percent}>0%</Text>
                 </View>
                 <View>
                   <TouchableOpacity
@@ -229,9 +213,142 @@ export function CourseSlideOne({ navigation }) {
             </View>
           )}
         />
-      )}
-    </View>
-  )
+      </View>
+    )
+  } else {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          backgroundColor: '#fff',
+        }}
+      >
+        {isLoading ? (
+          <ActivityIndicator size="large" color="#FF741F" />
+        ) : (
+          <FlatList
+            data={data}
+            numColumns={2}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            contentContainerStyle={{
+              paddingTop: '2%',
+              paddingBottom: Platform.OS === 'android' ? 95 : 110,
+            }}
+            keyExtractor={({ id }, index) => id.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.courses}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('Course', {
+                      screen: 'draweModules',
+                      params: {
+                        itemId: item.id,
+                      },
+                    })
+                  }
+                  style={{ position: 'relative', width: 165, height: 165 }}
+                >
+                  <ImageBackground
+                    source={image}
+                    resizeMode="cover"
+                    style={styles.imageBack}
+                    imageStyle={{ borderRadius: 5 }}
+                  >
+                    <Image
+                      style={styles.imageProduct}
+                      source={
+                        item.image_сourses !== null
+                          ? {
+                              uri: item.image_сourses,
+                            }
+                          : require('../../../../assets/img/adaptive-icon.png')
+                      }
+                    />
+                    <TouchableOpacity
+                      style={styles.fireTop}
+                      onPress={() => {
+                        let idCourse = item.id
+                        CourseFavorite(idCourse)
+                      }}
+                    >
+                      <IcoFireTop
+                        fill={
+                          item.favoriteUser.filter(
+                            (countFavorite) =>
+                              userProfile &&
+                              userProfile.idAdmin === countFavorite.id
+                          ).length !== 0
+                            ? '#9C0000'
+                            : '#fff'
+                        }
+                      />
+                    </TouchableOpacity>
+                  </ImageBackground>
+                </TouchableOpacity>
+                <View style={{ width: 165, height: 60 }}>
+                  <View style={styles.progress}>
+                    <View style={styles.progressBar}>
+                      <Animated.View
+                        style={
+                          ([styles.progressBarLevel],
+                          {
+                            backgroundColor: '#FF741F',
+                            width: `${
+                              item.courseLessonsCount !== 0
+                                ? (item.courseLessonsProgress.filter(
+                                    (countProgress) =>
+                                      userProfile &&
+                                      userProfile.idAdmin === countProgress.id
+                                  ).length /
+                                    item.courseLessonsCount) *
+                                  100
+                                : item.courseLessonsCount
+                            }%`,
+                            borderRadius: 5,
+                          })
+                        }
+                      />
+                    </View>
+                    <Text style={styles.percent}>
+                      {item.courseLessonsCount !== 0
+                        ? Math.round(
+                            (item.courseLessonsProgress.filter(
+                              (countProgress) =>
+                                userProfile &&
+                                userProfile.idAdmin === countProgress.id
+                            ).length /
+                              item.courseLessonsCount) *
+                              100
+                          )
+                        : item.courseLessonsCount}
+                      %
+                    </Text>
+                  </View>
+                  <View>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate('Course', {
+                          screen: 'draweModules',
+                          params: {
+                            itemId: item.id,
+                          },
+                        })
+                      }
+                    >
+                      <Text style={styles.title}>{item.title}</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            )}
+          />
+        )}
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({

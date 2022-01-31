@@ -209,7 +209,7 @@ export const СockpitPage = (props) => {
           </View>
         </View>
         <ScrollView horizontal={true}>
-          <View style={{ marginTop: 25 }}>
+          {/* <View style={{ marginTop: 25 }}>
             <View style={{ marginLeft: 20 }}>
               <View
                 style={{
@@ -374,7 +374,7 @@ export const СockpitPage = (props) => {
                 />
               </View>
             </View>
-          </View>
+          </View> */}
         </ScrollView>
         <View>
           <ImageBackground
@@ -467,7 +467,7 @@ export const СockpitPage = (props) => {
           <Text
             style={{ textAlign: 'center', marginVertical: 10, fontSize: 18 }}
           >
-            ТУТ ДАННЫЕ ФОРЕКСА
+            {/* ТУТ ДАННЫЕ ФОРЕКСА */}
           </Text>
         </View>
         <View>

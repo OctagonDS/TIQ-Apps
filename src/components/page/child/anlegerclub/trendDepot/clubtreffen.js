@@ -107,7 +107,7 @@ So setzst Du die Empfehlungen des Clubs richtig um – und investierst vom Anfan
               color: '#666',
             }}
           >
-            Месяц
+            {/* Месяц */}
           </Text>
           <Text
             style={{
@@ -118,7 +118,7 @@ So setzst Du die Empfehlungen des Clubs richtig um – und investierst vom Anfan
               color: '#666',
             }}
           >
-            Тут коллекция видео
+            {/* Тут коллекция видео */}
           </Text>
         </View>
       </ScrollView>

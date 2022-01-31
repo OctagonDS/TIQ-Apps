@@ -309,6 +309,7 @@ function Navigations() {
   const [userToken, setUserToken] = useState(null)
   const [userProfile, setUserProfile] = useState(null)
   const [countUnread, setCountUnread] = useState(null)
+  const [courseLocal, setCourseLocal] = useState(null)
   const [loggingIn, setloggingIn] = useState(false)
   const [error, setError] = useState(null)
   const [errorReset, setErrorReset] = useState(null)
@@ -327,6 +328,13 @@ function Navigations() {
         doUpdateTerms(JSON.parse(value).email)
       } else {
         setUserProfile(null), setIsLoading(false), setIsLogged(false)
+      }
+    })
+    AsyncStorage.getItem('courseLocal').then((value) => {
+      if (value) {
+        setCourseLocal(JSON.parse(value))
+      } else {
+        setCourseLocal(null)
       }
     })
   }, [])
@@ -401,6 +409,7 @@ function Navigations() {
     try {
       await AsyncStorage.removeItem('userProfile')
       await AsyncStorage.removeItem('countUnread')
+      await AsyncStorage.removeItem('courseLocal')
       setloggingIn(true)
       setUserProfile(null)
       setloggingIn(false)
@@ -462,6 +471,15 @@ function Navigations() {
       )
       let jsonCountNot = await responseCountNot.json()
 
+      let responseCourseLocal = await fetch(
+        `https://fe20295.online-server.cloud/api/v1/courses_local`,
+        {
+          method: 'GET',
+          headers: showHeaders,
+        }
+      )
+      let jsonCourseLocal = await responseCourseLocal.json()
+
       let responseQuentId = await fetch(
         `https://q0ydly.eu-2.quentn.com/public/api/v1/contact/${email}`,
         {
@@ -504,6 +522,12 @@ function Navigations() {
               countUnread: jsonCountNot.countUnread,
             })
           )
+          await AsyncStorage.setItem(
+            'courseLocal',
+            JSON.stringify({
+              courseLocal: jsonCourseLocal,
+            })
+          )
         } catch {
           setError('Error storing data on device')
         }
@@ -522,6 +546,9 @@ function Navigations() {
         setCountUnread({
           countUnread: jsonCountNot.countUnread,
         })
+        setCourseLocal({
+          courseLocal: jsonCourseLocal,
+        })
         setIsLogged(true)
         setUserProfile({
           isLoggedIn: json.status,
@@ -537,6 +564,9 @@ function Navigations() {
         })
         setCountUnread({
           countUnread: jsonCountNot.countUnread,
+        })
+        setCourseLocal({
+          courseLocal: jsonCourseLocal,
         })
         setUserToken(json.token)
         UniqueVisits(jsonShow.data.id)
@@ -829,6 +859,7 @@ function Navigations() {
     setSuccessEmail: setSuccessEmail,
     countUnread: countUnread,
     setCountUnread: setCountUnread,
+    courseLocal: courseLocal,
     doSome: () => {
       doSome()
     },

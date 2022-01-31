@@ -71,8 +71,8 @@ export const Indizes = (props) => {
           </View>
         </View>
         <View style={{ alignItems: 'center', marginTop: 30 }}>
-          <Text>ТУТ БУДЕТ ИНОФРМАЦИЯ</Text>
-          <Text>ПОСЛЕ ИМПОРТА API</Text>
+          {/* <Text>ТУТ БУДЕТ ИНОФРМАЦИЯ</Text>
+          <Text>ПОСЛЕ ИМПОРТА API</Text> */}
         </View>
       </ScrollView>
     </View>

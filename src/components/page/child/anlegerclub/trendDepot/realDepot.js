@@ -189,7 +189,7 @@ Ich wünsche Dir maximalen Anlageerfolg`}
           <Text
             style={{ textAlign: 'center', fontSize: 16, marginVertical: 15 }}
           >
-            Тут другой ролик
+            {/* Тут другой ролик */}
           </Text>
         </View>
         <View>
@@ -231,7 +231,7 @@ Ich wünsche Dir maximalen Anlageerfolg`}
               color: '#666',
             }}
           >
-            Импорт SCV
+            {/* Импорт SCV */}
           </Text>
           <Text
             style={{
@@ -253,7 +253,7 @@ Ich wünsche Dir maximalen Anlageerfolg`}
               color: '#666',
             }}
           >
-            Импорт SCV
+            {/* Импорт SCV */}
           </Text>
           <Text
             style={{
@@ -275,7 +275,7 @@ Ich wünsche Dir maximalen Anlageerfolg`}
               color: '#666',
             }}
           >
-            Импорт SCV ?
+            {/* Импорт SCV ? */}
           </Text>
         </View>
         <View>
@@ -306,7 +306,7 @@ Ich wünsche Dir maximalen Anlageerfolg`}
               color: '#666',
             }}
           >
-            Месяц
+            {/* Месяц */}
           </Text>
           <Text
             style={{
@@ -317,7 +317,7 @@ Ich wünsche Dir maximalen Anlageerfolg`}
               color: '#666',
             }}
           >
-            Тут другое видео
+            {/* Тут другое видео */}
           </Text>
           <Text
             style={{
@@ -339,7 +339,7 @@ Ich wünsche Dir maximalen Anlageerfolg`}
               color: '#666',
             }}
           >
-            Импорт SCV
+            {/* Импорт SCV */}
           </Text>
           <Text
             style={{
@@ -361,7 +361,7 @@ Ich wünsche Dir maximalen Anlageerfolg`}
               color: '#666',
             }}
           >
-            Импорт SCV ?
+            {/* Импорт SCV ? */}
           </Text>
           <Text
             style={{
@@ -383,7 +383,7 @@ Ich wünsche Dir maximalen Anlageerfolg`}
               color: '#666',
             }}
           >
-            Импорт SCV
+            {/* Импорт SCV */}
           </Text>
         </View>
       </ScrollView>

@@ -25,6 +25,7 @@ import { IconDownload } from '../../../atoms/iconDownload'
 import { IconShareFile } from '../../../atoms/iconShareFile'
 import mainContext from '../../../../store/context/context'
 import { Video } from 'expo-av'
+import NetInfo from '@react-native-community/netinfo'
 
 // Переменне
 const wait = (timeout) => {
@@ -78,7 +79,11 @@ export function Modules({ props, route, navigation }) {
   const contentWidth = useWindowDimensions().width
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState([])
-  const { userProfile } = useContext(mainContext)
+  const [dataLocal, setDataLocal] = useState([])
+  const [imgModuleLocal, setImgModuleLocal] = useState('')
+  const [descModulLocal, setDescModulLocal] = useState('')
+  const { userProfile, courseLocal } = useContext(mainContext)
+  const [connectNet, setConnectNet] = useState(true)
 
   const [refreshing, setRefreshing] = React.useState(false)
 
@@ -113,27 +118,48 @@ export function Modules({ props, route, navigation }) {
     wait(2000).then(() => getModules(false))
   }, [])
 
+  async function localCourse() {
+    setDataLocal([])
+    courseLocal &&
+      courseLocal.courseLocal.data.map((element) => {
+        if (element.id === itemId) {
+          setDescModulLocal(element)
+          setImgModuleLocal(element.image_сourses)
+          element.modules.map((elementModule) => {
+            return setDataLocal((prevState) => [...prevState, elementModule])
+          })
+        }
+      })
+  }
+  // console.log(descModulLocal)
   useEffect(() => {
     getModules()
+    localCourse()
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setConnectNet(state.isConnected)
+    })
     return () => {
       setData([])
       setLoading(true)
+      setDataLocal([])
+      setConnectNet(true)
+      setImgModuleLocal('')
+      unsubscribe()
+      setDescModulLocal('')
     }
-  }, [itemId])
-  // console.log(data)
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        backgroundColor: '#fff',
-      }}
-    >
-      {isLoading ? (
-        <ActivityIndicator />
-      ) : (
+  }, [itemId, connectNet])
+
+  if (!connectNet) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          backgroundColor: '#fff',
+        }}
+      >
         <FlatList
-          data={data.modules}
+          data={dataLocal}
           ListHeaderComponent={
             <View
               style={{
@@ -164,7 +190,7 @@ export function Modules({ props, route, navigation }) {
                     marginTop: 10,
                   }}
                 >
-                  {data.length !== 0 ? (
+                  {descModulLocal.length !== 0 ? (
                     <Text
                       style={{
                         color: '#fff',
@@ -175,22 +201,26 @@ export function Modules({ props, route, navigation }) {
                         margin: 0,
                       }}
                     >
-                      {data && data.title.replace(/^"(.+(?="$))"$/, '$1')}
+                      {descModulLocal &&
+                        descModulLocal.title.replace(/^"(.+(?="$))"$/, '$1')}
                     </Text>
                   ) : (
                     <View></View>
                   )}
 
                   {/* <Text style={{ color: '#fff' }}>
-                  {JSON.stringify(titleDescription)}
-                </Text> */}
-                  {data.length !== 0 ? (
+                    {JSON.stringify(titleDescription)}
+                  </Text> */}
+                  {descModulLocal.length !== 0 ? (
                     <HTML
                       tagsStyles={tagsStyles}
                       source={{
                         html: `${
-                          data &&
-                          data.description.replace(/^"(.+(?="$))"$/, '$1')
+                          descModulLocal &&
+                          descModulLocal.description.replace(
+                            /^"(.+(?="$))"$/,
+                            '$1'
+                          )
                         }`,
                       }}
                       contentWidth={contentWidth}
@@ -207,230 +237,7 @@ export function Modules({ props, route, navigation }) {
                   marginTop: 20,
                   justifyContent: 'space-around',
                 }}
-              >
-                <View>
-                  <Text
-                    style={{
-                      fontFamily: 'ub-medium',
-                      fontSize: 14,
-                      paddingLeft: '5%',
-                      paddingRight: 20,
-                    }}
-                  >
-                    Fortschritt
-                  </Text>
-                </View>
-                {data.length !== 0 ? (
-                  <View style={styles.progress}>
-                    <View style={styles.progressBar}>
-                      <Animated.View
-                        style={
-                          ([styles.progressBarLevel],
-                          {
-                            backgroundColor: '#FF741F',
-                            width: `${
-                              data.courseLessonsCount !== 0
-                                ? (data.courseLessonsProgress.filter(
-                                    (countProgress) =>
-                                      userProfile &&
-                                      userProfile.idAdmin === countProgress.id
-                                  ).length /
-                                    data.courseLessonsCount) *
-                                  100
-                                : data.courseLessonsCount
-                            }%`,
-                            borderRadius: 5,
-                          })
-                        }
-                      />
-                    </View>
-                    <Text style={styles.percent}>
-                      {data.courseLessonsCount !== 0
-                        ? Math.round(
-                            (data.courseLessonsProgress.filter(
-                              (countProgress) =>
-                                userProfile &&
-                                userProfile.idAdmin === countProgress.id
-                            ).length /
-                              data.courseLessonsCount) *
-                              100
-                          )
-                        : data.courseLessonsCount}
-                      %
-                    </Text>
-                  </View>
-                ) : (
-                  <View></View>
-                )}
-              </View>
-            </View>
-          }
-          ListFooterComponent={
-            <View style={{ flex: 1, paddingTop: 30 }}>
-              {data.custom_field1 != null || data.custom_field3 != null ? (
-                <View>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      fontFamily: 'ub-medium',
-                      color: '#4E4D4D',
-                      fontSize: 16,
-                    }}
-                  >
-                    Downloads
-                  </Text>
-                </View>
-              ) : (
-                <View></View>
-              )}
-              {data.custom_field1 != null ? (
-                <View style={{ marginTop: 10 }}>
-                  <View style={styles.flexDownfile}>
-                    <Text
-                      style={{
-                        // textAlign: 'center',
-                        fontFamily: 'ub-light',
-                        color: '#4E4D4D',
-                        fontSize: 16,
-                      }}
-                    >
-                      {data.custom_field1}
-                    </Text>
-                    <View
-                      style={{ flexDirection: 'row', alignItems: 'center' }}
-                    >
-                      <TouchableOpacity
-                        style={{ paddingHorizontal: 25 }}
-                        onPress={
-                          () => WebBrowser.openBrowserAsync(data.custom_field2)
-                          // MediaLibrary.requestPermissionsAsync().then(
-                          //   ({ granted }) => {
-                          //     if (granted) {
-                          //       FileSystem.downloadAsync(
-                          //         data.custom_field2,
-                          //         FileSystem.documentDirectory +
-                          //           data.custom_field2.substr(
-                          //             data.custom_field2.lastIndexOf('/') + 1
-                          //           )
-                          //       )
-                          //         .then(async ({ uri }) => {
-                          //           console.log('Finished downloading to ', uri)
-                          //           const asset =
-                          //             await MediaLibrary.createAssetAsync(uri)
-
-                          //           console.log('asset', asset)
-                          //           await MediaLibrary.createAlbumAsync(
-                          //             'Download',
-                          //             asset,
-                          //             false
-                          //           )
-                          //             .then(async () => {
-                          //               await Notifications.scheduleNotificationAsync(
-                          //                 {
-                          //                   content: {
-                          //                     title: data.custom_field2.substr(
-                          //                       data.custom_field2.lastIndexOf(
-                          //                         '/'
-                          //                       ) + 1
-                          //                     ),
-                          //                     body: 'Файл загружен!',
-                          //                   },
-                          //                   trigger: null,
-                          //                 }
-                          //               )
-                          //             })
-                          //             .catch((error) => {
-                          //               console.error(error)
-                          //             })
-                          //         })
-                          //         .catch((error) => {
-                          //           console.error(error)
-                          //         })
-                          //     }
-                          //   }
-                          // )
-                        }
-                      >
-                        <IconDownload />
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={{ paddingTop: 1 }}
-                        onPress={() =>
-                          FileSystem.downloadAsync(
-                            data.custom_field2,
-                            FileSystem.documentDirectory +
-                              data.custom_field2.substr(
-                                data.custom_field2.lastIndexOf('/') + 1
-                              )
-                          )
-                            .then(async ({ uri }) => {
-                              // console.log('Finished downloading to ', uri)
-                              Sharing.shareAsync(uri)
-                            })
-                            .catch((error) => {
-                              console.error(error)
-                            })
-                        }
-                      >
-                        <IconShareFile />
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              ) : (
-                <View></View>
-              )}
-              {data.custom_field3 != null ? (
-                <View style={{ marginTop: 20 }}>
-                  <View style={styles.flexDownfile}>
-                    <Text
-                      style={{
-                        // textAlign: 'center',
-                        fontFamily: 'ub-light',
-                        color: '#4E4D4D',
-                        fontSize: 16,
-                      }}
-                    >
-                      {data.custom_field3}
-                    </Text>
-                    <View
-                      style={{ flexDirection: 'row', alignItems: 'center' }}
-                    >
-                      <TouchableOpacity
-                        style={{ paddingHorizontal: 25 }}
-                        onPress={() =>
-                          WebBrowser.openBrowserAsync(data.custom_field4)
-                        }
-                      >
-                        <IconDownload />
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={{ paddingTop: 1 }}
-                        onPress={() =>
-                          FileSystem.downloadAsync(
-                            data.custom_field4,
-                            FileSystem.documentDirectory +
-                              data.custom_field4.substr(
-                                data.custom_field4.lastIndexOf('/') + 1
-                              )
-                          )
-                            .then(async ({ uri }) => {
-                              // console.log('Finished downloading to ', uri)
-                              Sharing.shareAsync(uri)
-                            })
-                            .catch((error) => {
-                              console.error(error)
-                            })
-                        }
-                      >
-                        <IconShareFile />
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              ) : (
-                <View></View>
-              )}
+              ></View>
             </View>
           }
           numColumns={2}
@@ -473,7 +280,7 @@ export function Modules({ props, route, navigation }) {
                   navigation.navigate('Course', {
                     screen: 'Lessons',
                     params: {
-                      itemId: data.id,
+                      itemId: descModulLocal.id,
                       moduleId: item.id,
                       lessonId:
                         item.lessons[0] != undefined
@@ -485,15 +292,7 @@ export function Modules({ props, route, navigation }) {
               >
                 <Image
                   style={styles.imageProduct}
-                  source={
-                    item.image_module !== null
-                      ? {
-                          uri: item.image_module,
-                        }
-                      : {
-                          uri: data.image_сourses,
-                        }
-                  }
+                  source={{ uri: imgModuleLocal }}
                 />
 
                 <Text style={styles.title}>{item.title}</Text>
@@ -501,9 +300,394 @@ export function Modules({ props, route, navigation }) {
             </View>
           )}
         />
-      )}
-    </View>
-  )
+      </View>
+    )
+  } else {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          backgroundColor: '#fff',
+        }}
+      >
+        {isLoading ? (
+          <ActivityIndicator size="large" color="#FF741F" />
+        ) : (
+          <FlatList
+            data={data.modules}
+            ListHeaderComponent={
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <ImageBackground
+                  source={image}
+                  resizeMode="cover"
+                  style={[
+                    {
+                      flex: 1,
+                      width: '95%',
+                      height: '100%',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    },
+                    {},
+                  ]}
+                  imageStyle={{ borderRadius: 5 }}
+                >
+                  <View
+                    style={{
+                      flex: 1,
+                      width: '90%',
+                      marginTop: 10,
+                    }}
+                  >
+                    {data.length !== 0 ? (
+                      <Text
+                        style={{
+                          color: '#fff',
+                          textAlign: 'center',
+                          fontFamily: 'ub-medium',
+                          fontSize: 20,
+                          padding: 0,
+                          margin: 0,
+                        }}
+                      >
+                        {data && data.title.replace(/^"(.+(?="$))"$/, '$1')}
+                      </Text>
+                    ) : (
+                      <View></View>
+                    )}
+
+                    {/* <Text style={{ color: '#fff' }}>
+                  {JSON.stringify(titleDescription)}
+                </Text> */}
+                    {data.length !== 0 ? (
+                      <HTML
+                        tagsStyles={tagsStyles}
+                        source={{
+                          html: `${
+                            data &&
+                            data.description.replace(/^"(.+(?="$))"$/, '$1')
+                          }`,
+                        }}
+                        contentWidth={contentWidth}
+                      />
+                    ) : (
+                      <View></View>
+                    )}
+                  </View>
+                </ImageBackground>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: 20,
+                    justifyContent: 'space-around',
+                  }}
+                >
+                  <View>
+                    <Text
+                      style={{
+                        fontFamily: 'ub-medium',
+                        fontSize: 14,
+                        paddingLeft: '5%',
+                        paddingRight: 20,
+                      }}
+                    >
+                      Fortschritt
+                    </Text>
+                  </View>
+                  {data.length !== 0 ? (
+                    <View style={styles.progress}>
+                      <View style={styles.progressBar}>
+                        <Animated.View
+                          style={
+                            ([styles.progressBarLevel],
+                            {
+                              backgroundColor: '#FF741F',
+                              width: `${
+                                data.courseLessonsCount !== 0
+                                  ? (data.courseLessonsProgress.filter(
+                                      (countProgress) =>
+                                        userProfile &&
+                                        userProfile.idAdmin === countProgress.id
+                                    ).length /
+                                      data.courseLessonsCount) *
+                                    100
+                                  : data.courseLessonsCount
+                              }%`,
+                              borderRadius: 5,
+                            })
+                          }
+                        />
+                      </View>
+                      <Text style={styles.percent}>
+                        {data.courseLessonsCount !== 0
+                          ? Math.round(
+                              (data.courseLessonsProgress.filter(
+                                (countProgress) =>
+                                  userProfile &&
+                                  userProfile.idAdmin === countProgress.id
+                              ).length /
+                                data.courseLessonsCount) *
+                                100
+                            )
+                          : data.courseLessonsCount}
+                        %
+                      </Text>
+                    </View>
+                  ) : (
+                    <View></View>
+                  )}
+                </View>
+              </View>
+            }
+            ListFooterComponent={
+              <View style={{ flex: 1, paddingTop: 30 }}>
+                {data.custom_field1 != null || data.custom_field3 != null ? (
+                  <View>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        fontFamily: 'ub-medium',
+                        color: '#4E4D4D',
+                        fontSize: 16,
+                      }}
+                    >
+                      Downloads
+                    </Text>
+                  </View>
+                ) : (
+                  <View></View>
+                )}
+                {data.custom_field1 != null ? (
+                  <View style={{ marginTop: 10 }}>
+                    <View style={styles.flexDownfile}>
+                      <Text
+                        style={{
+                          // textAlign: 'center',
+                          fontFamily: 'ub-light',
+                          color: '#4E4D4D',
+                          fontSize: 16,
+                        }}
+                      >
+                        {data.custom_field1}
+                      </Text>
+                      <View
+                        style={{ flexDirection: 'row', alignItems: 'center' }}
+                      >
+                        <TouchableOpacity
+                          style={{ paddingHorizontal: 25 }}
+                          onPress={
+                            () =>
+                              WebBrowser.openBrowserAsync(data.custom_field2)
+                            // MediaLibrary.requestPermissionsAsync().then(
+                            //   ({ granted }) => {
+                            //     if (granted) {
+                            //       FileSystem.downloadAsync(
+                            //         data.custom_field2,
+                            //         FileSystem.documentDirectory +
+                            //           data.custom_field2.substr(
+                            //             data.custom_field2.lastIndexOf('/') + 1
+                            //           )
+                            //       )
+                            //         .then(async ({ uri }) => {
+                            //           console.log('Finished downloading to ', uri)
+                            //           const asset =
+                            //             await MediaLibrary.createAssetAsync(uri)
+
+                            //           console.log('asset', asset)
+                            //           await MediaLibrary.createAlbumAsync(
+                            //             'Download',
+                            //             asset,
+                            //             false
+                            //           )
+                            //             .then(async () => {
+                            //               await Notifications.scheduleNotificationAsync(
+                            //                 {
+                            //                   content: {
+                            //                     title: data.custom_field2.substr(
+                            //                       data.custom_field2.lastIndexOf(
+                            //                         '/'
+                            //                       ) + 1
+                            //                     ),
+                            //                     body: 'Файл загружен!',
+                            //                   },
+                            //                   trigger: null,
+                            //                 }
+                            //               )
+                            //             })
+                            //             .catch((error) => {
+                            //               console.error(error)
+                            //             })
+                            //         })
+                            //         .catch((error) => {
+                            //           console.error(error)
+                            //         })
+                            //     }
+                            //   }
+                            // )
+                          }
+                        >
+                          <IconDownload />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={{ paddingTop: 1 }}
+                          onPress={() =>
+                            FileSystem.downloadAsync(
+                              data.custom_field2,
+                              FileSystem.documentDirectory +
+                                data.custom_field2.substr(
+                                  data.custom_field2.lastIndexOf('/') + 1
+                                )
+                            )
+                              .then(async ({ uri }) => {
+                                // console.log('Finished downloading to ', uri)
+                                Sharing.shareAsync(uri)
+                              })
+                              .catch((error) => {
+                                console.error(error)
+                              })
+                          }
+                        >
+                          <IconShareFile />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                ) : (
+                  <View></View>
+                )}
+                {data.custom_field3 != null ? (
+                  <View style={{ marginTop: 20 }}>
+                    <View style={styles.flexDownfile}>
+                      <Text
+                        style={{
+                          // textAlign: 'center',
+                          fontFamily: 'ub-light',
+                          color: '#4E4D4D',
+                          fontSize: 16,
+                        }}
+                      >
+                        {data.custom_field3}
+                      </Text>
+                      <View
+                        style={{ flexDirection: 'row', alignItems: 'center' }}
+                      >
+                        <TouchableOpacity
+                          style={{ paddingHorizontal: 25 }}
+                          onPress={() =>
+                            WebBrowser.openBrowserAsync(data.custom_field4)
+                          }
+                        >
+                          <IconDownload />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={{ paddingTop: 1 }}
+                          onPress={() =>
+                            FileSystem.downloadAsync(
+                              data.custom_field4,
+                              FileSystem.documentDirectory +
+                                data.custom_field4.substr(
+                                  data.custom_field4.lastIndexOf('/') + 1
+                                )
+                            )
+                              .then(async ({ uri }) => {
+                                // console.log('Finished downloading to ', uri)
+                                Sharing.shareAsync(uri)
+                              })
+                              .catch((error) => {
+                                console.error(error)
+                              })
+                          }
+                        >
+                          <IconShareFile />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                ) : (
+                  <View></View>
+                )}
+              </View>
+            }
+            numColumns={2}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            contentContainerStyle={{
+              paddingTop: '2%',
+              paddingBottom: Platform.OS === 'android' ? 90 : 130,
+            }}
+            keyExtractor={({ id }, index) => id}
+            renderItem={({ item }) => (
+              <View
+                style={{
+                  alignItems: 'center',
+                  width: '50%',
+                  marginTop: 25,
+                  position: 'relative',
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: '#4E4D4D',
+                    fontFamily: 'ub-reg',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {item.preview_title}
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    alignItems: 'center',
+                    width: '100%',
+                    marginTop: 10,
+                    // marginBottom: 20,
+                    position: 'relative',
+                  }}
+                  onPress={() =>
+                    navigation.navigate('Course', {
+                      screen: 'Lessons',
+                      params: {
+                        itemId: data.id,
+                        moduleId: item.id,
+                        lessonId:
+                          item.lessons[0] != undefined
+                            ? item.lessons[0].id
+                            : null,
+                      },
+                    })
+                  }
+                >
+                  <Image
+                    style={styles.imageProduct}
+                    source={
+                      item.image_module !== null
+                        ? {
+                            uri: item.image_module,
+                          }
+                        : {
+                            uri: data.image_сourses,
+                          }
+                    }
+                  />
+
+                  <Text style={styles.title}>{item.title}</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          />
+        )}
+      </View>
+    )
+  }
 }
 
 export const styles = StyleSheet.create({

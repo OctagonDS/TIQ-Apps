@@ -190,7 +190,7 @@ Zusätzlich sorgen Einzahlungen von 200 € pro Monat für den Wachstumsturbo so
           <Text
             style={{ textAlign: 'center', fontSize: 16, marginVertical: 15 }}
           >
-            Тут другой ролик
+            {/* Тут другой ролик */}
           </Text>
         </View>
         <View>
@@ -232,7 +232,7 @@ Zusätzlich sorgen Einzahlungen von 200 € pro Monat für den Wachstumsturbo so
               color: '#666',
             }}
           >
-            Импорт SCV
+            {/* Импорт SCV */}
           </Text>
         </View>
         <View>
@@ -258,7 +258,7 @@ Zusätzlich sorgen Einzahlungen von 200 € pro Monat für den Wachstumsturbo so
           <Text
             style={{ textAlign: 'center', fontSize: 16, marginVertical: 15 }}
           >
-            Тут другой ролик и дата
+            {/* Тут другой ролик и дата */}
           </Text>
           <Text
             style={{

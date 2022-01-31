@@ -115,7 +115,7 @@ export const StillhalterWatchlist = (props) => {
               color: '#666',
             }}
           >
-            Импорт API
+            {/* Импорт API */}
           </Text>
         </View>
       </ScrollView>

@@ -11,7 +11,9 @@
       "backgroundColor": "#FFFFFF"
     },
     "androidStatusBar": {
-      "translucent": true
+      "barStyle": "dark-content",
+      "translucent": true,
+      "backgroundColor": "#00000000"
     },
     "plugins": [
       [

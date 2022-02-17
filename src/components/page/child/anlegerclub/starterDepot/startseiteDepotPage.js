@@ -49,7 +49,7 @@ const GradientBtn = ({ name }) => (
   </LinearGradient>
 )
 
-export const StartseiteDepotPage = (props) => {
+export const StartseiteDepotPage = ({ navigation }) => {
   const { userProfile } = useContext(mainContext)
   const video = React.useRef(null)
   const [status, setStatus] = React.useState({})
@@ -200,15 +200,20 @@ Dein Andrei Anissimov, Herausgeber.`}
               borderColor: '#ccc',
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                marginTop: 15,
-              }}
-            >
-              <Image style={styles.imageBlocks} source={adm} />
-              <Text style={styles.blockText}>Aktie des monats</Text>
+            <View>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+                onPress={() => {
+                  navigation.navigate('Aktie des Monats')
+                }}
+              >
+                <Image style={styles.imageBlocks} source={adm} />
+                <Text style={styles.blockText}>Aktie des monats</Text>
+              </TouchableOpacity>
             </View>
             <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
               <Text style={styles.itemText}>
@@ -230,15 +235,20 @@ So findest Du die besten Aktien – ohne selbst stundenlang suchen zu müssen.`}
               borderColor: '#ccc',
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                marginTop: 15,
-              }}
-            >
-              <Image style={styles.imageBlocks} source={euro_e} />
-              <Text style={styles.blockText}>Empfehlungsarchiv</Text>
+            <View>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+                onPress={() => {
+                  navigation.navigate('Aktie des Monats')
+                }}
+              >
+                <Image style={styles.imageBlocks} source={euro_e} />
+                <Text style={styles.blockText}>Empfehlungsarchiv</Text>
+              </TouchableOpacity>
             </View>
             <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
               <Text style={styles.itemText}>
@@ -260,15 +270,20 @@ Damit bekommst Du schnell einen Überblick über die Auswahlkriterien der Redakt
               borderColor: '#ccc',
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                marginTop: 15,
-              }}
-            >
-              <Image style={styles.imageBlocks} source={ghjk} />
-              <Text style={styles.blockText}>Starter Depot</Text>
+            <View>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+                onPress={() => {
+                  navigation.navigate('Depot')
+                }}
+              >
+                <Image style={styles.imageBlocks} source={ghjk} />
+                <Text style={styles.blockText}>Starter Depot</Text>
+              </TouchableOpacity>
             </View>
             <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
               <Text style={styles.itemText}>
@@ -290,15 +305,20 @@ So baust Du Schritt für Schritt Dein sicheres und profitables Aktiendepot auf.`
               borderColor: '#ccc',
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                marginTop: 15,
-              }}
-            >
-              <Image style={styles.imageBlocks} source={dm} />
-              <Text style={styles.blockText}>Dax Millionär</Text>
+            <View>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+                onPress={() => {
+                  navigation.navigate('Dax millionär')
+                }}
+              >
+                <Image style={styles.imageBlocks} source={dm} />
+                <Text style={styles.blockText}>Dax Millionär</Text>
+              </TouchableOpacity>
             </View>
             <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
               <Text

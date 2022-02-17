@@ -48,7 +48,7 @@ const GradientBtn = ({ name }) => (
   </LinearGradient>
 )
 
-export const StartseiteTrendDepotPage = (props) => {
+export const StartseiteTrendDepotPage = ({ navigation }) => {
   const { userProfile } = useContext(mainContext)
   const video = React.useRef(null)
   const [status, setStatus] = React.useState({})
@@ -207,15 +207,20 @@ Ich wünsche Dir viel Erfolg bei der Umsetzung!`}
               borderColor: '#ccc',
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                marginTop: 15,
-              }}
-            >
-              <Image style={styles.imageBlocks} source={cir} />
-              <Text style={styles.blockText}>Das trend depot</Text>
+            <View>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+                onPress={() => {
+                  navigation.navigate('Depot')
+                }}
+              >
+                <Image style={styles.imageBlocks} source={cir} />
+                <Text style={styles.blockText}>Das trend depot</Text>
+              </TouchableOpacity>
             </View>
             <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
               <Text style={styles.itemText}>
@@ -237,15 +242,20 @@ Mit diesem Handelsansatz wächst das Konto dynamisch – ideal für chancenori
               borderColor: '#ccc',
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                marginTop: 15,
-              }}
-            >
-              <Image style={styles.imageBlocks} source={wich} />
-              <Text style={styles.blockText}>Die watchlist</Text>
+            <View>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+                onPress={() => {
+                  navigation.navigate('Watchlist')
+                }}
+              >
+                <Image style={styles.imageBlocks} source={wich} />
+                <Text style={styles.blockText}>Die watchlist</Text>
+              </TouchableOpacity>
             </View>
             <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
               <Text style={styles.itemText}>
@@ -267,15 +277,20 @@ Mit dem Aktienranking der Experten hast Du immer die Sicherheit in beste Unterne
               borderColor: '#ccc',
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                marginTop: 15,
-              }}
-            >
-              <Image style={styles.imageBlocks} source={lud} />
-              <Text style={styles.blockText}>Live clubtreffen</Text>
+            <View>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+                onPress={() => {
+                  navigation.navigate('Clubtreffen')
+                }}
+              >
+                <Image style={styles.imageBlocks} source={lud} />
+                <Text style={styles.blockText}>Live clubtreffen</Text>
+              </TouchableOpacity>
             </View>
             <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
               <Text style={styles.itemText}>

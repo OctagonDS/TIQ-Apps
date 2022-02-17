@@ -30,7 +30,7 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 
-export const StartseiteTraderCockpitPage = (props) => {
+export const StartseiteTraderCockpitPage = ({ navigation }) => {
   const { userProfile } = useContext(mainContext)
 
   return (
@@ -148,17 +148,22 @@ Dein Andrei Anissimov, Herausgeber.`}
               borderColor: '#ccc',
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                marginTop: 15,
-              }}
-            >
-              <Image style={styles.imageBlocks} source={ghjk} />
-              <Text style={[styles.blockText, { width: '70%' }]}>
-                Marktanalysen und saisonalitäten
-              </Text>
+            <View>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+                onPress={() => {
+                  navigation.navigate('Commodities')
+                }}
+              >
+                <Image style={styles.imageBlocks} source={ghjk} />
+                <Text style={[styles.blockText, { width: '70%' }]}>
+                  Marktanalysen und saisonalitäten
+                </Text>
+              </TouchableOpacity>
             </View>
             <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
               <Text
@@ -189,17 +194,22 @@ Die wöchentliche Marktanalyse des Chefredakteurs bereitet Dich ideal auf die Ha
               borderColor: '#ccc',
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                marginTop: 15,
-              }}
-            >
-              <Image style={styles.imageBlocks} source={das} />
-              <Text style={[styles.blockText, { width: '70%' }]}>
-                Das Cockpit
-              </Text>
+            <View>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+                onPress={() => {
+                  navigation.navigate('Cockpit')
+                }}
+              >
+                <Image style={styles.imageBlocks} source={das} />
+                <Text style={[styles.blockText, { width: '70%' }]}>
+                  Das Cockpit
+                </Text>
+              </TouchableOpacity>
             </View>
             <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
               <Text
@@ -230,17 +240,22 @@ Dich erwartet die komplette Marktkontrolle für die richtigen Trading-Entscheidu
               borderColor: '#ccc',
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                marginTop: 15,
-              }}
-            >
-              <Image style={styles.imageBlocks} source={dm} />
-              <Text style={[styles.blockText, { width: '70%' }]}>
-                Die handelssignale
-              </Text>
+            <View>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+                onPress={() => {
+                  navigation.navigate('Signale')
+                }}
+              >
+                <Image style={styles.imageBlocks} source={dm} />
+                <Text style={[styles.blockText, { width: '70%' }]}>
+                  Die handelssignale
+                </Text>
+              </TouchableOpacity>
             </View>
             <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
               <Text

@@ -53,7 +53,7 @@ export function StarterDepot() {
         component={StartseiteDepotPage}
       />
       <Tab.Screen
-        name="Aktie des monats"
+        name="Aktie des Monats"
         options={{ unmountOnBlur: true }}
         component={AktieDesMonats}
       />

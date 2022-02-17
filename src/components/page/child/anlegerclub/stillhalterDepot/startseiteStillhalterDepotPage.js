@@ -48,7 +48,7 @@ const GradientBtn = ({ name }) => (
   </LinearGradient>
 )
 
-export const StartseiteStillhalterDepotPage = (props) => {
+export const StartseiteStillhalterDepotPage = ({ navigation }) => {
   const { userProfile } = useContext(mainContext)
   const video = React.useRef(null)
   const [status, setStatus] = React.useState({})
@@ -199,15 +199,20 @@ Dein Andrei Anissimov, Herausgeber.`}
               borderColor: '#ccc',
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                marginTop: 15,
-              }}
-            >
-              <Image style={styles.imageBlocks} source={cir} />
-              <Text style={styles.blockText}>Das stillhalter depot</Text>
+            <View>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+                onPress={() => {
+                  navigation.navigate('Depot')
+                }}
+              >
+                <Image style={styles.imageBlocks} source={cir} />
+                <Text style={styles.blockText}>Das stillhalter depot</Text>
+              </TouchableOpacity>
             </View>
             <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
               <Text style={styles.itemText}>
@@ -229,15 +234,20 @@ Wir gewinnen bei fallenden und steigenden Märkten und sind nicht auf Kurssteige
               borderColor: '#ccc',
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                marginTop: 15,
-              }}
-            >
-              <Image style={styles.imageBlocks} source={wich} />
-              <Text style={styles.blockText}>Die watchlist</Text>
+            <View>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+                onPress={() => {
+                  navigation.navigate('Watchlist')
+                }}
+              >
+                <Image style={styles.imageBlocks} source={wich} />
+                <Text style={styles.blockText}>Die watchlist</Text>
+              </TouchableOpacity>
             </View>
             <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
               <Text style={styles.itemText}>
@@ -259,15 +269,20 @@ Mit dem Aktienranking der Experten hast Du immer die Sicherheit, in beste Untern
               borderColor: '#ccc',
             }}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                marginTop: 15,
-              }}
-            >
-              <Image style={styles.imageBlocks} source={lud} />
-              <Text style={styles.blockText}>Live clubtreffen</Text>
+            <View>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  marginTop: 15,
+                }}
+                onPress={() => {
+                  navigation.navigate('Clubtreffen')
+                }}
+              >
+                <Image style={styles.imageBlocks} source={lud} />
+                <Text style={styles.blockText}>Live clubtreffen</Text>
+              </TouchableOpacity>
             </View>
             <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
               <Text style={styles.itemText}>

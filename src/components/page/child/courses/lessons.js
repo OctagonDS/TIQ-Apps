@@ -370,6 +370,7 @@ export function Lessons({ props, route, navigation }) {
         setReplyCommentId(0)
         setReplyComment(null)
         setDataLocal([])
+        setAccordion(false)
         setConnectNet(true)
         clearTimeout(timer)
       }
@@ -976,198 +977,44 @@ export function Lessons({ props, route, navigation }) {
                     key={item.id}
                     style={{ paddingHorizontal: 25, paddingTop: 5 }}
                   >
-                    {item.lessons.map((itemLesson) => (
-                      <View key={itemLesson.id}>
-                        {item.id == moduleId && itemLesson.id == lessonId ? (
-                          <View>
-                            <Text
-                              style={{
-                                textAlign: 'left',
-                                fontFamily: 'ub-medium',
-                                fontSize: 26,
-                                color: '#454A4F',
-                                marginTop: 20,
-                              }}
-                            >
-                              {itemLesson.title}
-                            </Text>
-                            {itemLesson.video_lesson !== null ? (
-                              <View>
-                                <View
-                                  style={{
-                                    justifyContent: 'center',
-                                    position: 'relative',
-                                    marginTop: 15,
-                                  }}
-                                >
-                                  <Video
-                                    ref={video}
-                                    style={{
-                                      alignSelf: 'center',
-                                      width: 320,
-                                      height: 200,
-                                      borderWidth: 1,
-                                      borderColor: '#C4C4C4',
-                                    }}
-                                    source={
-                                      !videoUrl.includes(
-                                        decodeURI(
-                                          itemLesson.video_lesson.substr(
-                                            itemLesson.video_lesson.lastIndexOf(
-                                              '/'
-                                            ) + 1
-                                          )
-                                        )
-                                      )
-                                        ? { uri: `${itemLesson.video_lesson}` }
-                                        : videoUrl.includes(
-                                            decodeURI(
-                                              itemLesson.video_lesson.substr(
-                                                itemLesson.video_lesson.lastIndexOf(
-                                                  '/'
-                                                ) + 1
-                                              )
-                                            )
-                                          )
-                                        ? {
-                                            uri:
-                                              FileSystem.cacheDirectory +
-                                              itemLesson.video_lesson.substr(
-                                                itemLesson.video_lesson.lastIndexOf(
-                                                  '/'
-                                                ) + 1
-                                              ),
-                                          }
-                                        : {
-                                            uri: `${itemLesson.video_lesson}`,
-                                          }
-                                    }
-                                    useNativeControls
-                                    resizeMode="contain"
-                                    isLooping
-                                    onPlaybackStatusUpdate={(status) =>
-                                      setStatus(() => status)
-                                    }
-                                    posterSource={{
-                                      uri:
-                                        itemLesson &&
-                                        itemLesson.video_poster_lesson,
-                                    }}
-                                    usePoster
-                                    posterStyle={{
-                                      alignSelf: 'center',
-                                      width: 320,
-                                      height: 200,
-                                      resizeMode: 'cover',
-                                    }}
-                                  />
+                    {item.lessons.map((itemLesson, index) => {
+                      let indexLessonNext = index + 1
+                      let indexLessonPrev = index - 1
+                      return (
+                        <View key={itemLesson.id}>
+                          {item.id == moduleId && itemLesson.id == lessonId ? (
+                            <View>
+                              <Text
+                                style={{
+                                  textAlign: 'left',
+                                  fontFamily: 'ub-medium',
+                                  fontSize: 26,
+                                  color: '#454A4F',
+                                  marginTop: 20,
+                                }}
+                              >
+                                {itemLesson.title}
+                              </Text>
+                              {itemLesson.video_lesson !== null ? (
+                                <View>
                                   <View
-                                    style={
-                                      status.isPlaying ||
-                                      status.positionMillis > 0
-                                        ? { display: 'none' }
-                                        : {
-                                            flexDirection: 'row',
-                                            justifyContent: 'center',
-                                            position: 'absolute',
-                                            alignSelf: 'center',
-                                          }
-                                    }
+                                    style={{
+                                      justifyContent: 'center',
+                                      position: 'relative',
+                                      marginTop: 15,
+                                    }}
                                   >
-                                    <TouchableOpacity
-                                      style={{ width: 50, height: 50 }}
-                                      onPress={() => video.current.playAsync()}
-                                    >
-                                      <GradientBtnPlay />
-                                    </TouchableOpacity>
-                                  </View>
-                                </View>
-                                <View
-                                  style={{
-                                    flexDirection: 'row',
-                                    marginTop: 10,
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between',
-                                  }}
-                                >
-                                  <View>
-                                    <View style={{ width: '100%' }}>
-                                      <TouchableOpacity
-                                        style={{
-                                          width: '80%',
-                                          height: 30,
-                                          alignSelf: 'center',
-                                          alignSelf: 'flex-start',
-                                          width: '100%',
-                                        }}
-                                        onPress={async () => {
-                                          const callback = (
-                                            downloadProgress
-                                          ) => {
-                                            setTotalSize(
-                                              formatBytes(
-                                                downloadProgress.totalBytesExpectedToWrite
-                                              )
-                                            )
-                                            let progress =
-                                              downloadProgress.totalBytesWritten /
-                                              downloadProgress.totalBytesExpectedToWrite
-                                            progress = progress.toFixed(2) * 100
-                                            setProgressPercent(
-                                              progress.toFixed(0)
-                                            )
-                                          }
-                                          const downloadResumable =
-                                            FileSystem.createDownloadResumable(
-                                              itemLesson.video_lesson,
-                                              FileSystem.cacheDirectory +
-                                                itemLesson.video_lesson.substr(
-                                                  itemLesson.video_lesson.lastIndexOf(
-                                                    '/'
-                                                  ) + 1
-                                                ),
-                                              {},
-                                              callback
-                                            )
-
-                                          try {
-                                            const { uri } =
-                                              await downloadResumable.downloadAsync()
-                                            console.log(
-                                              'Finished downloading to ',
-                                              uri
-                                            )
-                                            await arrayVideo()
-                                          } catch (e) {
-                                            console.error(e)
-                                          }
-                                        }}
-                                      >
-                                        <GradientBtnCache name="Zwischenspeicher" />
-                                      </TouchableOpacity>
-                                    </View>
-                                  </View>
-                                  <View>
-                                    <View>
-                                      {videoUrl.includes(
-                                        decodeURI(
-                                          itemLesson.video_lesson.substr(
-                                            itemLesson.video_lesson.lastIndexOf(
-                                              '/'
-                                            ) + 1
-                                          )
-                                        )
-                                      ) ? (
-                                        <Text
-                                          style={{
-                                            fontFamily: 'ub-reg',
-                                            color: '#FB1818',
-                                            fontSize: 12,
-                                          }}
-                                        >
-                                          Zwischengespeichert!
-                                        </Text>
-                                      ) : !videoUrl.includes(
+                                    <Video
+                                      ref={video}
+                                      style={{
+                                        alignSelf: 'center',
+                                        width: 320,
+                                        height: 200,
+                                        borderWidth: 1,
+                                        borderColor: '#C4C4C4',
+                                      }}
+                                      source={
+                                        !videoUrl.includes(
                                           decodeURI(
                                             itemLesson.video_lesson.substr(
                                               itemLesson.video_lesson.lastIndexOf(
@@ -1175,603 +1022,893 @@ export function Lessons({ props, route, navigation }) {
                                               ) + 1
                                             )
                                           )
-                                        ) &&
-                                        progressPercent > 0 &&
-                                        progressPercent < 100 ? (
-                                        <View>
+                                        )
+                                          ? {
+                                              uri: `${itemLesson.video_lesson}`,
+                                            }
+                                          : videoUrl.includes(
+                                              decodeURI(
+                                                itemLesson.video_lesson.substr(
+                                                  itemLesson.video_lesson.lastIndexOf(
+                                                    '/'
+                                                  ) + 1
+                                                )
+                                              )
+                                            )
+                                          ? {
+                                              uri:
+                                                FileSystem.cacheDirectory +
+                                                itemLesson.video_lesson.substr(
+                                                  itemLesson.video_lesson.lastIndexOf(
+                                                    '/'
+                                                  ) + 1
+                                                ),
+                                            }
+                                          : {
+                                              uri: `${itemLesson.video_lesson}`,
+                                            }
+                                      }
+                                      useNativeControls
+                                      resizeMode="contain"
+                                      isLooping
+                                      onPlaybackStatusUpdate={(status) =>
+                                        setStatus(() => status)
+                                      }
+                                      posterSource={{
+                                        uri:
+                                          itemLesson &&
+                                          itemLesson.video_poster_lesson,
+                                      }}
+                                      usePoster
+                                      posterStyle={{
+                                        alignSelf: 'center',
+                                        width: 320,
+                                        height: 200,
+                                        resizeMode: 'cover',
+                                      }}
+                                    />
+                                    <View
+                                      style={
+                                        status.isPlaying ||
+                                        status.positionMillis > 0
+                                          ? { display: 'none' }
+                                          : {
+                                              flexDirection: 'row',
+                                              justifyContent: 'center',
+                                              position: 'absolute',
+                                              alignSelf: 'center',
+                                            }
+                                      }
+                                    >
+                                      <TouchableOpacity
+                                        style={{ width: 50, height: 50 }}
+                                        onPress={() =>
+                                          video.current.playAsync()
+                                        }
+                                      >
+                                        <GradientBtnPlay />
+                                      </TouchableOpacity>
+                                    </View>
+                                  </View>
+                                  <View
+                                    style={{
+                                      flexDirection: 'row',
+                                      marginTop: 10,
+                                      alignItems: 'center',
+                                      justifyContent: 'space-between',
+                                    }}
+                                  >
+                                    <View>
+                                      <View style={{ width: '100%' }}>
+                                        <TouchableOpacity
+                                          style={{
+                                            width: '80%',
+                                            height: 30,
+                                            alignSelf: 'center',
+                                            alignSelf: 'flex-start',
+                                            width: '100%',
+                                          }}
+                                          onPress={async () => {
+                                            const callback = (
+                                              downloadProgress
+                                            ) => {
+                                              setTotalSize(
+                                                formatBytes(
+                                                  downloadProgress.totalBytesExpectedToWrite
+                                                )
+                                              )
+                                              let progress =
+                                                downloadProgress.totalBytesWritten /
+                                                downloadProgress.totalBytesExpectedToWrite
+                                              progress =
+                                                progress.toFixed(2) * 100
+                                              setProgressPercent(
+                                                progress.toFixed(0)
+                                              )
+                                            }
+                                            const downloadResumable =
+                                              FileSystem.createDownloadResumable(
+                                                itemLesson.video_lesson,
+                                                FileSystem.cacheDirectory +
+                                                  itemLesson.video_lesson.substr(
+                                                    itemLesson.video_lesson.lastIndexOf(
+                                                      '/'
+                                                    ) + 1
+                                                  ),
+                                                {},
+                                                callback
+                                              )
+
+                                            try {
+                                              const { uri } =
+                                                await downloadResumable.downloadAsync()
+                                              console.log(
+                                                'Finished downloading to ',
+                                                uri
+                                              )
+                                              await arrayVideo()
+                                            } catch (e) {
+                                              console.error(e)
+                                            }
+                                          }}
+                                        >
+                                          <GradientBtnCache name="Zwischenspeicher" />
+                                        </TouchableOpacity>
+                                      </View>
+                                    </View>
+                                    <View>
+                                      <View>
+                                        {videoUrl.includes(
+                                          decodeURI(
+                                            itemLesson.video_lesson.substr(
+                                              itemLesson.video_lesson.lastIndexOf(
+                                                '/'
+                                              ) + 1
+                                            )
+                                          )
+                                        ) ? (
                                           <Text
                                             style={{
                                               fontFamily: 'ub-reg',
-                                              color: '#333',
+                                              color: '#FB1818',
                                               fontSize: 12,
                                             }}
                                           >
-                                            Größe: {totalSize}
+                                            Zwischengespeichert!
                                           </Text>
-                                          <View style={styles.progress}>
-                                            <View style={styles.progressBar}>
-                                              <Animated.View
-                                                style={
-                                                  ([styles.progressBarLevel],
-                                                  {
-                                                    backgroundColor: '#FF741F',
-                                                    width: `${progressPercent}%`,
-                                                    borderRadius: 5,
-                                                  })
-                                                }
-                                              />
-                                            </View>
-                                            <Text style={styles.percent}>
-                                              {progressPercent}%
+                                        ) : !videoUrl.includes(
+                                            decodeURI(
+                                              itemLesson.video_lesson.substr(
+                                                itemLesson.video_lesson.lastIndexOf(
+                                                  '/'
+                                                ) + 1
+                                              )
+                                            )
+                                          ) &&
+                                          progressPercent > 0 &&
+                                          progressPercent < 100 ? (
+                                          <View>
+                                            <Text
+                                              style={{
+                                                fontFamily: 'ub-reg',
+                                                color: '#333',
+                                                fontSize: 12,
+                                              }}
+                                            >
+                                              Größe: {totalSize}
                                             </Text>
+                                            <View style={styles.progress}>
+                                              <View style={styles.progressBar}>
+                                                <Animated.View
+                                                  style={
+                                                    ([styles.progressBarLevel],
+                                                    {
+                                                      backgroundColor:
+                                                        '#FF741F',
+                                                      width: `${progressPercent}%`,
+                                                      borderRadius: 5,
+                                                    })
+                                                  }
+                                                />
+                                              </View>
+                                              <Text style={styles.percent}>
+                                                {progressPercent}%
+                                              </Text>
+                                            </View>
                                           </View>
-                                        </View>
-                                      ) : (
-                                        <Text
-                                          style={{
-                                            fontFamily: 'ub-reg',
-                                            color: '#00b9eb',
-                                            fontSize: 12,
-                                          }}
-                                        >
-                                          Nicht zwischengespeichert
-                                        </Text>
-                                      )}
+                                        ) : (
+                                          <Text
+                                            style={{
+                                              fontFamily: 'ub-reg',
+                                              color: '#00b9eb',
+                                              fontSize: 12,
+                                            }}
+                                          >
+                                            Nicht zwischengespeichert
+                                          </Text>
+                                        )}
+                                      </View>
                                     </View>
                                   </View>
                                 </View>
-                              </View>
-                            ) : (
-                              <View></View>
-                            )}
-                            {itemLesson.progressLesson.filter(
-                              (countProgress) =>
-                                userProfile &&
-                                userProfile.idAdmin === countProgress.id
-                            ).length === 0 ? (
-                              <View>
+                              ) : (
+                                <View></View>
+                              )}
+
+                              {itemLesson.progressLesson.filter(
+                                (countProgress) =>
+                                  userProfile &&
+                                  userProfile.idAdmin === countProgress.id
+                              ).length === 0 ? (
                                 <View
                                   style={{
-                                    alignItems: 'center',
+                                    backgroundColor: '#ffe4d8',
+                                    width: '100%',
+                                    paddingHorizontal: 15,
+                                    paddingVertical: 10,
                                     marginTop: 15,
-                                    fontFamily: 'ub-reg',
+                                    borderRadius: 3,
+                                    borderColor: '#ff741f',
+                                    borderWidth: 1,
                                   }}
                                 >
-                                  <Text style={{ color: '#545A60' }}>
-                                    Haben Sie diese Lektion abgeschlossen?
-                                  </Text>
-                                  <Text style={{ color: '#545A60' }}>
-                                    Dann bitte als abgeschlossen markieren.
-                                  </Text>
-                                </View>
-                                <View style={{ marginTop: 20, width: '100%' }}>
-                                  <TouchableOpacity
-                                    style={styles.wrapper}
-                                    onPress={() => {
-                                      let idLesson = itemLesson.id
-                                      postProgress(idLesson)
+                                  <View
+                                    style={{
+                                      alignItems: 'center',
+                                      marginTop: 15,
+                                      fontFamily: 'ub-reg',
                                     }}
                                   >
-                                    <GradientBtn name="Als abgeschlossen markieren" />
-                                  </TouchableOpacity>
-                                </View>
-                              </View>
-                            ) : (
-                              <View>
-                                <View
-                                  style={{
-                                    alignItems: 'center',
-                                    marginTop: 15,
-                                    fontFamily: 'ub-reg',
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-around',
-                                    alignItems: 'center',
-                                  }}
-                                >
-                                  <IconCompleted />
-                                  <Text style={{ color: '#545A60' }}>
-                                    Sie haben diese Einheit nun abgeschlossen.
-                                  </Text>
-                                </View>
-                              </View>
-                            )}
-                            {itemLesson.custom_field1 != null ||
-                            itemLesson.custom_field3 != null ? (
-                              <View
-                                style={{
-                                  marginTop: 30,
-                                }}
-                              >
-                                <Text
-                                  style={{
-                                    fontFamily: 'ub-reg',
-                                    fontSize: 18,
-                                    color: '#454A4F',
-                                    marginRight: 25,
-                                  }}
-                                >
-                                  Downloads:
-                                </Text>
-                                {itemLesson.custom_field1 != null ? (
-                                  <View style={{ marginTop: 15 }}>
-                                    <View style={styles.flexDownfile}>
-                                      <Text
-                                        style={{
-                                          // textAlign: 'center',
-                                          fontFamily: 'ub-light',
-                                          color: '#4E4D4D',
-                                          fontSize: 16,
-                                        }}
-                                      >
-                                        {itemLesson.custom_field1}
-                                      </Text>
-                                      <View
-                                        style={{
-                                          flexDirection: 'row',
-                                          alignItems: 'center',
-                                        }}
-                                      >
-                                        <TouchableOpacity
-                                          style={{ paddingHorizontal: 25 }}
-                                          onPress={() =>
-                                            WebBrowser.openBrowserAsync(
-                                              itemLesson.custom_field2
-                                            )
-                                          }
-                                        >
-                                          <IconDownload />
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                          style={{ paddingTop: 1 }}
-                                          onPress={() =>
-                                            FileSystem.downloadAsync(
-                                              itemLesson.custom_field2,
-                                              FileSystem.documentDirectory +
-                                                itemLesson.custom_field2.substr(
-                                                  itemLesson.custom_field2.lastIndexOf(
-                                                    '/'
-                                                  ) + 1
-                                                )
-                                            )
-                                              .then(async ({ uri }) => {
-                                                Sharing.shareAsync(uri)
-                                              })
-                                              .catch((error) => {
-                                                console.error(error)
-                                              })
-                                          }
-                                        >
-                                          <IconShareFile />
-                                        </TouchableOpacity>
-                                      </View>
-                                    </View>
+                                    <Text style={{ color: '#545A60' }}>
+                                      Haben Sie diese Lektion abgeschlossen?
+                                    </Text>
+                                    <Text style={{ color: '#545A60' }}>
+                                      Dann bitte als abgeschlossen markieren.
+                                    </Text>
                                   </View>
-                                ) : (
-                                  <View></View>
-                                )}
-                                {itemLesson.custom_field3 != null ? (
-                                  <View style={{ marginTop: 20 }}>
-                                    <View style={styles.flexDownfile}>
-                                      <Text
-                                        style={{
-                                          // textAlign: 'center',
-                                          fontFamily: 'ub-light',
-                                          color: '#4E4D4D',
-                                          fontSize: 16,
-                                        }}
-                                      >
-                                        {itemLesson.custom_field3}
-                                      </Text>
-                                      <View
-                                        style={{
-                                          flexDirection: 'row',
-                                          alignItems: 'center',
-                                        }}
-                                      >
-                                        <TouchableOpacity
-                                          style={{ paddingHorizontal: 25 }}
-                                          onPress={() =>
-                                            WebBrowser.openBrowserAsync(
-                                              itemLesson.custom_field4
-                                            )
-                                          }
-                                        >
-                                          <IconDownload />
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                          style={{ paddingTop: 1 }}
-                                          onPress={() =>
-                                            FileSystem.downloadAsync(
-                                              itemLesson.custom_field4,
-                                              FileSystem.documentDirectory +
-                                                itemLesson.custom_field4.substr(
-                                                  itemLesson.custom_field4.lastIndexOf(
-                                                    '/'
-                                                  ) + 1
-                                                )
-                                            )
-                                              .then(async ({ uri }) => {
-                                                Sharing.shareAsync(uri)
-                                              })
-                                              .catch((error) => {
-                                                console.error(error)
-                                              })
-                                          }
-                                        >
-                                          <IconShareFile />
-                                        </TouchableOpacity>
-                                      </View>
-                                    </View>
+                                  <View
+                                    style={{ marginTop: 20, width: '100%' }}
+                                  >
+                                    <TouchableOpacity
+                                      style={styles.wrapper}
+                                      onPress={() => {
+                                        let idLesson = itemLesson.id
+                                        postProgress(idLesson)
+                                      }}
+                                    >
+                                      <GradientBtn name="Als abgeschlossen markieren" />
+                                    </TouchableOpacity>
                                   </View>
-                                ) : (
-                                  <View></View>
-                                )}
-                              </View>
-                            ) : (
-                              <View></View>
-                            )}
-                            <View style={{ marginTop: 20 }}>
-                              <View style={{ marginVertical: 15 }}>
-                                <Text
-                                  style={{
-                                    fontFamily: 'ub-reg',
-                                    fontSize: 18,
-                                    color: '#454A4F',
-                                    marginBottom: 15,
-                                  }}
-                                >
-                                  Kommentare:
-                                </Text>
-                                {itemLesson.commentsL.map((itemComment) => (
-                                  <View key={itemComment.id}>
-                                    {itemComment.status === 2 &&
-                                    itemComment.parent_id === null ? (
-                                      <View>
+                                </View>
+                              ) : (
+                                <View>
+                                  <View
+                                    style={{
+                                      alignItems: 'center',
+                                      marginTop: 20,
+                                      fontFamily: 'ub-reg',
+                                      flexDirection: 'row',
+                                      justifyContent: 'space-around',
+                                      alignItems: 'center',
+                                    }}
+                                  >
+                                    <IconCompleted />
+                                    <Text style={{ color: '#545A60' }}>
+                                      Sie haben diese Einheit nun abgeschlossen.
+                                    </Text>
+                                  </View>
+                                </View>
+                              )}
+
+                              {item.lessons.map((itemLessonNavi, index) => {
+                                let idLessonNext = item.lessons.filter(
+                                  (itemLessonNaviID, index) =>
+                                    index === indexLessonNext
+                                )
+                                let idLessonPrev = item.lessons.filter(
+                                  (itemLessonNaviID, index) =>
+                                    index === indexLessonPrev
+                                )
+                                // console.log(idLessonNext[0].id)
+                                // console.log(idLessonPrev[0].id)
+                                return (
+                                  <View key={itemLessonNavi.id}>
+                                    {itemLessonNavi.id === itemLesson.id ? (
+                                      <View style={{ marginTop: 20, flex: 1 }}>
                                         <View
                                           style={{
                                             flexDirection: 'row',
-                                            justifyContent: 'flex-start',
-                                            alignItems: 'flex-start',
-                                            marginVertical: 10,
+                                            flexWrap: 'wrap',
+                                            alignContent: 'center',
+                                            justifyContent: 'center',
+                                            // alignSelf: 'center',
+                                            // flex: 1,
                                           }}
                                         >
-                                          <View>
-                                            <View style={{}}>
-                                              <LinearGradient
-                                                colors={['#FF741F', '#E86312']}
-                                                start={{ x: 0, y: 0 }}
-                                                end={{ x: 1, y: 0 }}
-                                                style={styles.backAvatar}
-                                              >
-                                                <View>
-                                                  <Image
-                                                    style={{
-                                                      width: 30,
-                                                      height: 30,
-                                                      borderRadius: 15,
-                                                      marginHorizontal: 5,
-                                                    }}
-                                                    resizeMode="cover"
-                                                    source={{
-                                                      uri: itemComment.users
-                                                        .image_avatar,
-                                                    }}
-                                                  />
-                                                </View>
-                                              </LinearGradient>
-                                            </View>
-                                          </View>
-                                          <View
-                                            style={{ paddingLeft: 15, flex: 1 }}
-                                          >
-                                            <Text
+                                          {1 === index + 1 ? (
+                                            <View
                                               style={{
-                                                // textAlign: 'center',
-                                                fontFamily: 'ub-light',
-                                                color: '#4E4D4D',
-                                                fontSize: 10,
+                                                minWidth: '42%',
+                                                textAlign: 'center',
+                                                marginRight: 3,
+                                                height: 30,
                                               }}
                                             >
-                                              <Text
-                                                style={{
-                                                  fontFamily: 'ub-medium',
-                                                }}
-                                              >
-                                                {itemComment.users.name}
-                                              </Text>{' '}
-                                              {itemComment.created_at}
-                                            </Text>
-                                            <View style={{ flex: 1 }}>
-                                              <Text
-                                                style={{
-                                                  // textAlign: 'center',
-                                                  fontFamily: 'ub-reg',
-                                                  color: '#4E4D4D',
-                                                }}
-                                              >
-                                                {itemComment.message}
-                                              </Text>
+                                              <GradientBtnCacheDisable name="Vorherige Einheit" />
                                             </View>
+                                          ) : (
                                             <TouchableOpacity
+                                              style={{
+                                                marginRight: 3,
+                                                height: 30,
+                                                minWidth: '42%',
+                                                textAlign: 'center',
+                                              }}
                                               onPress={() => {
-                                                setReplyComment(
-                                                  itemComment.users.name
-                                                )
-                                                setReplyCommentId(
-                                                  itemComment.id
-                                                )
-                                                focusInput()
+                                                navigation.setParams({
+                                                  lessonId: idLessonPrev[0].id,
+                                                })
+                                                setReplyComment(null)
+                                                setReplyCommentId(0)
                                               }}
                                             >
-                                              <View
-                                                style={{
-                                                  flexDirection: 'row',
-                                                  alignItems: 'center',
-                                                  paddingTop: 5,
-                                                }}
-                                              >
-                                                <IconReplyComment />
-                                                <Text
-                                                  style={{
-                                                    // textAlign: 'center',
-                                                    fontFamily: 'ub-reg',
-                                                    color: '#4E4D4D',
-                                                    fontSize: 12,
-                                                    paddingLeft: 2,
-                                                  }}
-                                                >
-                                                  Antworten
-                                                </Text>
-                                              </View>
+                                              <GradientBtnCache name="Vorherige Einheit" />
                                             </TouchableOpacity>
-                                          </View>
-                                        </View>
-                                        {itemComment.replies.map(
-                                          (itemReplies) => (
-                                            <View key={itemReplies.id}>
-                                              {itemReplies.status === 2 ? (
-                                                <View>
-                                                  <View
-                                                    style={{
-                                                      flexDirection: 'row',
-                                                      justifyContent:
-                                                        'flex-start',
-                                                      alignItems: 'flex-start',
-                                                      marginVertical: 10,
-                                                      width: '90%',
-                                                      marginLeft: 30,
-                                                    }}
-                                                  >
-                                                    <View>
-                                                      <View style={{}}>
-                                                        <LinearGradient
-                                                          colors={[
-                                                            '#FF741F',
-                                                            '#E86312',
-                                                          ]}
-                                                          start={{ x: 0, y: 0 }}
-                                                          end={{ x: 1, y: 0 }}
-                                                          style={
-                                                            styles.backAvatar
-                                                          }
-                                                        >
-                                                          <View>
-                                                            <Image
-                                                              style={{
-                                                                width: 30,
-                                                                height: 30,
-                                                                borderRadius: 15,
-                                                                marginHorizontal: 5,
-                                                              }}
-                                                              resizeMode="cover"
-                                                              source={{
-                                                                uri: itemReplies
-                                                                  .users
-                                                                  .image_avatar,
-                                                              }}
-                                                            />
-                                                          </View>
-                                                        </LinearGradient>
-                                                      </View>
-                                                    </View>
-                                                    <View
-                                                      style={{
-                                                        paddingLeft: 15,
-                                                        flex: 1,
-                                                      }}
-                                                    >
-                                                      <Text
-                                                        style={{
-                                                          // textAlign: 'center',
-                                                          fontFamily:
-                                                            'ub-light',
-                                                          color: '#4E4D4D',
-                                                          fontSize: 10,
-                                                        }}
-                                                      >
-                                                        <Text
-                                                          style={{
-                                                            fontFamily:
-                                                              'ub-medium',
-                                                          }}
-                                                        >
-                                                          {
-                                                            itemReplies.users
-                                                              .name
-                                                          }
-                                                        </Text>{' '}
-                                                        {itemReplies.created_at}
-                                                      </Text>
-                                                      <Text
-                                                        style={{
-                                                          // textAlign: 'center',
-                                                          fontFamily: 'ub-reg',
-                                                          color: '#4E4D4D',
-                                                        }}
-                                                      >
-                                                        {itemReplies.message}
-                                                      </Text>
-                                                    </View>
-                                                  </View>
-                                                </View>
-                                              ) : (
-                                                <View></View>
-                                              )}
+                                          )}
+
+                                          {item.lessons.filter(
+                                            (itemLessonNavi) => itemLessonNavi
+                                          ).length ===
+                                          index + 1 ? (
+                                            <View
+                                              style={{
+                                                minWidth: '42%',
+                                                textAlign: 'center',
+                                                marginLeft: 3,
+                                                height: 30,
+                                              }}
+                                            >
+                                              <GradientBtnCacheDisable name="Nächste Einheit" />
                                             </View>
-                                          )
-                                        )}
+                                          ) : (
+                                            <TouchableOpacity
+                                              style={{
+                                                minWidth: '42%',
+                                                textAlign: 'center',
+                                                marginLeft: 3,
+                                                height: 30,
+                                              }}
+                                              onPress={() => {
+                                                navigation.setParams({
+                                                  lessonId: idLessonNext[0].id,
+                                                })
+                                                setReplyComment(null)
+                                                setReplyCommentId(0)
+                                              }}
+                                            >
+                                              <GradientBtnCache name="Nächste Einheit" />
+                                            </TouchableOpacity>
+                                          )}
+                                        </View>
                                       </View>
                                     ) : (
                                       <View></View>
                                     )}
                                   </View>
-                                ))}
-                              </View>
-                            </View>
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'flex-start',
-                              }}
-                            >
-                              <View style={{ marginRight: 10 }}>
-                                <Text
-                                  style={{
-                                    fontFamily: 'ub-reg',
-                                    fontSize: 16,
-                                    color: '#454A4F',
-                                  }}
-                                >
-                                  Kommentar
-                                </Text>
-                              </View>
-                              {replyComment !== null ? (
+                                )
+                              })}
+
+                              {itemLesson.custom_field1 != null ||
+                              itemLesson.custom_field3 != null ? (
                                 <View
                                   style={{
-                                    backgroundColor: '#454A4F',
-                                    borderRadius: 3,
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
+                                    marginTop: 30,
                                   }}
                                 >
                                   <Text
                                     style={{
                                       fontFamily: 'ub-reg',
-                                      fontSize: 12,
-                                      color: '#fff',
-                                      paddingVertical: 2,
-                                      paddingHorizontal: 5,
+                                      fontSize: 18,
+                                      color: '#454A4F',
+                                      marginRight: 25,
                                     }}
                                   >
-                                    {replyComment}
+                                    Downloads:
                                   </Text>
-                                  <TouchableOpacity
-                                    onPress={() => {
-                                      setReplyComment(null)
-                                      setReplyCommentId(0)
-                                    }}
-                                  >
-                                    <IconCloseSuccess fill="#fff" />
-                                  </TouchableOpacity>
+                                  {itemLesson.custom_field1 != null ? (
+                                    <View style={{ marginTop: 15 }}>
+                                      <View style={styles.flexDownfile}>
+                                        <Text
+                                          style={{
+                                            // textAlign: 'center',
+                                            fontFamily: 'ub-light',
+                                            color: '#4E4D4D',
+                                            fontSize: 16,
+                                          }}
+                                        >
+                                          {itemLesson.custom_field1}
+                                        </Text>
+                                        <View
+                                          style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                          }}
+                                        >
+                                          <TouchableOpacity
+                                            style={{ paddingHorizontal: 25 }}
+                                            onPress={() =>
+                                              WebBrowser.openBrowserAsync(
+                                                itemLesson.custom_field2
+                                              )
+                                            }
+                                          >
+                                            <IconDownload />
+                                          </TouchableOpacity>
+                                          <TouchableOpacity
+                                            style={{ paddingTop: 1 }}
+                                            onPress={() =>
+                                              FileSystem.downloadAsync(
+                                                itemLesson.custom_field2,
+                                                FileSystem.documentDirectory +
+                                                  itemLesson.custom_field2.substr(
+                                                    itemLesson.custom_field2.lastIndexOf(
+                                                      '/'
+                                                    ) + 1
+                                                  )
+                                              )
+                                                .then(async ({ uri }) => {
+                                                  Sharing.shareAsync(uri)
+                                                })
+                                                .catch((error) => {
+                                                  console.error(error)
+                                                })
+                                            }
+                                          >
+                                            <IconShareFile />
+                                          </TouchableOpacity>
+                                        </View>
+                                      </View>
+                                    </View>
+                                  ) : (
+                                    <View></View>
+                                  )}
+                                  {itemLesson.custom_field3 != null ? (
+                                    <View style={{ marginTop: 20 }}>
+                                      <View style={styles.flexDownfile}>
+                                        <Text
+                                          style={{
+                                            // textAlign: 'center',
+                                            fontFamily: 'ub-light',
+                                            color: '#4E4D4D',
+                                            fontSize: 16,
+                                          }}
+                                        >
+                                          {itemLesson.custom_field3}
+                                        </Text>
+                                        <View
+                                          style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                          }}
+                                        >
+                                          <TouchableOpacity
+                                            style={{ paddingHorizontal: 25 }}
+                                            onPress={() =>
+                                              WebBrowser.openBrowserAsync(
+                                                itemLesson.custom_field4
+                                              )
+                                            }
+                                          >
+                                            <IconDownload />
+                                          </TouchableOpacity>
+                                          <TouchableOpacity
+                                            style={{ paddingTop: 1 }}
+                                            onPress={() =>
+                                              FileSystem.downloadAsync(
+                                                itemLesson.custom_field4,
+                                                FileSystem.documentDirectory +
+                                                  itemLesson.custom_field4.substr(
+                                                    itemLesson.custom_field4.lastIndexOf(
+                                                      '/'
+                                                    ) + 1
+                                                  )
+                                              )
+                                                .then(async ({ uri }) => {
+                                                  Sharing.shareAsync(uri)
+                                                })
+                                                .catch((error) => {
+                                                  console.error(error)
+                                                })
+                                            }
+                                          >
+                                            <IconShareFile />
+                                          </TouchableOpacity>
+                                        </View>
+                                      </View>
+                                    </View>
+                                  ) : (
+                                    <View></View>
+                                  )}
                                 </View>
                               ) : (
                                 <View></View>
                               )}
-                            </View>
-
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                marginTop: 10,
-                                alignItems: 'center',
-                                justifyContent: 'space-evenly',
-                              }}
-                            >
-                              <TextInput
+                              <View style={{ marginTop: 20 }}>
+                                <View style={{ marginVertical: 15 }}>
+                                  <Text
+                                    style={{
+                                      fontFamily: 'ub-reg',
+                                      fontSize: 18,
+                                      color: '#454A4F',
+                                      marginBottom: 15,
+                                    }}
+                                  >
+                                    Kommentare:
+                                  </Text>
+                                  {itemLesson.commentsL.map((itemComment) => (
+                                    <View key={itemComment.id}>
+                                      {itemComment.status === 2 &&
+                                      itemComment.parent_id === null ? (
+                                        <View>
+                                          <View
+                                            style={{
+                                              flexDirection: 'row',
+                                              justifyContent: 'flex-start',
+                                              alignItems: 'flex-start',
+                                              marginVertical: 10,
+                                            }}
+                                          >
+                                            <View>
+                                              <View style={{}}>
+                                                <LinearGradient
+                                                  colors={[
+                                                    '#FF741F',
+                                                    '#E86312',
+                                                  ]}
+                                                  start={{ x: 0, y: 0 }}
+                                                  end={{ x: 1, y: 0 }}
+                                                  style={styles.backAvatar}
+                                                >
+                                                  <View>
+                                                    <Image
+                                                      style={{
+                                                        width: 30,
+                                                        height: 30,
+                                                        borderRadius: 15,
+                                                        marginHorizontal: 5,
+                                                      }}
+                                                      resizeMode="cover"
+                                                      source={{
+                                                        uri: itemComment.users
+                                                          .image_avatar,
+                                                      }}
+                                                    />
+                                                  </View>
+                                                </LinearGradient>
+                                              </View>
+                                            </View>
+                                            <View
+                                              style={{
+                                                paddingLeft: 15,
+                                                flex: 1,
+                                              }}
+                                            >
+                                              <Text
+                                                style={{
+                                                  // textAlign: 'center',
+                                                  fontFamily: 'ub-light',
+                                                  color: '#4E4D4D',
+                                                  fontSize: 10,
+                                                }}
+                                              >
+                                                <Text
+                                                  style={{
+                                                    fontFamily: 'ub-medium',
+                                                  }}
+                                                >
+                                                  {itemComment.users.name}
+                                                </Text>{' '}
+                                                {itemComment.created_at}
+                                              </Text>
+                                              <View style={{ flex: 1 }}>
+                                                <Text
+                                                  style={{
+                                                    // textAlign: 'center',
+                                                    fontFamily: 'ub-reg',
+                                                    color: '#4E4D4D',
+                                                  }}
+                                                >
+                                                  {itemComment.message}
+                                                </Text>
+                                              </View>
+                                              <TouchableOpacity
+                                                onPress={() => {
+                                                  setReplyComment(
+                                                    itemComment.users.name
+                                                  )
+                                                  setReplyCommentId(
+                                                    itemComment.id
+                                                  )
+                                                  focusInput()
+                                                }}
+                                              >
+                                                <View
+                                                  style={{
+                                                    flexDirection: 'row',
+                                                    alignItems: 'center',
+                                                    paddingTop: 5,
+                                                  }}
+                                                >
+                                                  <IconReplyComment />
+                                                  <Text
+                                                    style={{
+                                                      // textAlign: 'center',
+                                                      fontFamily: 'ub-reg',
+                                                      color: '#4E4D4D',
+                                                      fontSize: 12,
+                                                      paddingLeft: 2,
+                                                    }}
+                                                  >
+                                                    Antworten
+                                                  </Text>
+                                                </View>
+                                              </TouchableOpacity>
+                                            </View>
+                                          </View>
+                                          {itemComment.replies.map(
+                                            (itemReplies) => (
+                                              <View key={itemReplies.id}>
+                                                {itemReplies.status === 2 ? (
+                                                  <View>
+                                                    <View
+                                                      style={{
+                                                        flexDirection: 'row',
+                                                        justifyContent:
+                                                          'flex-start',
+                                                        alignItems:
+                                                          'flex-start',
+                                                        marginVertical: 10,
+                                                        width: '90%',
+                                                        marginLeft: 30,
+                                                      }}
+                                                    >
+                                                      <View>
+                                                        <View style={{}}>
+                                                          <LinearGradient
+                                                            colors={[
+                                                              '#FF741F',
+                                                              '#E86312',
+                                                            ]}
+                                                            start={{
+                                                              x: 0,
+                                                              y: 0,
+                                                            }}
+                                                            end={{ x: 1, y: 0 }}
+                                                            style={
+                                                              styles.backAvatar
+                                                            }
+                                                          >
+                                                            <View>
+                                                              <Image
+                                                                style={{
+                                                                  width: 30,
+                                                                  height: 30,
+                                                                  borderRadius: 15,
+                                                                  marginHorizontal: 5,
+                                                                }}
+                                                                resizeMode="cover"
+                                                                source={{
+                                                                  uri: itemReplies
+                                                                    .users
+                                                                    .image_avatar,
+                                                                }}
+                                                              />
+                                                            </View>
+                                                          </LinearGradient>
+                                                        </View>
+                                                      </View>
+                                                      <View
+                                                        style={{
+                                                          paddingLeft: 15,
+                                                          flex: 1,
+                                                        }}
+                                                      >
+                                                        <Text
+                                                          style={{
+                                                            // textAlign: 'center',
+                                                            fontFamily:
+                                                              'ub-light',
+                                                            color: '#4E4D4D',
+                                                            fontSize: 10,
+                                                          }}
+                                                        >
+                                                          <Text
+                                                            style={{
+                                                              fontFamily:
+                                                                'ub-medium',
+                                                            }}
+                                                          >
+                                                            {
+                                                              itemReplies.users
+                                                                .name
+                                                            }
+                                                          </Text>{' '}
+                                                          {
+                                                            itemReplies.created_at
+                                                          }
+                                                        </Text>
+                                                        <Text
+                                                          style={{
+                                                            // textAlign: 'center',
+                                                            fontFamily:
+                                                              'ub-reg',
+                                                            color: '#4E4D4D',
+                                                          }}
+                                                        >
+                                                          {itemReplies.message}
+                                                        </Text>
+                                                      </View>
+                                                    </View>
+                                                  </View>
+                                                ) : (
+                                                  <View></View>
+                                                )}
+                                              </View>
+                                            )
+                                          )}
+                                        </View>
+                                      ) : (
+                                        <View></View>
+                                      )}
+                                    </View>
+                                  ))}
+                                </View>
+                              </View>
+                              <View
                                 style={{
-                                  borderWidth: 1.5,
-                                  borderColor: '#FF741F',
-                                  width: '100%',
-                                  textAlignVertical: 'top',
-                                  borderRadius: 7,
-                                  fontSize: 18,
-                                  paddingLeft: 10,
-                                  paddingTop: 15,
-                                  fontFamily: 'ub-reg',
-                                  color: '#333',
-                                  height: 100,
-                                }}
-                                onChangeText={(messageComment) =>
-                                  setMessageComment(messageComment)
-                                }
-                                ref={InputRef}
-                                value={messageComment.toString()}
-                                multiline={true}
-                                numberOfLines={10}
-                                autoCapitalize="none"
-                                autoCompleteType="off"
-                                autoCorrect={false}
-                                editable
-                              />
-                            </View>
-                            {commentSuccess === null ? (
-                              <View></View>
-                            ) : (
-                              <FadeInView>
-                                <Text
-                                  style={{
-                                    fontFamily: 'ub-reg',
-                                    color:
-                                      commentSuccess ===
-                                      'Geben Sie Ihren Kommentartext ein'
-                                        ? '#FE4141'
-                                        : '#00b9eb',
-                                    fontSize: 12,
-                                    paddingLeft: 3,
-                                    paddingTop: 3,
-                                  }}
-                                >
-                                  {commentSuccess}
-                                </Text>
-                              </FadeInView>
-                            )}
-                            <View
-                              style={{
-                                marginTop: commentSuccess === null ? 20 : 10,
-                                width: '100%',
-                              }}
-                            >
-                              <TouchableOpacity
-                                style={[
-                                  styles.wrapperComment,
-                                  { alignSelf: 'flex-end', width: '55%' },
-                                ]}
-                                onPress={async () => {
-                                  let idLesson = itemLesson.wp_lesson
-                                  await postMessage(
-                                    messageComment,
-                                    idLesson,
-                                    replyCommentId
-                                  )
-                                  let timer = setTimeout(() => {
-                                    setCommentSuccess(null)
-                                  }, 4000)
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                  justifyContent: 'flex-start',
                                 }}
                               >
-                                <GradientBtnComment name="Kommentar abschicken" />
-                              </TouchableOpacity>
+                                <View style={{ marginRight: 10 }}>
+                                  <Text
+                                    style={{
+                                      fontFamily: 'ub-reg',
+                                      fontSize: 16,
+                                      color: '#454A4F',
+                                    }}
+                                  >
+                                    Kommentar
+                                  </Text>
+                                </View>
+                                {replyComment !== null ? (
+                                  <View
+                                    style={{
+                                      backgroundColor: '#454A4F',
+                                      borderRadius: 3,
+                                      flexDirection: 'row',
+                                      alignItems: 'center',
+                                    }}
+                                  >
+                                    <Text
+                                      style={{
+                                        fontFamily: 'ub-reg',
+                                        fontSize: 12,
+                                        color: '#fff',
+                                        paddingVertical: 2,
+                                        paddingHorizontal: 5,
+                                      }}
+                                    >
+                                      {replyComment}
+                                    </Text>
+                                    <TouchableOpacity
+                                      onPress={() => {
+                                        setReplyComment(null)
+                                        setReplyCommentId(0)
+                                      }}
+                                    >
+                                      <IconCloseSuccess fill="#fff" />
+                                    </TouchableOpacity>
+                                  </View>
+                                ) : (
+                                  <View></View>
+                                )}
+                              </View>
+
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  marginTop: 10,
+                                  alignItems: 'center',
+                                  justifyContent: 'space-evenly',
+                                }}
+                              >
+                                <TextInput
+                                  style={{
+                                    borderWidth: 1.5,
+                                    borderColor: '#FF741F',
+                                    width: '100%',
+                                    textAlignVertical: 'top',
+                                    borderRadius: 7,
+                                    fontSize: 18,
+                                    paddingLeft: 10,
+                                    paddingTop: 15,
+                                    fontFamily: 'ub-reg',
+                                    color: '#333',
+                                    height: 100,
+                                  }}
+                                  onChangeText={(messageComment) =>
+                                    setMessageComment(messageComment)
+                                  }
+                                  ref={InputRef}
+                                  value={messageComment.toString()}
+                                  multiline={true}
+                                  numberOfLines={10}
+                                  autoCapitalize="none"
+                                  autoCompleteType="off"
+                                  autoCorrect={false}
+                                  editable
+                                />
+                              </View>
+                              {commentSuccess === null ? (
+                                <View></View>
+                              ) : (
+                                <FadeInView>
+                                  <Text
+                                    style={{
+                                      fontFamily: 'ub-reg',
+                                      color:
+                                        commentSuccess ===
+                                        'Geben Sie Ihren Kommentartext ein'
+                                          ? '#FE4141'
+                                          : '#00b9eb',
+                                      fontSize: 12,
+                                      paddingLeft: 3,
+                                      paddingTop: 3,
+                                    }}
+                                  >
+                                    {commentSuccess}
+                                  </Text>
+                                </FadeInView>
+                              )}
+                              <View
+                                style={{
+                                  marginTop: commentSuccess === null ? 20 : 10,
+                                  width: '100%',
+                                }}
+                              >
+                                <TouchableOpacity
+                                  style={[
+                                    styles.wrapperComment,
+                                    { alignSelf: 'flex-end', width: '55%' },
+                                  ]}
+                                  onPress={async () => {
+                                    let idLesson = itemLesson.wp_lesson
+                                    await postMessage(
+                                      messageComment,
+                                      idLesson,
+                                      replyCommentId
+                                    )
+                                    let timer = setTimeout(() => {
+                                      setCommentSuccess(null)
+                                    }, 4000)
+                                  }}
+                                >
+                                  <GradientBtnComment name="Kommentar abschicken" />
+                                </TouchableOpacity>
+                              </View>
                             </View>
-                          </View>
-                        ) : item.id == moduleId && lessonId == null ? (
-                          <View>
-                            <Text>Ошибка</Text>
-                          </View>
-                        ) : (
-                          <View></View>
-                        )}
-                      </View>
-                    ))}
+                          ) : item.id == moduleId && lessonId == null ? (
+                            <View>
+                              <Text>Ошибка</Text>
+                            </View>
+                          ) : (
+                            <View></View>
+                          )}
+                        </View>
+                      )
+                    })}
                   </View>
                 ))}
               </ScrollView>

@@ -15,7 +15,7 @@ import {
   Platform,
 } from 'react-native'
 import { gStyle } from '../../../../styles/style'
-import HTML from 'react-native-render-html'
+import RenderHtml from 'react-native-render-html'
 import * as FileSystem from 'expo-file-system'
 import * as Notifications from 'expo-notifications'
 import * as MediaLibrary from 'expo-media-library'
@@ -212,7 +212,7 @@ export function Modules({ props, route, navigation }) {
                     {JSON.stringify(titleDescription)}
                   </Text> */}
                   {descModulLocal.length !== 0 ? (
-                    <HTML
+                    <RenderHtml
                       tagsStyles={tagsStyles}
                       source={{
                         html: `${
@@ -367,7 +367,7 @@ export function Modules({ props, route, navigation }) {
                   {JSON.stringify(titleDescription)}
                 </Text> */}
                     {data.length !== 0 ? (
-                      <HTML
+                      <RenderHtml
                         tagsStyles={tagsStyles}
                         source={{
                           html: `${

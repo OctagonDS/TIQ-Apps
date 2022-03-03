@@ -13,6 +13,7 @@ import { IconBurger } from '../components/atoms/iconBurger'
 import { IconSearch } from '../components/atoms/iconSearch'
 import { IconRef } from '../components/atoms/iconRef'
 
+import { Ticket } from '../components/page/child/ticket'
 import { Feedback } from '../components/page/feedback'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
@@ -115,6 +116,22 @@ export function DraweFeedback({ navigation: { goBack } }) {
         component={Feedback}
         options={{
           title: 'Обратная связь',
+        }}
+      />
+      <Drawer.Screen
+        name="draweTicket"
+        component={Ticket}
+        options={{
+          unmountOnBlur: true,
+          headerLeft: () => {
+            const navigation = useNavigation()
+            return (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <ArrowLeftScreen style={{ marginLeft: 10 }} />
+              </TouchableOpacity>
+            )
+          },
+          title: 'Тикет',
         }}
       />
     </Drawer.Navigator>

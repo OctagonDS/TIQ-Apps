@@ -15,7 +15,7 @@ import {
 } from 'react-native'
 import { gStyle } from '../../styles/style'
 import mainContext from '../../store/context/context'
-import HTML from 'react-native-render-html'
+import RenderHtml from 'react-native-render-html'
 import { IconEuro } from '../atoms/iconEuro'
 import { LinearGradient } from 'expo-linear-gradient'
 import * as WebBrowser from 'expo-web-browser'
@@ -190,7 +190,7 @@ export const Mentor = (props) => {
                 >
                   {item.title}
                 </Text>
-                <HTML
+                <RenderHtml
                   tagsStyles={tagsStyles}
                   source={{
                     html: `${item.description.replace(/^"(.+(?="$))"$/, '$1')}`,

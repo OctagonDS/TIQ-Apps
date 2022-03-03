@@ -15,7 +15,6 @@ import {
   TextInput,
 } from 'react-native'
 import { gStyle } from '../../../../styles/style'
-import HTML from 'react-native-render-html'
 import { Video, AVPlaybackStatus } from 'expo-av'
 import { LinearGradient } from 'expo-linear-gradient'
 import { IconPlay } from '../../../atoms/iconPlay'

@@ -205,7 +205,7 @@ function StackNav() {
           name="FeedbackForm"
           component={FeedbackForm}
           options={{
-            title: 'Suche',
+            title: 'Feedback',
           }}
         />
       </Stack.Group>

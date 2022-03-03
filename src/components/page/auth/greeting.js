@@ -16,7 +16,7 @@ import {
 import { gStyle } from '../../../styles/style'
 import * as WebBrowser from 'expo-web-browser'
 import { LinearGradient } from 'expo-linear-gradient'
-import HTML from 'react-native-render-html'
+import RenderHtml from 'react-native-render-html'
 import { IconCloseModal } from '../../atoms/iconCloseM'
 
 const image = require('../../../assets/img/grey-geo.png')
@@ -274,7 +274,7 @@ export const Greeting = ({ navigation }) => {
                     renderItem={({ item }) => (
                       <View>
                         <View style={{ paddingHorizontal: 10 }}>
-                          <HTML
+                          <RenderHtml
                             tagsStyles={tagsStyles}
                             source={{ html: item.text }}
                             contentWidth={contentWidth}
@@ -311,7 +311,7 @@ export const Greeting = ({ navigation }) => {
                     renderItem={({ item }) => (
                       <View>
                         <View style={{ paddingHorizontal: 10 }}>
-                          <HTML
+                          <RenderHtml
                             tagsStyles={tagsStyles}
                             source={{ html: item.text }}
                             contentWidth={contentWidth}

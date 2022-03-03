@@ -20,7 +20,7 @@ import { IconPlay } from '../../../../atoms/iconPlay'
 import mainContext from '../../../../../store/context/context'
 import { IcoBTC } from '../../../../atoms/iconCockpit/iconBTC'
 import { IcoEthereum } from '../../../../atoms/iconCockpit/iconEthereum'
-import HTML from 'react-native-render-html'
+import RenderHtml from 'react-native-render-html'
 import { useIsFocused } from '@react-navigation/native'
 
 const image = require('../../../../../assets/img/black-geo.png')
@@ -280,7 +280,7 @@ export const SignaleTrendDepot = (props) => {
                       <View
                         style={{ paddingHorizontal: '2.5%', paddingBottom: 20 }}
                       >
-                        <HTML
+                        <RenderHtml
                           tagsStyles={tagsStyles}
                           source={{ html: item.content }}
                           contentWidth={contentWidth}
@@ -300,7 +300,7 @@ export const SignaleTrendDepot = (props) => {
                     Veröffentlicht: {item.created_at}
                   </Text>
                   <View style={{ paddingHorizontal: '2.5%', paddingBottom: 5 }}>
-                    <HTML
+                    <RenderHtml
                       tagsStyles={tagsStyles}
                       source={{ html: item.content }}
                       contentWidth={contentWidth}

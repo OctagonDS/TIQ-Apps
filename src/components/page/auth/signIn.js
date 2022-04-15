@@ -55,6 +55,7 @@ const FadeInView = (props) => {
 export const SignIn = ({ navigation: { goBack }, navigation }) => {
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
+  const [phoneNumber, setPhoneNumber] = useState(null)
   const { userProfile, loggingIn, doLogin, error } = useContext(mainContext)
 
   return (
@@ -119,10 +120,33 @@ export const SignIn = ({ navigation: { goBack }, navigation }) => {
               disabled={loggingIn}
             />
           </View>
+          <View style={{ marginTop: '8%' }}>
+            <View style={styles.labelphone}>
+              <Text style={{ color: '#FF741F' }}>
+                Telefonnummer
+                <Text style={{ color: '#DA1414', fontSize: 10 }}> / </Text>
+                <Text style={{ color: '#DA1414', fontSize: 8 }}>
+                  Halten Sie Ihre Daten aktuell
+                </Text>
+                <Text style={{ color: '#DA1414', fontSize: 10 }}> / </Text>
+                <Text style={{ color: '#DA1414', fontSize: 8 }}>Optional</Text>
+              </Text>
+            </View>
+            <TextInput
+              style={styles.input}
+              onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
+              value={phoneNumber}
+              autoCapitalize="none"
+              autoCorrect={false}
+              autoComplete="off"
+              keyboardType="phone-pad"
+              disabled={loggingIn}
+            />
+          </View>
           <View style={styles.block}>
             <TouchableOpacity
               style={styles.wrapper}
-              onPress={() => doLogin(email, password)}
+              onPress={() => doLogin(email, password, phoneNumber)}
               disabled={loggingIn}
             >
               <GradientBtn name="Log-In" />
@@ -140,7 +164,7 @@ export const SignIn = ({ navigation: { goBack }, navigation }) => {
 export const styles = StyleSheet.create({
   arrow: {
     left: '8%',
-    top: '0%',
+    top: '5%',
     // position: 'absolute',
     zIndex: 1,
   },
@@ -159,6 +183,18 @@ export const styles = StyleSheet.create({
   labelmail: {
     backgroundColor: '#fff',
     width: '34%',
+    height: 19,
+    borderRadius: 4,
+    position: 'absolute',
+    zIndex: 1,
+    paddingLeft: 5,
+    marginLeft: '10%',
+    marginTop: -5,
+    fontFamily: 'ub-medium',
+  },
+  labelphone: {
+    backgroundColor: '#fff',
+    width: '74%',
     height: 19,
     borderRadius: 4,
     position: 'absolute',
@@ -195,7 +231,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#fff',
     letterSpacing: 2,
-    marginTop: '28%',
+    marginTop: '23%',
   },
   input: {
     borderWidth: 1,

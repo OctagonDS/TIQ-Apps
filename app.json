@@ -20,7 +20,8 @@
         "expo-notifications",
         {
           "icon": "./src/assets/img/not-icon.png",
-          "color": "#ffffff"
+          "color": "#ffffff",
+          "sounds": ["./src/assets/sound/ping-bing.wav"]
         }
       ]
     ],

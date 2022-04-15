@@ -134,6 +134,7 @@ export const Feedback = ({ navigation }) => {
       setStatistics({})
     }
   }, [connectNet, isFocused])
+
   return (
     <View style={gStyle.main}>
       {isLoading ? (
@@ -218,7 +219,6 @@ export const Feedback = ({ navigation }) => {
                       onPress={() => {
                         navigation.navigate('draweTicket', {
                           itemId: item.id,
-                          accessToken: token && token[0].access_token,
                         })
                       }}
                     >
@@ -258,7 +258,7 @@ export const Feedback = ({ navigation }) => {
                           <View
                             style={{
                               flexDirection: 'row',
-                              justifyContent: 'center',
+                              justifyContent: 'flex-end',
                               alignItems: 'center',
                             }}
                           >
@@ -300,15 +300,7 @@ export const Feedback = ({ navigation }) => {
                           >
                             {item.subject}
                           </Text>
-                          <View
-                            style={
-                              {
-                                // flexDirection: 'row',
-                                // // justifyContent: 'space-between',
-                                // alignItems: 'center',
-                              }
-                            }
-                          >
+                          <View>
                             <Text
                               style={{
                                 color:

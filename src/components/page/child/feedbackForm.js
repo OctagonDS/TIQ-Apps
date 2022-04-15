@@ -16,6 +16,8 @@ import * as ImagePicker from 'expo-image-picker'
 import { IconUploadImage } from '../../atoms/iconUploadImage'
 import { IconUploadCamera } from '../../atoms/iconUploadCamera'
 import { IconCloseSuccess } from '../../atoms/iconCloseS'
+import * as mime from 'mime'
+import * as DocumentPicker from 'expo-document-picker'
 
 const GradientBtn = ({ name }) => (
   <LinearGradient
@@ -33,108 +35,120 @@ export const FeedbackForm = ({ props, navigation, route }) => {
   const [image, setImage] = useState(null)
   const [nameImage, setNameImage] = useState(null)
   const { userProfile } = useContext(mainContext)
-  const [isLoading, setLoading] = useState(true)
-  const urlMessage = ``
-  const urlUpload = ``
+  const [message, setMessage] = useState(null)
+  const [subject, setSubject] = useState(null)
+  const [email, setEmail] = useState(userProfile.email.toString())
+  const [name, setName] = useState(userProfile.display_name.toString())
+
+  const urlMessage = `https://desk.zoho.eu/api/v1/tickets`
+  const urlUpload = `https://desk.zoho.eu/api/v1/uploads`
 
   const pickImage = async () => {
-    // ImagePicker.requestMediaLibraryPermissionsAsync(true)
-
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      // allowsEditing: true,
-      // aspect: [9, 16],
-      // base64: true,
-      quality: 1,
-    })
+    let result = await DocumentPicker.getDocumentAsync({})
 
     if (!result.cancelled) {
-      setNameImage(result.uri.split('/').pop())
+      setNameImage(result.name)
       setImage(result.uri)
-      // setImage(result)
-      // console.log(result)
     }
   }
 
   const pickImageCamera = async () => {
+    let prem = await ImagePicker.getCameraPermissionsAsync()
+
+    if (prem.granted !== true) {
+      await ImagePicker.requestCameraPermissionsAsync()
+    }
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      // allowsEditing: true,
-      // aspect: [9, 16],
-      // base64: true,
       quality: 1,
     })
 
     if (!result.cancelled) {
       setNameImage(result.uri.split('/').pop())
       setImage(result.uri)
-      // setImage(result)
-      // console.log(result)
     }
   }
 
-  async function postMessageSupport() {
-    // Привязка файла к тикету
+  const postMessageSupport = async (message, subject) => {
+    //Шапка сообщения
     var myHeaders = new Headers()
-    myHeaders.append('Content-Type', 'multipart/form-data')
+    myHeaders.append('Content-Type', 'application/json')
     myHeaders.append('orgId', '20077040966')
-    myHeaders.append(
-      'Authorization',
-      'Zoho-oauthtoken 1000.47ef4b5e040492773506d01aad1b14bf.8bcaf92d2dcb1ec2023f0351a231d3bf'
-    )
+    myHeaders.append('Authorization', `Zoho-oauthtoken ${accessToken}`)
 
-    let formData = new FormData()
-    formData.append('file', fileInput.files[0], image)
-
-    // Создание тикета
-    var myHeadersMessage = new Headers()
-    myHeadersMessage.append('Accept', 'application/json')
-    myHeadersMessage.append('Content-Type', 'application/json')
-
-    var formDataMessage = JSON.stringify({
-      author: userProfile && userProfile.wp_user,
-      content: {
-        raw: messageComment,
-      },
-      post: idLesson,
-      parent: replyCommentId,
-    })
+    // Шапка загрузки файла
+    var myHeadersUpload = new Headers()
+    myHeadersUpload.append('Content-Type', 'multipart/form-data')
+    myHeadersUpload.append('orgId', '20077040966')
+    myHeadersUpload.append('Authorization', `Zoho-oauthtoken ${accessToken}`)
 
     try {
-      // Привязка файла к тикету
-      const responseUpload = await fetch(urlUpload, {
+      if (image !== null) {
+        var formdata = new FormData()
+        formdata.append('file', {
+          uri: image,
+          name: nameImage,
+          type: mime.getType(image),
+        })
+        const responseUpload = await fetch(urlUpload, {
+          method: 'POST',
+          headers: myHeadersUpload,
+          body: formdata,
+        })
+        const jsonUpload = await responseUpload.json()
+        // console.log(jsonUpload)
+        var raw = JSON.stringify({
+          subject: subject,
+          departmentId: '67790000000007061',
+          channel: 'App Mobile',
+          email: email,
+          phone: null,
+          description: message,
+          status: 'Open',
+          contact: {
+            lastName: name,
+            email: email,
+            phone: null,
+          },
+          uploads: [jsonUpload.id],
+        })
+      } else {
+        var raw = JSON.stringify({
+          subject: subject,
+          departmentId: '67790000000007061',
+          channel: 'App Mobile',
+          email: email,
+          phone: null,
+          description: message,
+          status: 'Open',
+          contact: {
+            lastName: name,
+            email: email,
+            phone: null,
+          },
+        })
+      }
+
+      const responsePost = await fetch(urlMessage, {
         method: 'POST',
         headers: myHeaders,
-        body: formData,
+        body: raw,
       })
-      const jsonUpload = await responseUpload.json()
-
-      // Создание тикета
-      const responseMessage = await fetch(urlMessage, {
-        method: 'POST',
-        headers: myHeadersMessage,
-        body: formDataMessage,
-      })
-      const jsonMessage = await responseMessage.json()
-
-      // console.log(jsonMessage.data)
-      // console.log(jsonMessage.errors)
+      const jsonPost = await responsePost.json()
+      // console.log(jsonPost)
     } catch (error) {
       console.error(error)
     } finally {
-      setLoading(false)
+      navigation.goBack()
     }
   }
-
-  console.log(accessToken)
-  // console.log(image)
-  // console.log(nameImage)
 
   useEffect(() => {
     return () => {
       setImage(null)
       setNameImage(null)
-      setLoading(true)
+      setMessage(null)
+      setSubject(null)
     }
   }, [])
 
@@ -154,40 +168,6 @@ export const FeedbackForm = ({ props, navigation, route }) => {
           <View
             style={{
               flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-evenly',
-            }}
-          >
-            <TextInput
-              style={styles.input}
-              placeholder="Name*"
-              autoCapitalize="none"
-              autoCompleteType="off"
-              defaultValue={userProfile && userProfile.name}
-              autoCorrect={false}
-            />
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginTop: 20,
-              alignItems: 'center',
-              justifyContent: 'space-evenly',
-            }}
-          >
-            <TextInput
-              style={styles.input}
-              placeholder="E-Mail*"
-              autoCapitalize="none"
-              keyboardType="email-address"
-              autoCompleteType="off"
-              defaultValue={userProfile && userProfile.email}
-              autoCorrect={false}
-            />
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
               marginTop: 20,
               alignItems: 'center',
               justifyContent: 'space-evenly',
@@ -199,6 +179,8 @@ export const FeedbackForm = ({ props, navigation, route }) => {
               autoCapitalize="none"
               autoCompleteType="off"
               autoCorrect={false}
+              onChangeText={(subject) => setSubject(subject)}
+              value={subject}
             />
           </View>
 
@@ -230,6 +212,8 @@ export const FeedbackForm = ({ props, navigation, route }) => {
               autoCapitalize="none"
               autoCompleteType="off"
               autoCorrect={false}
+              onChangeText={(message) => setMessage(message)}
+              value={message}
               editable
             />
           </View>
@@ -290,20 +274,17 @@ export const FeedbackForm = ({ props, navigation, route }) => {
               )
             )}
           </View>
-          {/* {image && (
-                <Image
-                  source={{ uri: 'data:image/jpeg;base64,' + image.base64 }}
-                  style={{ width: 220, height: 400 }}
-                />
-              )} */}
-          {/* {image && (
-            <Image
-              source={{ uri: image }}
-              style={{ width: 220, height: 400 }}
-            />
-          )} */}
           <View style={{ marginTop: 20, width: '100%' }}>
-            <TouchableOpacity style={styles.wrapper} onPress={() => {}}>
+            <TouchableOpacity
+              style={styles.wrapper}
+              onPress={() => {
+                if (message === null || subject === null) {
+                  console.log('Empty input')
+                } else {
+                  postMessageSupport(message, subject)
+                }
+              }}
+            >
               <GradientBtn name="Übermitteln" />
             </TouchableOpacity>
           </View>

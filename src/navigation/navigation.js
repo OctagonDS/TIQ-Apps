@@ -423,7 +423,7 @@ function Navigations() {
 
   // Авторизация
 
-  const doLogin = async (email, password) => {
+  const doLogin = async (email, password, phoneNumber) => {
     //console.log(email + '...' + password);
     setloggingIn(true)
     setError(null)
@@ -498,6 +498,23 @@ function Navigations() {
       )
       let jsonQnTerms = await responseQuentTerms.json()
 
+      if (phoneNumber !== null) {
+        var rawPhone = JSON.stringify({
+          phone: phoneNumber,
+        })
+
+        let responseQuentPhone = await fetch(
+          `https://q0ydly.eu-2.quentn.com/public/api/v1/contact/${jsonQnId[0].id}`,
+          {
+            method: 'PUT',
+            headers: qnHeaders,
+            body: rawPhone,
+          }
+        )
+        let jsonQnPhone = await responseQuentPhone.json()
+      }
+
+      console.log(phoneNumber)
       if (json.status != false) {
         setError(null)
         try {
@@ -863,8 +880,8 @@ function Navigations() {
     doSome: () => {
       doSome()
     },
-    doLogin: (email, password) => {
-      doLogin(email, password)
+    doLogin: (email, password, phoneNumber) => {
+      doLogin(email, password, phoneNumber)
     },
     doSingUp: (email, name, phoneNumber) => {
       doSingUp(email, name, phoneNumber)
